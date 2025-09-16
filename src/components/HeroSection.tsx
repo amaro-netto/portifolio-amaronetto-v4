@@ -84,7 +84,7 @@ const HeroSection = () => {
               </div>
 
               {/* Certifications */}
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-8">
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start pt-6">
                 {certifications.map((cert, index) => {
                   const IconComponent = cert.icon;
                   return (
@@ -92,8 +92,8 @@ const HeroSection = () => {
                       key={index}
                       className="group relative"
                     >
-                      <div className="flex flex-col items-center space-y-1 p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
-                        <IconComponent className="h-4 w-4 text-accent" />
+                      <div className="flex flex-col items-center space-y-1 p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
+                        <IconComponent className="h-3 w-3 text-accent" />
                         <span className="text-xs font-medium text-white/90">
                           {cert.label}
                         </span>
@@ -112,7 +112,7 @@ const HeroSection = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
           <button
             onClick={() => scrollToSection('sobre')}
             className="flex flex-col items-center space-y-2 text-white/70 hover:text-white transition-colors group focus-ring rounded-lg p-2"

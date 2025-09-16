@@ -3,25 +3,14 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Calendar, MapPin, Building, ExternalLink, GraduationCap } from 'lucide-react';
+import { Calendar, MapPin, Building, ExternalLink, GraduationCap, Code, Network, Palette, Shield } from 'lucide-react';
 
 const AboutSection = () => {
   const [selectedExperience, setSelectedExperience] = useState<number | null>(null);
 
   const skills = {
-    technical: [
-      'React & Next.js', 'TypeScript', 'Node.js', 'Python',
-      'PostgreSQL', 'MongoDB', 'AWS', 'Docker',
-      'Linux Administration', 'Network Security', 'CI/CD'
-    ],
-    design: [
-      'Adobe Creative Suite', 'Figma', 'UI/UX Design',
-      'Branding', 'Web Design', 'Motion Graphics'
-    ],
-    soft: [
-      'Liderança de Projetos', 'Comunicação', 'Resolução de Problemas',
-      'Trabalho em Equipe', 'Mentoria', 'Gestão de Tempo'
-    ]
+    technical: ['React & Next.js', 'TypeScript'],
+    soft: ['Liderança de Projetos', 'Comunicação']
   };
 
   const experiences = [
@@ -30,7 +19,7 @@ const AboutSection = () => {
       years: '2022 - Atual',
       role: 'Tech Lead & Designer',
       company: 'Freelancer',
-      icon: Building,
+      icon: Code,
       description: 'Liderando projetos de desenvolvimento full-stack e design para diversos clientes, com foco em soluções escaláveis e experiências de usuário excepcionais. Responsável pela arquitetura técnica, mentoria de desenvolvedores júnior e gestão de projetos complexos.',
       achievements: [
         'Entregou 50+ projetos web com 100% de satisfação do cliente',
@@ -45,7 +34,7 @@ const AboutSection = () => {
       years: '2020 - 2022',
       role: 'Desenvolvedor Full-Stack Sênior',
       company: 'TechCorp Solutions',
-      icon: Building,
+      icon: Network,
       description: 'Desenvolvimento de aplicações enterprise escaláveis, liderança técnica em projetos críticos e implementação de melhores práticas de desenvolvimento. Foco em performance, segurança e experiência do usuário.',
       achievements: [
         'Arquitetou sistema que processa 1M+ transações diárias',
@@ -60,7 +49,7 @@ const AboutSection = () => {
       years: '2018 - 2020',
       role: 'Designer & Desenvolvedor',
       company: 'Creative Digital Agency',
-      icon: Building,
+      icon: Palette,
       description: 'Combinando habilidades de design e desenvolvimento para criar experiências digitais inovadoras. Responsável por todo o ciclo do produto, desde a concepção até a implementação.',
       achievements: [
         'Criou identidades visuais para 30+ marcas',
@@ -75,7 +64,7 @@ const AboutSection = () => {
       years: '2016 - 2018',
       role: 'Especialista em TI',
       company: 'Infratech Sistemas',
-      icon: Building,
+      icon: Shield,
       description: 'Gerenciamento de infraestrutura de TI, suporte técnico especializado e implementação de soluções de segurança. Responsável pela manutenção de sistemas críticos e suporte a usuários.',
       achievements: [
         'Manteve 99.8% de uptime em serviços críticos',
@@ -129,7 +118,7 @@ const AboutSection = () => {
               
               <div className="space-y-4">
                 <div>
-                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Técnicas</h4>
+                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Hard Skills</h4>
                   <div className="flex flex-wrap gap-2">
                     {skills.technical.map((skill) => (
                       <Badge key={skill} variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer">
@@ -140,18 +129,7 @@ const AboutSection = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Design</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.design.map((skill) => (
-                      <Badge key={skill} variant="outline" className="hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Interpessoais</h4>
+                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Soft Skills</h4>
                   <div className="flex flex-wrap gap-2">
                     {skills.soft.map((skill) => (
                       <Badge key={skill} className="bg-muted hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
@@ -170,23 +148,25 @@ const AboutSection = () => {
               EXPERIÊNCIA PROFISSIONAL
             </h3>
             
-            <div className="relative">
+            <div className="relative pl-8">
               {/* Timeline Line */}
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-border"></div>
               
               <div className="space-y-6">
                 {experiences.map((exp) => {
                   const IconComponent = exp.icon;
                   return (
                     <Dialog key={exp.id}>
-                      <DialogTrigger asChild>
-                        <Card className="ml-12 cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
-                          <CardHeader className="pb-3">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center space-x-3">
-                                <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                                  <IconComponent className="h-4 w-4" />
-                                </div>
+                      <div className="relative flex items-start space-x-4">
+                        {/* External Icon */}
+                        <div className="absolute -left-[30px] top-1 flex-shrink-0 p-2 rounded-lg bg-primary/10 text-primary">
+                          <IconComponent className="h-4 w-4" />
+                        </div>
+                        
+                        <DialogTrigger asChild>
+                          <Card className="w-full cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
+                            <CardHeader className="pb-3">
+                              <div className="flex items-center justify-between">
                                 <div>
                                   <CardTitle className="text-base font-semibold">
                                     {exp.role}
@@ -195,17 +175,17 @@ const AboutSection = () => {
                                     {exp.company}
                                   </CardDescription>
                                 </div>
+                                <Badge variant="outline" className="text-xs">
+                                  {exp.years}
+                                </Badge>
                               </div>
-                              <Badge variant="outline" className="text-xs">
-                                {exp.years}
-                              </Badge>
-                            </div>
-                          </CardHeader>
-                        </Card>
-                      </DialogTrigger>
+                            </CardHeader>
+                          </Card>
+                        </DialogTrigger>
 
-                      {/* Timeline Dot */}
-                      <div className="absolute left-2 top-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-sm"></div>
+                        {/* Timeline Dot */}
+                        <div className="absolute -left-[34px] top-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-sm"></div>
+                      </div>
 
                       <DialogContent className="max-w-2xl">
                         <DialogHeader>
@@ -275,17 +255,15 @@ const AboutSection = () => {
           
           <div className="flex flex-wrap justify-center gap-4">
             {learningPlatforms.map((platform) => (
-              <Button
+              <button
                 key={platform.name}
-                variant="outline"
-                size="sm"
-                className="hover:bg-primary hover:text-primary-foreground transition-colors"
+                className="w-16 h-16 flex items-center justify-center bg-card border border-border rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer focus-ring"
                 onClick={() => window.open(platform.url, '_blank')}
+                aria-label={`Visitar ${platform.name}`}
+                title={platform.name}
               >
-                <span className="mr-2">{platform.icon}</span>
-                {platform.name}
-                <ExternalLink className="ml-2 h-3 w-3" />
-              </Button>
+                <span className="text-2xl">{platform.icon}</span>
+              </button>
             ))}
           </div>
         </div>
