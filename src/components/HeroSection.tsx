@@ -31,7 +31,7 @@ const HeroSection = () => {
         <div className="flex flex-col lg:flex-row justify-between h-full min-h-screen pt-20">
           {/* Image Side - Left */}
           <div className="flex-1 flex justify-center lg:justify-start mb-12 lg:mb-0 order-1 lg:order-1 lg:self-end">
-            <div className="relative h-full w-full max-w-xl min-h-[680px]">
+            <div className="relative h-full w-full max-w-xl min-h-[816px]">
               <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
               <img
                 src={amaroPortrait}
@@ -123,6 +123,9 @@ const HeroSection = () => {
           </button>
         </div>
       </div>
+
+      {/* Bottom Fade Gradient */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
     </section>
   );
 };
