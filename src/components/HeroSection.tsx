@@ -32,6 +32,8 @@ const HeroSection = () => {
           {/* Image Side - Left */}
           <div className="flex-1 flex justify-center lg:justify-start mb-12 lg:mb-0 order-1 lg:order-1 lg:self-end">
             <div className="relative h-full w-full max-w-2xl min-h-[400px]">
+          <div className="flex-1 flex flex-col justify-center lg:justify-start mb-12 lg:mb-0 order-1 lg:order-1 lg:self-end">
+            <div className="relative h-full w-full max-w-2xl">
               <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
               <img
                 src={amaroPortrait}
