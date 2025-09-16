@@ -78,9 +78,9 @@ const HeroSection = () => {
                       key={index}
                       className="group relative"
                     >
-                      <div className="flex flex-col items-center space-y-1 p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
-                        <IconComponent className="h-3 w-3 text-accent" />
-                        <span className="text-xs font-medium text-white/90">
+                      <div className="flex flex-col items-center space-y-1 w-16 h-16 justify-center rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
+                        <IconComponent className="h-5 w-5 text-accent" />
+                        <span className="text-xs font-small text-white/100">
                           {cert.label}
                         </span>
                       </div>
