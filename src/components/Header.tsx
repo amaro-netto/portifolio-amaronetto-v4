@@ -73,7 +73,7 @@ const Header = () => {
           <div className="flex items-center">
             <button
               onClick={() => scrollToSection('inicio')}
-              className="font-display text-xl font-bold text-foreground hover:text-primary transition-colors focus-ring rounded-lg px-2 py-1"
+              className="font-display text-xl font-bold text-foreground transition-colors focus-ring rounded-lg px-2 py-1"
               aria-label="Ir para o início"
             >
               Amaro <span className="text-primary">Netto</span>
@@ -86,9 +86,10 @@ const Header = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-lg"
+                className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-lg group"
               >
                 {item.label}
+                <span className="absolute bottom-1 left-1/2 w-0 h-0.5 bg-primary transform -translate-x-1/2 transition-all duration-300 group-hover:w-6"></span>
               </button>
             ))}
           </div>

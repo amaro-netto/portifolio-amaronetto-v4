@@ -115,13 +115,12 @@ const CollaboratorsSection = () => {
   return (
     <section id="colaboradores" className="section-snap bg-background">
       <div className="container mx-auto px-4 py-20 h-full">
-        <div className="text-center mb-12">
+        <div className="text-left mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             COLABORADORES E <span className="text-primary">CLIENTES</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Conheça as empresas e profissionais com quem trabalho. 
-            Juntos, criamos soluções que fazem a diferença no mercado.
+          <p className="text-muted-foreground text-lg">
+            Conheça as empresas e profissionais com quem trabalho. Juntos, criamos soluções que fazem a diferença no mercado.
           </p>
         </div>
 
@@ -160,11 +159,11 @@ const CollaboratorsSection = () => {
           </div>
 
           {/* Collaborators Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[500px]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[480px]">
             {visibleCollaborators.map((collaborator) => (
               <div
                 key={collaborator.id}
-                className="perspective-1000 h-[400px]"
+                className="perspective-1000 h-[450px]"
               >
                 <div
                   className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${
@@ -177,7 +176,7 @@ const CollaboratorsSection = () => {
                     <CardContent className="p-0 h-full">
                       <div className="flex flex-col h-full">
                         {/* Image */}
-                        <div className="relative h-48 overflow-hidden rounded-t-lg">
+                        <div className="relative h-56 overflow-hidden rounded-t-lg">
                           <img
                             src={collaborator.image}
                             alt={collaborator.name}

@@ -21,7 +21,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section id="inicio" className="section-snap relative bg-gradient-hero overflow-hidden">
+    <section id="inicio" className="section-snap relative bg-gradient-hero dark:bg-secondary overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-tech opacity-20"></div>
       <div className="absolute top-20 right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
@@ -29,8 +29,21 @@ const HeroSection = () => {
       
       <div className="relative container mx-auto px-4 h-full">
         <div className="flex flex-col lg:flex-row items-center justify-between h-full py-20">
-          {/* Content Side */}
-          <div className="flex-1 text-center lg:text-left lg:pr-12 mb-12 lg:mb-0">
+          {/* Image Side - Left */}
+          <div className="flex-1 flex justify-center lg:justify-start mb-12 lg:mb-0 lg:pr-12 order-1 lg:order-1">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-primary rounded-2xl blur-2xl opacity-30 transform rotate-3"></div>
+              <img
+                src={amaroPortrait}
+                alt="Amaro Netto - Profissional de TI e Designer"
+                className="relative w-80 h-96 md:w-96 md:h-[480px] object-cover rounded-2xl shadow-xl transform hover:scale-105 transition-transform duration-300"
+                loading="eager"
+              />
+            </div>
+          </div>
+          
+          {/* Content Side - Right */}
+          <div className="flex-1 text-center lg:text-left order-2 lg:order-2">
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
@@ -71,7 +84,7 @@ const HeroSection = () => {
               </div>
 
               {/* Certifications */}
-              <div className="flex flex-wrap gap-6 justify-center lg:justify-start pt-8">
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-8">
                 {certifications.map((cert, index) => {
                   const IconComponent = cert.icon;
                   return (
@@ -79,34 +92,21 @@ const HeroSection = () => {
                       key={index}
                       className="group relative"
                     >
-                      <div className="flex flex-col items-center space-y-2 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
-                        <IconComponent className="h-6 w-6 text-accent" />
-                        <span className="text-sm font-medium text-white/90">
+                      <div className="flex flex-col items-center space-y-1 p-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 cursor-pointer">
+                        <IconComponent className="h-4 w-4 text-accent" />
+                        <span className="text-xs font-medium text-white/90">
                           {cert.label}
                         </span>
                       </div>
                       
                       {/* Tooltip */}
-                      <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-secondary text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+                      <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-secondary text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
                         {cert.tooltip}
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
-          </div>
-
-          {/* Image Side */}
-          <div className="flex-1 flex justify-center lg:justify-end">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-primary rounded-2xl blur-2xl opacity-30 transform rotate-3"></div>
-              <img
-                src={amaroPortrait}
-                alt="Amaro Netto - Profissional de TI e Designer"
-                className="relative w-80 h-96 md:w-96 md:h-[480px] object-cover rounded-2xl shadow-xl transform hover:scale-105 transition-transform duration-300"
-                loading="eager"
-              />
             </div>
           </div>
         </div>

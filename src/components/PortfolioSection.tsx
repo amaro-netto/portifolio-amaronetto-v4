@@ -138,13 +138,12 @@ const PortfolioSection = () => {
   return (
     <section id="portfolio" className="section-snap bg-muted/30">
       <div className="container mx-auto px-4 py-20 h-full">
-        <div className="text-center mb-12">
+        <div className="text-left mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             MEU <span className="text-primary">PORTFÓLIO</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Aqui estão alguns dos projetos destacados que desenvolvi, desde aplicações web 
-            complexas até sistemas de identidade visual completos.
+          <p className="text-muted-foreground text-lg">
+            Aqui estão alguns dos projetos destacados que desenvolvi, desde aplicações web complexas até sistemas de identidade visual completos.
           </p>
         </div>
 
@@ -182,19 +181,20 @@ const PortfolioSection = () => {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[350px]">
             {visibleProjects.map((project) => (
               <Card 
                 key={project.id}
-                className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm"
+                className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm h-[320px] flex flex-col"
                 onClick={() => openProject(project.id)}
               >
-                <CardContent className="p-0">
-                  <div className="relative overflow-hidden rounded-t-lg">
+                <CardContent className="p-0 h-full flex flex-col">
+                  <div className="relative overflow-hidden rounded-t-lg h-48">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={{ aspectRatio: '4/3' }}
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -207,7 +207,7 @@ const PortfolioSection = () => {
                     </div>
                   </div>
                   
-                  <div className="p-6">
+                  <div className="p-4 flex-1 flex flex-col justify-between">
                     <div className="flex items-center justify-between mb-2">
                       <Badge variant="outline" className="text-xs">
                         {project.type}

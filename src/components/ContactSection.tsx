@@ -131,13 +131,12 @@ const ContactSection = () => {
   return (
     <section id="contato" className="section-snap bg-background">
       <div className="container mx-auto px-4 py-20 h-full">
-        <div className="text-center mb-12">
+        <div className="text-left mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             VAMOS <span className="text-primary">CONVERSAR</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Pronto para transformar sua ideia em realidade? 
-            Entre em contato e vamos criar algo incrível juntos.
+          <p className="text-muted-foreground text-lg">
+            Pronto para transformar sua ideia em realidade? Entre em contato e vamos criar algo incrível juntos.
           </p>
         </div>
 
@@ -149,29 +148,19 @@ const ContactSection = () => {
               <h3 className="font-semibold text-xl text-foreground mb-6">
                 Entre em Contato
               </h3>
-              <div className="space-y-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 {socialLinks.map((social, index) => {
                   const IconComponent = social.icon;
                   return (
                     <Button
                       key={index}
-                      variant="ghost"
-                      className="w-full justify-start h-auto p-4 hover:bg-muted/50"
+                      variant="outline"
+                      size="lg"
+                      className="p-3"
                       onClick={() => window.open(social.url, '_blank')}
+                      aria-label={social.label}
                     >
-                      <div className="flex items-center space-x-4">
-                        <div className={`${social.color} p-2 rounded-lg bg-muted`}>
-                          <IconComponent className="h-5 w-5" />
-                        </div>
-                        <div className="text-left">
-                          <div className="font-medium text-foreground">
-                            {social.label}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {social.value}
-                          </div>
-                        </div>
-                      </div>
+                      <IconComponent className={`h-6 w-6 ${social.color}`} />
                     </Button>
                   );
                 })}

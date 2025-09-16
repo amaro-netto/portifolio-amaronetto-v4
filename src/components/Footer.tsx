@@ -44,17 +44,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Back to top button */}
-        <div className="mt-6 text-center">
-          <button
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors focus-ring rounded px-3 py-2"
-          >
-            ↑ Voltar ao topo
-          </button>
-        </div>
       </div>
     </footer>
   );
