@@ -30,13 +30,13 @@ const HeroSection = () => {
       <div className="relative container mx-auto px-4 h-full">
         <div className="flex flex-col lg:flex-row items-center justify-between h-full py-20">
           {/* Image Side - Left */}
-          <div className="flex-1 flex justify-center lg:justify-end mb-12 lg:mb-0 lg:pr-12 order-1 lg:order-1 self-stretch">
+          <div className="flex-1 flex justify-center lg:justify-center mb-12 lg:mb-0 lg:pr-12 order-1 lg:order-1 self-stretch">
             <div className="relative h-full w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-primary rounded-2xl blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
               <img
                 src={amaroPortrait}
                 alt="Amaro Netto - Profissional de TI e Designer"
-                className="relative w-full h-full object-cover rounded-2xl shadow-xl transform hover:scale-105 transition-transform duration-300 object-top"
+                className="relative w-full h-full object-cover rounded-2xl shadow-xl object-top"
                 loading="eager"
               />
             </div>
