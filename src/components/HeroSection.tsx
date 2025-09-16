@@ -1,6 +1,6 @@
 // src/components/HeroSection.tsx
 import { Button } from '@/components/ui/button';
-import { ArrowDown, Code, Palette, Shield, Network } from 'lucide-react';
+import { Code, Palette, Shield, Network } from 'lucide-react';
 import amaroPortrait from '@/assets/amaro-portrait.webp';
 
 const HeroSection = () => {
@@ -29,33 +29,9 @@ const HeroSection = () => {
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
       
       <div className="relative mx-auto px-4 h-full">
-        {/*
-          Modificação: Ajustado para o comportamento desejado. 
-          Usaremos 'flex-col' por padrão e 'lg:flex-row' para telas grandes.
-          'justify-between' e 'items-center' para alinhar em ambas as direções.
-        */}
         <div className="flex flex-col lg:flex-row justify-between items-center h-screen pt-20">
-          {/*
-            Modificação: Alterado o container da imagem para ter 'flex-1' em telas grandes,
-            garantindo que ele ocupe o espaço e alinhe corretamente.
-          */}
-          <div className="flex-1 flex flex-col justify-end mb-12 lg:mb-0 order-1 lg:order-1 self-stretch">
-            <div className="relative h-full w-full max-w-2xl">
-              <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
-              <img
-                src={amaroPortrait}
-                alt="Amaro Netto - Profissional de TI e Designer"
-                className="relative w-full h-full object-cover object-top"
-                loading="eager"
-              />
-            </div>
-          </div>
-          
-          {/*
-            Modificação: Adicionado 'self-center' para alinhar o conteúdo no meio em ambas as direções.
-            'flex-1' para que o conteúdo ocupe o espaço restante, garantindo uma distribuição uniforme.
-          */}
-          <div className="flex-1 text-center lg:text-left order-2 lg:order-2 container self-center">
+          {/* Texto */}
+          <div className="flex-1 text-center lg:text-left order-1 lg:order-2 container self-center">
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
@@ -76,7 +52,6 @@ const HeroSection = () => {
                 </p>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button
                   onClick={() => scrollToSection('portfolio')}
@@ -95,8 +70,7 @@ const HeroSection = () => {
                 </Button>
               </div>
 
-              {/* Certifications */}
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start pt-6">
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start py-1">
                 {certifications.map((cert, index) => {
                   const IconComponent = cert.icon;
                   return (
@@ -111,7 +85,6 @@ const HeroSection = () => {
                         </span>
                       </div>
                       
-                      {/* Tooltip */}
                       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-secondary text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
                         {cert.tooltip}
                       </div>
@@ -119,6 +92,31 @@ const HeroSection = () => {
                   );
                 })}
               </div>
+            </div>
+          </div>
+
+          {/* Imagem */}
+          <div className="flex-1 flex flex-col mb-12 lg:mb-0 order-2 lg:order-1 h-full">
+            <div className="relative h-full w-full max-w-2xl mx-auto flex flex-col lg:justify-end">
+              <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
+              
+              <img
+                src={amaroPortrait}
+                alt="Amaro Netto - Profissional de TI e Designer"
+                className="
+                  relative
+                  w-full
+                  h-auto
+                  max-h-72
+                  sm:max-h-80
+                  md:max-h-96
+                  lg:max-h-full
+                  object-contain
+                  flex-shrink-0
+                  mx-auto
+                "
+                loading="eager"
+              />
             </div>
           </div>
         </div>
