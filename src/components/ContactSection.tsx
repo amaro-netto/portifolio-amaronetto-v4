@@ -129,7 +129,7 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contato" className="section-snap bg-background">
+    <section id="contato" className="section-snap bg-background pb-20">
       <div className="container mx-auto px-4 py-20 h-full">
         <div className="text-left mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
