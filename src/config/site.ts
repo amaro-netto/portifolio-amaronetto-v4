@@ -6,12 +6,12 @@ export const siteConfig = {
   ogImage: "https://amaronetto.dev/og-image.webp",
   author: {
     name: "Amaro Netto",
-    email: "contato@amaronetto.dev",
+    email: "ti.amaronetto@gmail.com",
     social: {
       github: "https://github.com/amaronetto",
-      linkedin: "https://linkedin.com/in/amaronetto",
-      instagram: "https://instagram.com/amaronetto",
-      whatsapp: "https://wa.me/5511999998888"
+      linkedin: "https://linkedin.com/in/amarosilvanetto",
+      instagram: "https://instagram.com/ti.amaronetto",
+      whatsapp: "https://wa.me/5521964039120"
     }
   },
   admin: {
@@ -39,7 +39,7 @@ export const metaTags = {
   googlebot: "index, follow",
   keywords: [
     "tecnologia", "design", "desenvolvimento web", 
-    "TI", "portfolio", "Amaro Netto", "São Paulo",
-    "freelancer", "full-stack", "UI/UX", "branding"
+    "TI", "portfolio", "Amaro Netto", "Rio de Janeiro",
+    "freelancer", "full-stack", "UI/UX", "branding", "autonomo", "soluções digitais",
   ].join(", ")
 };

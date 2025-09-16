@@ -69,7 +69,7 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {<./public/logo.png}
           <div className="flex items-center">
             <button
               onClick={() => scrollToSection('inicio')}
