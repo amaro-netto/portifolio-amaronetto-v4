@@ -1,3 +1,4 @@
+// src/components/HeroSection.tsx
 import { Button } from '@/components/ui/button';
 import { ArrowDown, Code, Palette, Shield, Network } from 'lucide-react';
 import amaroPortrait from '@/assets/amaro-portrait.webp';
@@ -6,7 +7,7 @@ const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -28,9 +29,17 @@ const HeroSection = () => {
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
       
       <div className="relative mx-auto px-4 h-full">
-        <div className="flex flex-col lg:flex-row justify-between h-full min-h-[calc(100vh_-_80px)] pt-20">
-          {/* Image Side - Left */}
-          <div className="flex-1 flex flex-col justify-center lg:justify-start mb-12 lg:mb-0 order-1 lg:order-1 lg:self-end">
+        {/*
+          Modificação: Ajustado para o comportamento desejado. 
+          Usaremos 'flex-col' por padrão e 'lg:flex-row' para telas grandes.
+          'justify-between' e 'items-center' para alinhar em ambas as direções.
+        */}
+        <div className="flex flex-col lg:flex-row justify-between items-center h-screen pt-20">
+          {/*
+            Modificação: Alterado o container da imagem para ter 'flex-1' em telas grandes,
+            garantindo que ele ocupe o espaço e alinhe corretamente.
+          */}
+          <div className="flex-1 flex flex-col justify-end mb-12 lg:mb-0 order-1 lg:order-1 self-stretch">
             <div className="relative h-full w-full max-w-2xl">
               <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
               <img
@@ -42,8 +51,11 @@ const HeroSection = () => {
             </div>
           </div>
           
-          {/* Content Side - Right */}
-          <div className="flex-1 text-center lg:text-left order-2 lg:order-2 container lg:self-center">
+          {/*
+            Modificação: Adicionado 'self-center' para alinhar o conteúdo no meio em ambas as direções.
+            'flex-1' para que o conteúdo ocupe o espaço restante, garantindo uma distribuição uniforme.
+          */}
+          <div className="flex-1 text-center lg:text-left order-2 lg:order-2 container self-center">
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
@@ -110,20 +122,7 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
-          <button
-            onClick={() => scrollToSection('sobre')}
-            className="flex flex-col items-center space-y-2 text-white/70 hover:text-white transition-colors group focus-ring rounded-lg p-2"
-            aria-label="Rolar para próxima seção"
-          >
-            <span className="text-sm font-medium">Rolar para baixo</span>
-            <ArrowDown className="h-5 w-5 animate-bounce" />
-          </button>
-        </div>
       </div>
-
     </section>
   );
 };
