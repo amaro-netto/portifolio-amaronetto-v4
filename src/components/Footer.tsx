@@ -4,7 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-secondary/5 border-t border-border py-8">
+    <footer className="bg-transparent pt-20 pb-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           {/* Copyright */}
@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <span>Feito com</span>
             <Heart className="h-4 w-4 text-red-500 fill-current" />
-            <span>em São Paulo, Brasil</span>
+            <span>em Rio de Janeiro, Brasil</span>
           </div>
 
           {/* Optional Links */}

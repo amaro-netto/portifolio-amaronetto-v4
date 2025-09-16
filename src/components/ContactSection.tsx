@@ -17,6 +17,7 @@ import {
   MapPin,
   Phone
 } from 'lucide-react';
+import Footer from './Footer';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -94,29 +95,29 @@ const ContactSection = () => {
     {
       icon: MessageCircle,
       label: 'WhatsApp',
-      value: '+55 (11) 99999-8888',
-      url: 'https://wa.me/5511999998888',
+      value: '+55 (21) 96403-9120',
+      url: 'https://wa.me/5521964039120',
       color: 'text-green-500'
     },
     {
       icon: Mail,
       label: 'E-mail',
-      value: 'contato@amaronetto.dev',
-      url: 'mailto:contato@amaronetto.dev',
+      value: 'ti.amaronetto@gmail.com',
+      url: 'mailto:ti.amaronetto@gmail.com',
       color: 'text-blue-500'
     },
     {
       icon: Instagram,
       label: 'Instagram',
-      value: '@amaronetto',
-      url: 'https://instagram.com/amaronetto',
+      value: '@ti.amaronetto',
+      url: 'https://instagram.com/ti.amaronetto',
       color: 'text-pink-500'
     },
     {
       icon: Github,
       label: 'GitHub',
-      value: '/amaronetto',
-      url: 'https://github.com/amaronetto',
+      value: '/amaro-netto',
+      url: 'https://github.com/amaro-netto',
       color: 'text-foreground'
     },
     {
@@ -130,7 +131,7 @@ const ContactSection = () => {
 
   return (
     <section id="contato" className="section-snap bg-background">
-      <div className="container mx-auto px-4 py-20 h-full">
+      <div className="container mx-auto px-4 pt-20 h-full flex flex-col">
         <div className="text-left mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             VAMOS <span className="text-primary">CONVERSAR</span>
@@ -140,7 +141,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12 flex-grow">
           {/* Left Side - Contact Info */}
           <div className="space-y-8">
             {/* Social Links */}
@@ -307,6 +308,9 @@ const ContactSection = () => {
             </Card>
           </div>
         </div>
+
+        {/* Footer is now part of the last section */}
+        <Footer />
       </div>
     </section>
   );
