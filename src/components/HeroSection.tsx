@@ -31,12 +31,12 @@ const HeroSection = () => {
         <div className="flex flex-col lg:flex-row justify-between h-full min-h-screen pt-20">
           {/* Image Side - Left */}
           <div className="flex-1 flex justify-center lg:justify-start mb-12 lg:mb-0 order-1 lg:order-1 lg:self-end">
-            <div className="relative h-full w-full max-w-lg min-h-[400px]">
-              <div className="absolute inset-0 bg-gradient-primary rounded-2xl blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
+            <div className="relative h-full w-full max-w-xl min-h-[520px]">
+              <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
               <img
                 src={amaroPortrait}
                 alt="Amaro Netto - Profissional de TI e Designer"
-                className="relative w-full h-full object-cover rounded-2xl object-top"
+                className="relative w-full h-full object-cover object-top"
                 loading="eager"
               />
             </div>
