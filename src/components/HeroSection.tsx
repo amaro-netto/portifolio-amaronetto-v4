@@ -28,10 +28,10 @@ const HeroSection = () => {
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
       
       <div className="relative container mx-auto px-4 h-full">
-        <div className="flex flex-col lg:flex-row items-center justify-between h-full min-h-screen py-20">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between h-full min-h-screen pt-20 pb-12">
           {/* Image Side - Left */}
-          <div className="flex-1 flex justify-center lg:justify-center mb-12 lg:mb-0 lg:pr-12 order-1 lg:order-1 self-stretch">
-            <div className="relative h-full w-full max-w-md min-h-[400px] lg:min-h-0">
+          <div className="flex-1 flex justify-center lg:justify-start mb-12 lg:mb-0 order-1 lg:order-1 self-stretch">
+            <div className="relative h-full w-full max-w-lg min-h-[400px] lg:min-h-0">
               <div className="absolute inset-0 bg-gradient-primary rounded-2xl blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
               <img
                 src={amaroPortrait}
