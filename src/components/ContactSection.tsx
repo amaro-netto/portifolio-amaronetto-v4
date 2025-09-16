@@ -17,7 +17,6 @@ import {
   MapPin,
   Phone
 } from 'lucide-react';
-import Footer from './Footer';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -131,7 +130,7 @@ const ContactSection = () => {
 
   return (
     <section id="contato" className="section-snap bg-background">
-      <div className="container mx-auto px-4 pt-20 h-full flex flex-col">
+      <div className="container mx-auto px-4 py-20 h-full">
         <div className="text-left mb-12">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             VAMOS <span className="text-primary">CONVERSAR</span>
@@ -141,7 +140,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 flex-grow">
+        <div className="grid lg:grid-cols-2 gap-12">
           {/* Left Side - Contact Info */}
           <div className="space-y-8">
             {/* Social Links */}
@@ -308,9 +307,6 @@ const ContactSection = () => {
             </Card>
           </div>
         </div>
-
-        {/* Footer is now part of the last section */}
-        <Footer />
       </div>
     </section>
   );
