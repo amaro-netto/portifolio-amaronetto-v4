@@ -10,6 +10,7 @@ import {
   Mail, 
   Instagram, 
   Github, 
+  Linkedin,
   Calendar,
   Clock,
   CheckCircle,
@@ -120,6 +121,13 @@ const ContactSection = () => {
       color: 'text-foreground'
     },
     {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      value: '/in/amarosilvanetto',
+      url: 'https://linkedin.com/in/amarosilvanetto',
+      color: 'text-sky-600'
+    },
+    {
       icon: Calendar,
       label: 'Agenda',
       value: 'Agendar Reunião',
@@ -177,12 +185,12 @@ const ContactSection = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Seg - Sex</span>
-                  <span className="text-sm font-medium">9h às 18h</span>
+                  <span className="text-sm text-muted-foreground">Segunda a Sexta</span>
+                  <span className="text-sm font-medium">das 9h às 18h</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Sáb - Dom</span>
-                  <span className="text-sm font-medium">Sob agendamento</span>
+                  <span className="text-sm text-muted-foreground">Sábados e Domingos</span>
+                  <span className="text-sm font-medium">Somente Sob agendamento</span>
                 </div>
                 <div className="pt-2 border-t border-border">
                   <div className="flex items-center space-x-2 text-xs text-muted-foreground">
@@ -199,9 +207,9 @@ const ContactSection = () => {
                 <div className="flex items-center space-x-3">
                   <MapPin className="h-5 w-5 text-primary" />
                   <div>
-                    <div className="font-medium text-foreground">São Paulo, SP</div>
+                    <div className="font-medium text-foreground">Rio de Janeiro, RJ</div>
                     <div className="text-sm text-muted-foreground">
-                      Atendimento presencial na região metropolitana
+                      Atendimento presencial na região metropolitana e Interior.
                     </div>
                   </div>
                 </div>
