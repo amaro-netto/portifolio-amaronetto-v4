@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import logo from '@/assets/logo.svg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -69,16 +70,17 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {<./public/logo.png}
-          <div className="flex items-center">
-            <button
-              onClick={() => scrollToSection('inicio')}
-              className="font-display text-xl font-bold text-foreground transition-colors focus-ring rounded-lg px-2 py-1"
-              aria-label="Ir para o início"
-            >
+          {}
+          <button
+            onClick={() => scrollToSection('inicio')}
+            className="flex items-center gap-2 text-foreground transition-colors focus-ring rounded-lg px-2 py-1"
+            aria-label="Ir para o início"
+          >
+            <img src={logo} alt="Amaro Netto Logo" className="h-6 w-6 text-primary" />
+            <span className="font-display text-xl font-bold">
               Amaro <span className="text-primary">Netto</span>
-            </button>
-          </div>
+            </span>
+          </button>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
