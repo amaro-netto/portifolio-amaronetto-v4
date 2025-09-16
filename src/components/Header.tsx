@@ -70,7 +70,7 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {}
+          {/* Logo */}
           <button
             onClick={() => scrollToSection('inicio')}
             className="flex items-center gap-2 text-foreground transition-colors focus-ring rounded-lg px-2 py-1"
