@@ -137,24 +137,22 @@ const AboutSection = () => {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="text-lg font-medium text-foreground mb-4">Hard Skills</h4>
-                  <div className="space-y-3">
+                  <div className="flex flex-wrap gap-2">
                     {skills.hardSkills.map((skill) => (
-                      <div key={skill.name} className="flex items-center space-x-3 p-3 rounded-lg bg-card border border-border hover:shadow-md transition-shadow">
-                        <skill.icon className="h-5 w-5 text-primary flex-shrink-0" />
-                        <span className="text-sm font-medium">{skill.name}</span>
-                      </div>
+                      <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">
+                        {skill.name}
+                      </Badge>
                     ))}
                   </div>
                 </div>
 
                 <div>
                   <h4 className="text-lg font-medium text-foreground mb-4">Soft Skills</h4>
-                  <div className="space-y-3">
+                  <div className="flex flex-wrap gap-2">
                     {skills.softSkills.map((skill) => (
-                      <div key={skill.name} className="flex items-center space-x-3 p-3 rounded-lg bg-card border border-border hover:shadow-md transition-shadow">
-                        <skill.icon className="h-5 w-5 text-primary flex-shrink-0" />
-                        <span className="text-sm font-medium">{skill.name}</span>
-                      </div>
+                      <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">
+                        {skill.name}
+                      </Badge>
                     ))}
                   </div>
                 </div>
@@ -162,132 +160,109 @@ const AboutSection = () => {
             </div>
           </div>
 
-          {/* Right Column - Timeline */}
-          <div className="space-y-6">
-            <h3 className="font-display text-xl font-semibold text-foreground mb-6">
-              EXPERIÊNCIA PROFISSIONAL
-            </h3>
-            
-            <div className="relative pl-8">
-              {/* Timeline Line */}
-              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border"></div>
+            {/* Right Column - Timeline */}
+            <div className="space-y-6">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-6">
+                EXPERIÊNCIA PROFISSIONAL
+              </h3>
               
-              <div className="space-y-8">
-                {experiences.map((exp) => {
-                  const IconComponent = exp.icon;
-                  return (
-                    <Dialog key={exp.id}>
-                      <div className="relative">
-                        {/* Timeline Icon on Line */}
-                        <div className="absolute -left-2 top-6 w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md z-10">
-                          <IconComponent className="h-3 w-3 text-primary-foreground" />
+              <div className="relative flex">
+                {/* Vertical Timeline Line */}
+                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                
+                {/* Icons Column */}
+                <div className="flex flex-col space-y-8 mr-6">
+                  {experiences.map((exp, index) => {
+                    const IconComponent = exp.icon;
+                    return (
+                      <div key={`icon-${exp.id}`} className="relative z-10">
+                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md">
+                          <IconComponent className="h-4 w-4 text-primary-foreground" />
                         </div>
-                        
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                {/* Cards Column */}
+                <div className="flex flex-col space-y-8 flex-1">
+                  {experiences.map((exp, index) => {
+                    const IconComponent = exp.icon;
+                    return (
+                      <Dialog key={exp.id}>
                         <DialogTrigger asChild>
-                          <Card className="max-w-sm ml-8 cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
-                            <CardHeader className="pb-3">
-                              <div className="flex items-start justify-between">
-                                <div>
-                                  <CardTitle className="text-base font-semibold">
-                                    {exp.role}
-                                  </CardTitle>
-                                  <CardDescription className="text-sm">
-                                    {exp.company}
-                                  </CardDescription>
-                                </div>
-                                <Badge variant="outline" className="text-xs ml-2 flex-shrink-0">
+                          <Card className="cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
+                            <CardHeader className="pb-3 p-4">
+                              <div>
+                                <CardTitle className="text-lg font-semibold leading-tight mb-1">
+                                  {exp.role}
+                                </CardTitle>
+                                <CardDescription className="text-sm mb-2">
+                                  {exp.company}
+                                </CardDescription>
+                                <Badge variant="outline" className="text-sm">
                                   {exp.years}
                                 </Badge>
                               </div>
                             </CardHeader>
                           </Card>
                         </DialogTrigger>
-                      </div>
 
-                      <DialogContent className="max-w-2xl">
-                        <DialogHeader>
-                          <DialogTitle className="flex items-center space-x-2">
-                            <IconComponent className="h-5 w-5 text-primary" />
-                            <span>{exp.role}</span>
-                          </DialogTitle>
-                          <DialogDescription className="flex items-center space-x-4 text-sm">
-                            <span className="flex items-center space-x-1">
-                              <Building className="h-4 w-4" />
-                              <span>{exp.company}</span>
-                            </span>
-                            <span className="flex items-center space-x-1">
-                              <Calendar className="h-4 w-4" />
-                              <span>{exp.years}</span>
-                            </span>
-                          </DialogDescription>
-                        </DialogHeader>
-                        
-                        <div className="space-y-4">
-                          <p className="text-muted-foreground leading-relaxed">
-                            {exp.description}
-                          </p>
+                        <DialogContent className="max-w-2xl">
+                          <DialogHeader>
+                            <DialogTitle className="flex items-center space-x-2">
+                              <IconComponent className="h-5 w-5 text-primary" />
+                              <span>{exp.role}</span>
+                            </DialogTitle>
+                            <DialogDescription className="flex items-center space-x-4 text-sm">
+                              <span className="flex items-center space-x-1">
+                                <Building className="h-4 w-4" />
+                                <span>{exp.company}</span>
+                              </span>
+                              <span className="flex items-center space-x-1">
+                                <Calendar className="h-4 w-4" />
+                                <span>{exp.years}</span>
+                              </span>
+                            </DialogDescription>
+                          </DialogHeader>
                           
-                          <div>
-                            <h4 className="font-medium mb-2">Principais Conquistas:</h4>
-                            <ul className="space-y-1 text-sm text-muted-foreground">
-                              {exp.achievements.map((achievement, idx) => (
-                                <li key={idx} className="flex items-start space-x-2">
-                                  <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span>
-                                  <span>{achievement}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          
-                          <div>
-                            <h4 className="font-medium mb-2">Tecnologias:</h4>
-                            <div className="flex flex-wrap gap-1">
-                              {exp.technologies.map((tech) => (
-                                <Badge key={tech} variant="secondary" className="text-xs">
-                                  {tech}
-                                </Badge>
-                              ))}
+                          <div className="space-y-4">
+                            <p className="text-muted-foreground leading-relaxed">
+                              {exp.description}
+                            </p>
+                            
+                            <div>
+                              <h4 className="font-medium mb-2">Principais Conquistas:</h4>
+                              <ul className="space-y-1 text-sm text-muted-foreground">
+                                {exp.achievements.map((achievement, idx) => (
+                                  <li key={idx} className="flex items-start space-x-2">
+                                    <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span>
+                                    <span>{achievement}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            
+                            <div>
+                              <h4 className="font-medium mb-2">Tecnologias:</h4>
+                              <div className="flex flex-wrap gap-1">
+                                {exp.technologies.map((tech) => (
+                                  <Badge key={tech} variant="secondary" className="text-xs">
+                                    {tech}
+                                  </Badge>
+                                ))}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  );
-                })}
+                        </DialogContent>
+                      </Dialog>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
         </div>
 
-        {/* Learning Platforms */}
-        <div className="mt-16 pt-8 border-t border-border">
-          <div className="text-center mb-8">
-            <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-              APRENDIZADO CONTÍNUO
-            </h3>
-            <p className="text-muted-foreground">
-              Sempre em busca de conhecimento através das melhores plataformas
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            {learningPlatforms.map((platform) => (
-              <button
-                key={platform.name}
-                className="w-16 h-16 flex items-center justify-center bg-card border border-border rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer focus-ring"
-                onClick={() => window.open(platform.url, '_blank')}
-                aria-label={`Visitar ${platform.name}`}
-                title={platform.name}
-              >
-                <img 
-                  src="https://cursos.alura.com.br/assets/images/logos/logo-alura.svg" 
-                  alt={platform.name}
-                  className="w-8 h-8 object-contain"
-                />
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
