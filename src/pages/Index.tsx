@@ -4,7 +4,6 @@ import AboutSection from '@/components/AboutSection';
 import PortfolioSection from '@/components/PortfolioSection';
 import CollaboratorsSection from '@/components/CollaboratorsSection';
 import ContactSection from '@/components/ContactSection';
-import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
