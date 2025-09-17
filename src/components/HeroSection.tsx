@@ -62,8 +62,7 @@ const HeroSection = () => {
                 </Button>
                 <Button
                   onClick={() => scrollToSection('contato')}
-                  variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
+                  className="bg-primary hover:bg-primary-hover text-primary-foreground shadow-tech transition-all duration-300 hover:shadow-glow transform hover:-translate-y-1"
                   size="lg"
                 >
                   Contate-me

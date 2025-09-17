@@ -189,7 +189,7 @@ const PortfolioSection = () => {
                 onClick={() => openProject(project.id)}
               >
                 <CardContent className="p-0 h-full flex flex-col">
-                  <div className="relative overflow-hidden rounded-t-lg flex-[2]">
+                  <div className="relative overflow-hidden rounded-t-lg h-3/4">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -197,7 +197,7 @@ const PortfolioSection = () => {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <div className="absolute bottom-3 left-3 right-3 text-white">
                         <div className="flex items-center space-x-2">
                           <Eye className="h-4 w-4" />
                           <span className="text-sm font-medium">Ver Detalhes</span>
@@ -206,29 +206,20 @@ const PortfolioSection = () => {
                     </div>
                   </div>
                   
-                  <div className="p-4 flex-1 flex flex-col justify-between">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge variant="outline" className="text-xs">
-                        {project.type}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {project.year}
-                      </span>
-                    </div>
-                    
-                    <h3 className="font-semibold text-base text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                  <div className="p-4 h-1/4 flex flex-col justify-center">
+                    <h3 className="font-semibold text-sm text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">
                       {project.title}
                     </h3>
                     
                     <div className="flex flex-wrap gap-1">
-                      {project.tags.slice(0, 3).map((tag) => (
+                      {project.tags.slice(0, 2).map((tag) => (
                         <Badge key={tag} variant="secondary" className="text-xs">
                           {tag}
                         </Badge>
                       ))}
-                      {project.tags.length > 3 && (
+                      {project.tags.length > 2 && (
                         <Badge variant="secondary" className="text-xs">
-                          +{project.tags.length - 3}
+                          +{project.tags.length - 2}
                         </Badge>
                       )}
                     </div>

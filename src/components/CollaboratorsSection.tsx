@@ -175,8 +175,8 @@ const CollaboratorsSection = () => {
                   <Card className="absolute inset-0 w-full h-full backface-hidden border-0 bg-card/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
                     <CardContent className="p-0 h-full">
                       <div className="flex flex-col h-full">
-                        {/* Image */}
-                        <div className="relative h-56 overflow-hidden rounded-t-lg">
+                        {/* Image - 3/4 of card */}
+                        <div className="relative h-3/4 overflow-hidden rounded-t-lg">
                           <img
                             src={collaborator.image}
                             alt={collaborator.name}
@@ -186,28 +186,15 @@ const CollaboratorsSection = () => {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         </div>
                         
-                        {/* Content */}
-                        <div className="flex-1 p-6 flex flex-col justify-between">
-                          <div>
-                            <h3 className="font-semibold text-xl text-foreground mb-1">
-                              {collaborator.name}
-                            </h3>
-                            <p className="text-primary font-medium mb-2">
-                              {collaborator.subtitle}
-                            </p>
-                            <div className="flex items-center text-sm text-muted-foreground mb-3">
-                              <Building className="h-4 w-4 mr-1" />
-                              {collaborator.company}
-                            </div>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              {collaborator.description}
-                            </p>
-                          </div>
-                          
-                          <div className="mt-4 pt-4 border-t border-border">
-                            <p className="text-xs text-center text-muted-foreground">
-                              Clique para ver mais detalhes
-                            </p>
+                        {/* Content - 1/4 of card */}
+                        <div className="h-1/4 p-4 flex flex-col justify-center">
+                          <h3 className="font-semibold text-lg text-foreground mb-1">
+                            {collaborator.name}
+                          </h3>
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <span className="text-primary font-medium">{collaborator.subtitle}</span>
+                            <span className="mx-2">•</span>
+                            <span>{collaborator.company}</span>
                           </div>
                         </div>
                       </div>
@@ -217,17 +204,25 @@ const CollaboratorsSection = () => {
                   {/* Back Card */}
                   <Card className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 border-0 bg-primary/5 backdrop-blur-sm">
                     <CardContent className="p-6 h-full flex flex-col">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg text-foreground mb-2">
-                          Nossa Colaboração
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                          {collaborator.collaboration}
-                        </p>
+                      <div className="flex-1 space-y-4">
+                        <div>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {collaborator.description}
+                          </p>
+                        </div>
                         
-                        <div className="mb-4">
-                          <h4 className="font-medium text-sm text-foreground mb-2">
-                            Especialidades:
+                        <div>
+                          <h4 className="font-semibold text-sm text-foreground mb-2">
+                            Nossa Colaboração
+                          </h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {collaborator.collaboration}
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-semibold text-sm text-foreground mb-2">
+                            Especialidades
                           </h4>
                           <p className="text-xs text-muted-foreground">
                             {collaborator.expertise}
@@ -237,33 +232,31 @@ const CollaboratorsSection = () => {
                       
                       {/* Social Links */}
                       <div className="border-t border-border pt-4">
-                        <h4 className="font-medium text-sm text-foreground mb-3 text-center">
-                          Conectar-se
-                        </h4>
-                        <div className="flex justify-center space-x-3">
+                        <div className="flex items-center justify-center space-x-3">
+                          <span className="text-sm font-medium text-foreground">Contactar</span>
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={(e) => openSocialLink(collaborator.social.instagram, e)}
-                            className="p-2"
+                            className="p-1.5"
                           >
-                            <Instagram className="h-4 w-4" />
+                            <Instagram className="h-3 w-3" />
                           </Button>
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={(e) => openSocialLink(collaborator.social.whatsapp, e)}
-                            className="p-2"
+                            className="p-1.5"
                           >
-                            <MessageCircle className="h-4 w-4" />
+                            <MessageCircle className="h-3 w-3" />
                           </Button>
                           <Button
                             variant="outline"
                             size="sm"
                             onClick={(e) => openSocialLink(`mailto:${collaborator.social.email}`, e)}
-                            className="p-2"
+                            className="p-1.5"
                           >
-                            <Mail className="h-4 w-4" />
+                            <Mail className="h-3 w-3" />
                           </Button>
                         </div>
                       </div>

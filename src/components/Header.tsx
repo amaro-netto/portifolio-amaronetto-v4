@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/logo.svg';
+import logoDark from '@/assets/logodark.svg';
+import logoLight from '@/assets/logolight.svg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -73,36 +74,22 @@ const Header = () => {
           {/* Logo */}
           <button
             onClick={() => scrollToSection('inicio')}
-            className="flex items-center gap-2 text-foreground transition-colors focus-ring rounded-lg px-2 py-1"
+            className="flex items-center gap-2 text-foreground transition-colors rounded-lg"
             aria-label="Ir para o início"
           >
-            <img src={logo} alt="Amaro Netto Logo" className="h-6 w-6 text-primary" />
-            <span className="font-display text-xl font-bold">
+            <img src={isDark ? logoLight : logoDark} alt="Amaro Netto Logo" className="h-6 w-6" />
+            <span className="font-display text-xl font-bold text-foreground">
               Amaro <span className="text-primary">Netto</span>
             </span>
           </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-lg group"
-              >
-                {item.label}
-                <span className="absolute bottom-1 left-1/2 w-0 h-0.5 bg-primary transform -translate-x-1/2 transition-all duration-300 group-hover:w-6"></span>
-              </button>
-            ))}
-          </div>
-
-          {/* Theme Toggle & Mobile Menu */}
-          <div className="flex items-center space-x-2">
+          {/* Theme Toggle - Center */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 md:static md:left-auto md:transform-none">
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleTheme}
-              className="focus-ring"
+              className="text-foreground hover:bg-muted"
               aria-label={isDark ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
             >
               {isDark ? (
@@ -111,6 +98,23 @@ const Header = () => {
                 <Moon className="h-4 w-4" />
               )}
             </Button>
+          </div>
+
+          {/* Desktop Navigation & Mobile Menu */}
+          <div className="flex items-center space-x-2">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
+                >
+                  {item.label}
+                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transform -translate-x-1/2 transition-all duration-300 group-hover:w-6"></span>
+                </button>
+              ))}
+            </div>
 
             {/* Mobile Menu Button */}
             <Button

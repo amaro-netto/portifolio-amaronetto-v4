@@ -9,8 +9,26 @@ const AboutSection = () => {
   const [selectedExperience, setSelectedExperience] = useState<number | null>(null);
 
   const skills = {
-    technical: ['React & Next.js', 'TypeScript'],
-    soft: ['Liderança de Projetos', 'Comunicação']
+    hardSkills: [
+      { name: 'React & Next.js', icon: Code },
+      { name: 'TypeScript', icon: Code },
+      { name: 'Node.js & APIs', icon: Network },
+      { name: 'PostgreSQL & MongoDB', icon: Shield },
+      { name: 'AWS & Docker', icon: Network },
+      { name: 'Git & CI/CD', icon: Code },
+      { name: 'Figma & Adobe CC', icon: Palette },
+      { name: 'Linux & Windows Server', icon: Shield }
+    ],
+    softSkills: [
+      { name: 'Liderança de Equipes', icon: Code },
+      { name: 'Comunicação Assertiva', icon: Palette },
+      { name: 'Gestão de Projetos', icon: Network },
+      { name: 'Resolução de Problemas', icon: Shield },
+      { name: 'Pensamento Analítico', icon: Code },
+      { name: 'Trabalho em Equipe', icon: Palette },
+      { name: 'Adaptabilidade', icon: Network },
+      { name: 'Mentoria & Ensino', icon: Shield }
+    ]
   };
 
   const experiences = [
@@ -99,12 +117,12 @@ const AboutSection = () => {
               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
                 MINHA <span className="text-primary">JORNADA</span>
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-lg mb-8">
+              <p className="text-muted-foreground leading-relaxed text-lg mb-8 text-justify">
                 Com mais de 8 anos de experiência em tecnologia, construí uma carreira sólida 
                 combinando desenvolvimento, design e liderança técnica. Minha paixão é 
                 transformar desafios complexos em soluções elegantes que geram impacto real.
               </p>
-              <p className="text-muted-foreground leading-relaxed text-lg mb-8">
+              <p className="text-muted-foreground leading-relaxed text-lg mb-8 text-justify [text-align-last:left]">
                 Especializo-me em criar experiências digitais que não apenas funcionam perfeitamente, 
                 mas também encantam os usuários. Acredito que a tecnologia deve ser uma ponte 
                 entre pessoas e possibilidades.
@@ -112,29 +130,31 @@ const AboutSection = () => {
             </div>
 
             <div>
-              <h3 className="font-display text-xl font-semibold text-foreground mb-4">
+              <h3 className="font-display text-xl font-semibold text-foreground mb-6">
                 HABILIDADES
               </h3>
               
-              <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Hard Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.technical.map((skill) => (
-                      <Badge key={skill} variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer">
-                        {skill}
-                      </Badge>
+                  <h4 className="text-lg font-medium text-foreground mb-4">Hard Skills</h4>
+                  <div className="space-y-3">
+                    {skills.hardSkills.map((skill) => (
+                      <div key={skill.name} className="flex items-center space-x-3 p-3 rounded-lg bg-card border border-border hover:shadow-md transition-shadow">
+                        <skill.icon className="h-5 w-5 text-primary flex-shrink-0" />
+                        <span className="text-sm font-medium">{skill.name}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Soft Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.soft.map((skill) => (
-                      <Badge key={skill} className="bg-muted hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer">
-                        {skill}
-                      </Badge>
+                  <h4 className="text-lg font-medium text-foreground mb-4">Soft Skills</h4>
+                  <div className="space-y-3">
+                    {skills.softSkills.map((skill) => (
+                      <div key={skill.name} className="flex items-center space-x-3 p-3 rounded-lg bg-card border border-border hover:shadow-md transition-shadow">
+                        <skill.icon className="h-5 w-5 text-primary flex-shrink-0" />
+                        <span className="text-sm font-medium">{skill.name}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -150,23 +170,23 @@ const AboutSection = () => {
             
             <div className="relative pl-8">
               {/* Timeline Line */}
-              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-border"></div>
+              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border"></div>
               
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {experiences.map((exp) => {
                   const IconComponent = exp.icon;
                   return (
                     <Dialog key={exp.id}>
-                      <div className="relative flex items-start space-x-4">
-                        {/* External Icon */}
-                        <div className="absolute -left-[30px] top-1 flex-shrink-0 p-2 rounded-lg bg-primary/10 text-primary">
-                          <IconComponent className="h-4 w-4" />
+                      <div className="relative">
+                        {/* Timeline Icon on Line */}
+                        <div className="absolute -left-2 top-6 w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md z-10">
+                          <IconComponent className="h-3 w-3 text-primary-foreground" />
                         </div>
                         
                         <DialogTrigger asChild>
-                          <Card className="w-full cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
+                          <Card className="max-w-sm ml-8 cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
                             <CardHeader className="pb-3">
-                              <div className="flex items-center justify-between">
+                              <div className="flex items-start justify-between">
                                 <div>
                                   <CardTitle className="text-base font-semibold">
                                     {exp.role}
@@ -175,16 +195,13 @@ const AboutSection = () => {
                                     {exp.company}
                                   </CardDescription>
                                 </div>
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs ml-2 flex-shrink-0">
                                   {exp.years}
                                 </Badge>
                               </div>
                             </CardHeader>
                           </Card>
                         </DialogTrigger>
-
-                        {/* Timeline Dot */}
-                        <div className="absolute -left-[34px] top-6 w-4 h-4 bg-primary rounded-full border-4 border-background shadow-sm"></div>
                       </div>
 
                       <DialogContent className="max-w-2xl">
@@ -262,7 +279,11 @@ const AboutSection = () => {
                 aria-label={`Visitar ${platform.name}`}
                 title={platform.name}
               >
-                <span className="text-2xl">{platform.icon}</span>
+                <img 
+                  src="https://cursos.alura.com.br/assets/images/logos/logo-alura.svg" 
+                  alt={platform.name}
+                  className="w-8 h-8 object-contain"
+                />
               </button>
             ))}
           </div>

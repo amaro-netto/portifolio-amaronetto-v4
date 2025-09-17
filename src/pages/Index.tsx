@@ -18,8 +18,6 @@ const Index = () => {
         <CollaboratorsSection />
         <ContactSection />
       </main>
-      
-      <Footer />
     </div>
   );
 };

@@ -315,6 +315,15 @@ const ContactSection = () => {
             </Card>
           </div>
         </div>
+
+        {/* Simple Footer */}
+        <footer className="mt-16 pt-4 pb-4 border-t-[5px] border-b-[5px] border-border">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              © 2025 Amaro Netto Portfólio. Todos os direitos reservados.
+            </p>
+          </div>
+        </footer>
       </div>
     </section>
   );
