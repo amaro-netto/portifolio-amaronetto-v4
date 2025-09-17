@@ -192,9 +192,14 @@ const CollaboratorsSection = () => {
                             {collaborator.name}
                           </h3>
                           <div className="flex items-center text-sm text-muted-foreground">
-                            <span className="text-primary font-medium">{collaborator.subtitle}</span>
-                            <span className="mx-2">•</span>
-                            <span>{collaborator.company}</span>
+                            <p className="text-primary font-medium mb-2">
+                              {collaborator.subtitle}
+                            </p>
+                            <span className="mx-2 mb-2">|</span>
+                            <div className="flex items-center text-sm text-muted-foreground mb-2">
+                              <Building className="h-4 w-4 mr-1" />
+                              {collaborator.company}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -206,6 +211,9 @@ const CollaboratorsSection = () => {
                     <CardContent className="p-6 h-full flex flex-col">
                       <div className="flex-1 space-y-4">
                         <div>
+                          <h4 className="font-semibold text-sm text-foreground mb-2">
+                            Sobre o Colaborador
+                          </h4>
                           <p className="text-sm text-muted-foreground leading-relaxed">
                             {collaborator.description}
                           </p>
