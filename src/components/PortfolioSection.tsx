@@ -185,7 +185,7 @@ const PortfolioSection = () => {
             {visibleProjects.map((project) => (
               <Card 
                 key={project.id}
-                className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-card/50 backdrop-blur-sm aspect-square flex flex-col"
+                className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-secondary backdrop-blur-sm aspect-square flex flex-col"
                 onClick={() => openProject(project.id)}
               >
                 <CardContent className="p-0 h-full flex flex-col">
@@ -207,22 +207,18 @@ const PortfolioSection = () => {
                   </div>
                   
                   <div className="p-4 h-1/4 flex flex-col justify-center">
-                    <h3 className="font-semibold text-sm text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">
-                      {project.title}
-                    </h3>
-                    
-                    <div className="flex flex-wrap gap-1">
-                      {project.tags.slice(0, 2).map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                      {project.tags.length > 2 && (
-                        <Badge variant="secondary" className="text-xs">
-                          +{project.tags.length - 2}
-                        </Badge>
-                      )}
+                  <div className="flex items-center justify-between mb-2">
+                      <Badge variant="outline" className="text-xs text-blue-500 border-white/30">
+                        {project.type}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {project.year}
+                      </span>
                     </div>
+                    
+                    <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">
+                      {project.title}
+                    </h3>                    
                   </div>
                 </CardContent>
               </Card>
