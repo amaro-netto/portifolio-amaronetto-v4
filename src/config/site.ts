@@ -16,12 +16,7 @@ export const siteConfig = {
   },
   admin: {
     // This will be configurable after Supabase connection
-    secretPath: "/admin007",
-    defaultCredentials: {
-      // Will be replaced with Supabase auth
-      username: "admin",
-      password: "change-me-after-deploy"
-    }
+    secretPath: "/admin",
   }
 };
 
