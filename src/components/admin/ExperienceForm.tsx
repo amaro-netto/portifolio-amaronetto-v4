@@ -91,8 +91,8 @@ export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToE
             <FormLabel>Ícone</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl><SelectTrigger><SelectValue placeholder="Selecione um ícone para a timeline" /></SelectTrigger></FormControl>
-              {/* CORREÇÃO 1: Adicionada a classe bg-popover para dar um fundo sólido */}
-              <SelectContent className="bg-popover">
+              {/* CORREÇÃO 2: Usando uma cor sólida diretamente */}
+                <SelectContent className="bg-white dark:bg-slate-900">
                 {/* CORREÇÃO 2: Adicionados mais ícones */}
                 <SelectItem value="Code">TI: Desenvolvimento</SelectItem>
                 <SelectItem value="Database">TI: Banco de Dados</SelectItem>
