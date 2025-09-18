@@ -1,260 +1,53 @@
+// src/components/PortfolioSection.tsx (versão final completa com duas imagens)
+
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ChevronLeft, ChevronRight, ExternalLink, Github, Eye } from 'lucide-react';
-import project1 from '@/assets/project-1.webp';
-import project2 from '@/assets/project-2.webp';
-import project3 from '@/assets/project-3.webp';
+
+// Função para buscar os projetos no Supabase
+const fetchProjects = async () => {
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .order('created_at', { ascending: false });
+    
+  if (error) throw new Error(error.message);
+  return data;
+};
 
 const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
 
-  const projects = [
-    {
-      id: 1,
-      title: 'Dashboard Analytics Pro',
-      image: project1,
-      tags: ['React', 'TypeScript', 'D3.js', 'Node.js'],
-      type: 'Web Application',
-      year: '2024',
-      description: 'Plataforma completa de analytics com visualizações de dados em tempo real. Sistema desenvolvido para grandes empresas que precisam monitorar KPIs críticos e tomar decisões baseadas em dados. Inclui dashboards personalizáveis, relatórios automatizados e integração com múltiplas fontes de dados.',
-      features: [
-        'Dashboard em tempo real com WebSocket',
-        'Visualizações interativas com D3.js',
-        'Sistema de alertas personalizáveis',
-        'Exportação de relatórios em PDF/Excel',
-        'API REST completa e documentada',
-        'Autenticação OAuth2 e controle de acesso'
-      ],
-      projectUrl: 'https://dashboard-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/dashboard-pro',
-      status: 'live'
-    },
-    {
-      id: 2,
-      title: 'E-commerce Mobile App',
-      image: project2,
-      tags: ['React Native', 'Redux', 'Firebase', 'Stripe'],
-      type: 'Mobile Application',
-      year: '2024',
-      description: 'Aplicativo móvel de e-commerce completo com experiência de usuário excepcional. Desenvolvido com foco em performance e conversão, inclui recursos avançados como recomendações personalizadas, chat em tempo real e sistema de pagamentos integrado.',
-      features: [
-        'Interface nativa para iOS e Android',
-        'Carrinho de compras offline-first',
-        'Integração completa com Stripe',
-        'Push notifications personalizadas',
-        'Sistema de reviews e avaliações',
-        'Rastreamento de entregas em tempo real'
-      ],
-      projectUrl: 'https://app.store/ecommerce-app',
-      codeUrl: 'https://github.com/amaronetto/ecommerce-mobile',
-      status: 'live'
-    },
-    {
-      id: 3,
-      title: 'Corporate Branding System',
-      image: project3,
-      tags: ['Adobe CC', 'Figma', 'Brand Design', 'Print'],
-      type: 'Brand Identity',
-      year: '2023',
-      description: 'Sistema completo de identidade visual para empresa multinacional. Projeto que envolveu desde a criação do logo até a aplicação em todos os materiais corporativos. Desenvolvido com foco na consistência da marca em todos os pontos de contato.',
-      features: [
-        'Logo e identidade visual completa',
-        'Manual de marca de 80+ páginas',
-        'Templates para materiais impressos',
-        'Iconografia personalizada',
-        'Paleta de cores estratégica',
-        'Aplicação em materiais digitais'
-      ],
-      projectUrl: 'https://behance.net/amaronetto/corporate',
-      codeUrl: 'https://behance.net/amaronetto/brand-system',
-      status: 'live'
-    },
-    // Add more projects for demonstration
-    {
-      id: 4,
-      title: 'SaaS Platform Architecture',
-      image: project1,
-      tags: ['Next.js', 'PostgreSQL', 'AWS', 'Docker'],
-      type: 'Full-Stack Platform',
-      year: '2023',
-      description: 'Arquitetura completa de plataforma SaaS escalável para gerenciamento de projetos. Sistema multi-tenant com alta disponibilidade e performance otimizada para grandes volumes de dados.',
-      features: [
-        'Arquitetura multi-tenant',
-        'Auto-scaling com AWS',
-        'CI/CD pipeline completo',
-        'Monitoramento e alertas',
-        'API GraphQL performática',
-        'Backup automatizado'
-      ],
-      projectUrl: 'https://saas-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/saas-platform',
-      status: 'live'
-    },
-    {
-      id: 5,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-        {
-      id: 6,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-        {
-      id: 7,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-        {
-      id: 8,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-        {
-      id: 9,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-        {
-      id: 10,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-        {
-      id: 11,
-      title: 'AI-Powered Chat Bot',
-      image: project2,
-      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
-      type: 'AI Application',
-      year: '2023',
-      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
-      features: [
-        'NLP avançado para PT/EN',
-        'Integração com ChatGPT API',
-        'Dashboard de analytics',
-        'Treinamento personalizado',
-        'WebSocket para tempo real',
-        'Integração com CRM'
-      ],
-      projectUrl: 'https://chatbot-demo.amaronetto.dev',
-      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
-      status: 'live'
-    },
-
-  ];
-
+  const { data: projects, isLoading, error } = useQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+  });
+  
   const itemsPerPage = 3;
-  const totalPages = Math.ceil(projects.length / itemsPerPage);
+  // Garante que o cálculo só é feito quando 'projects' já foi carregado
+  const totalPages = projects ? Math.ceil(projects.length / itemsPerPage) : 0;
   const startIndex = currentIndex * itemsPerPage;
-  const visibleProjects = projects.slice(startIndex, startIndex + itemsPerPage);
-
+  const visibleProjects = projects ? projects.slice(startIndex, startIndex + itemsPerPage) : [];
+  
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalPages);
+    if (totalPages > 0) {
+      setCurrentIndex((prev) => (prev + 1) % totalPages);
+    }
   };
-
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+    if (totalPages > 0) {
+      setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+    }
   };
-
-  const openProject = (projectId: number) => {
-    setSelectedProject(projectId);
-  };
-
-  const selectedProjectData = projects.find(p => p.id === selectedProject);
+  
+  const selectedProjectData = projects?.find(p => p.id === selectedProject);
 
   return (
     <section id="portfolio" className="section-snap bg-muted/30">
@@ -263,56 +56,53 @@ const PortfolioSection = () => {
           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
             MEU <span className="text-primary">PORTFÓLIO</span>
           </h2>
-          <p className="text-muted-foreground text-lg whitespace-nowrap overflow-hidden text-ellipsis">
-            Aqui estão alguns dos projetos destacados que desenvolvi, desde aplicações web complexas até sistemas de identidade visual completos.
+          <p className="text-muted-foreground text-lg">
+            Aqui estão alguns dos projetos que desenvolvi, desde aplicações web complexas até sistemas de identidade visual.
           </p>
         </div>
 
-        {/* Projects Carousel */}
         <div className="relative">
-          {/* Navigation Buttons */}
+          {/* Navegação do Carrossel */}
           <div className="flex items-center justify-between mb-8">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={goToPrev}
-              disabled={totalPages <= 1}
-              className="focus-ring"
-            >
-              <ChevronLeft className="h-4 w-4 mr-1" />
-              Anterior
+            <Button variant="outline" size="sm" onClick={goToPrev} disabled={totalPages <= 1} className="focus-ring">
+              <ChevronLeft className="h-4 w-4 mr-1" /> Anterior
             </Button>
-            
             <div className="text-sm text-muted-foreground">
-              <span className="font-medium">
-                {String(currentIndex + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
-              </span>
+              <span className="font-medium">{String(currentIndex + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}</span>
             </div>
-            
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={goToNext}
-              disabled={totalPages <= 1}
-              className="focus-ring"
-            >
-              Próximo
-              <ChevronRight className="h-4 w-4 ml-1" />
+            <Button variant="outline" size="sm" onClick={goToNext} disabled={totalPages <= 1} className="focus-ring">
+              Próximo <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </div>
 
-          {/* Projects Grid */}
+          {/* Grid de Projetos */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
-            {visibleProjects.map((project) => (
+            {isLoading && (
+              // Efeito de "skeleton" enquanto os dados carregam
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="space-y-2">
+                  <Skeleton className="aspect-square w-full" />
+                  <div className="p-4 space-y-2">
+                    <Skeleton className="h-4 w-1/4" />
+                    <Skeleton className="h-6 w-3/4" />
+                  </div>
+                </div>
+              ))
+            )}
+
+            {error && <p className="col-span-3 text-center text-destructive">Não foi possível carregar os projetos.</p>}
+            
+            {visibleProjects && visibleProjects.map((project) => (
               <Card 
                 key={project.id}
                 className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-secondary backdrop-blur-sm aspect-square flex flex-col"
-                onClick={() => openProject(project.id)}
+                onClick={() => setSelectedProject(project.id)}
               >
                 <CardContent className="p-0 h-full flex flex-col">
                   <div className="relative overflow-hidden rounded-t-lg h-3/4">
+                    {/* IMAGEM 1: Usando a imagem do card */}
                     <img
-                      src={project.image}
+                      src={project.image_card_url} 
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       loading="lazy"
@@ -326,27 +116,19 @@ const PortfolioSection = () => {
                       </div>
                     </div>
                   </div>
-                  
                   <div className="p-4 h-1/4 flex flex-col justify-center">
-                  <div className="flex items-center justify-between mb-2">
-                      <Badge variant="outline" className="text-xs text-blue-500 border-white/30">
-                        {project.type}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {project.year}
-                      </span>
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant="outline" className="text-xs text-blue-500 border-white/30">{project.type}</Badge>
+                      <span className="text-xs text-muted-foreground">{project.year}</span>
                     </div>
-                    
-                    <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">
-                      {project.title}
-                    </h3>                    
+                    <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">{project.title}</h3>                    
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          {/* Pagination Dots */}
+          {/* Paginação */}
           <div className="flex justify-center mt-8 space-x-2">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
@@ -361,52 +143,37 @@ const PortfolioSection = () => {
           </div>
         </div>
 
-        {/* Project Detail Modal */}
+        {/* Modal (Dialog) para Detalhes do Projeto */}
         {selectedProjectData && (
           <Dialog open={selectedProject !== null} onOpenChange={() => setSelectedProject(null)}>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-bold">
-                  {selectedProjectData.title}
-                </DialogTitle>
+                <DialogTitle className="text-2xl font-bold">{selectedProjectData.title}</DialogTitle>
                 <DialogDescription className="flex items-center space-x-4 text-base">
                   <Badge>{selectedProjectData.type}</Badge>
                   <span>{selectedProjectData.year}</span>
                 </DialogDescription>
               </DialogHeader>
-              
               <div className="space-y-6">
-                {/* Project Image */}
                 <div className="relative rounded-lg overflow-hidden">
+                  {/* IMAGEM 2: Usando a imagem do modal, com fallback para a imagem do card */}
                   <img
-                    src={selectedProjectData.image}
+                    src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url}
                     alt={selectedProjectData.title}
                     className="w-full h-64 md:h-80 object-cover"
                   />
                 </div>
-                
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2">
-                  {selectedProjectData.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                    </Badge>
-                  ))}
+                  {selectedProjectData.tags?.map((tag: string) => <Badge key={tag} variant="secondary">{tag}</Badge>)}
                 </div>
-                
-                {/* About the Project */}
                 <div>
                   <h3 className="font-semibold text-lg mb-3">Sobre o Projeto</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {selectedProjectData.description}
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed">{selectedProjectData.description}</p>
                 </div>
-                
-                {/* Features */}
                 <div>
                   <h3 className="font-semibold text-lg mb-3">Principais Funcionalidades</h3>
                   <ul className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                    {selectedProjectData.features.map((feature, idx) => (
+                    {selectedProjectData.features?.map((feature: string, idx: number) => (
                       <li key={idx} className="flex items-start space-x-2">
                         <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current flex-shrink-0"></span>
                         <span>{feature}</span>
@@ -414,23 +181,12 @@ const PortfolioSection = () => {
                     ))}
                   </ul>
                 </div>
-                
-                {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-                  <Button
-                    onClick={() => window.open(selectedProjectData.projectUrl, '_blank')}
-                    className="flex-1"
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Ver Projeto
+                  <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="flex-1">
+                    <ExternalLink className="h-4 w-4 mr-2" /> Ver Projeto
                   </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => window.open(selectedProjectData.codeUrl, '_blank')}
-                    className="flex-1"
-                  >
-                    <Github className="h-4 w-4 mr-2" />
-                    Ver Código
+                  <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="flex-1">
+                    <Github className="h-4 w-4 mr-2" /> Ver Código
                   </Button>
                 </div>
               </div>
