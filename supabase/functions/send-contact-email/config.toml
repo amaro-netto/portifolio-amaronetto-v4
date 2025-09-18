@@ -1,0 +1,2 @@
+[functions.send-contact-email]
+timeout_sec = 10
