@@ -101,7 +101,7 @@ const StudyProfileSection = () => {
           {/* Right Column - Photo */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform -rotate-6 scale-105"></div>
+              <div className="absolute inset-0 bg-gradient-primary blur-3xl opacity-20 transform scale-100"></div>
               
               <div className="relative w-80 h-[480px] lg:w-96 lg:h-full overflow-hidden">
                 <img 
