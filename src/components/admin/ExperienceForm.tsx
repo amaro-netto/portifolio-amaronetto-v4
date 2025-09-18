@@ -1,4 +1,4 @@
-// src/components/admin/ExperienceForm.tsx
+// src/components/admin/ExperienceForm.tsx (versão final e completa)
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
@@ -22,7 +22,7 @@ const experienceSchema = z.object({
   icon: z.string({ required_error: "Selecione um ícone." }),
 });
 
-// Converte uma string com quebras de linha em um array
+// Converte uma string com quebras de linha em um array de strings
 const stringToArrayByNewline = (str: string | undefined) => str ? str.split('\n').map(item => item.trim()).filter(Boolean) : [];
 
 export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToEdit?: any, onFinished: () => void }) {
@@ -92,10 +92,13 @@ export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToE
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl><SelectTrigger><SelectValue placeholder="Selecione um ícone para a timeline" /></SelectTrigger></FormControl>
               <SelectContent>
-                <SelectItem value="Code">Código (Desenvolvimento)</SelectItem>
-                <SelectItem value="Network">Rede (Infra/DevOps)</SelectItem>
-                <SelectItem value="Palette">Paleta (Design)</SelectItem>
-                <SelectItem value="Shield">Escudo (TI/Segurança)</SelectItem>
+                <SelectItem value="Code">Desenvolvimento (Código)</SelectItem>
+                <SelectItem value="PenTool">Design (Ferramenta de Caneta)</SelectItem>
+                <SelectItem value="Palette">Design (Paleta de Cores)</SelectItem>
+                <SelectItem value="Megaphone">Marketing (Megafone)</SelectItem>
+                <SelectItem value="Network">Infra/DevOps (Rede)</SelectItem>
+                <SelectItem value="Shield">Segurança (Escudo)</SelectItem>
+                <SelectItem value="LifeBuoy">Suporte (Bóia)</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
@@ -106,14 +109,14 @@ export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToE
         )} />
         <FormField control={form.control} name="achievements" render={({ field }) => (
           <FormItem>
-            <FormLabel>Principais Conquistas</FormLabel>
+            <FormLabel>Principais Conquistas (uma por linha)</FormLabel>
             <FormControl><Textarea placeholder="Liste cada conquista em uma nova linha..." {...field} rows={4} /></FormControl>
             <FormMessage />
           </FormItem>
         )} />
         <FormField control={form.control} name="technologies" render={({ field }) => (
           <FormItem>
-            <FormLabel>Habilidades</FormLabel>
+            <FormLabel>Tecnologias (uma por linha)</FormLabel>
             <FormControl><Textarea placeholder="Liste cada tecnologia em uma nova linha..." {...field} rows={4} /></FormControl>
             <FormMessage />
           </FormItem>
