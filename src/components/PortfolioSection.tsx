@@ -113,7 +113,128 @@ const PortfolioSection = () => {
       projectUrl: 'https://chatbot-demo.amaronetto.dev',
       codeUrl: 'https://github.com/amaronetto/ai-chatbot',
       status: 'live'
-    }
+    },
+        {
+      id: 6,
+      title: 'AI-Powered Chat Bot',
+      image: project2,
+      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
+      type: 'AI Application',
+      year: '2023',
+      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
+      features: [
+        'NLP avançado para PT/EN',
+        'Integração com ChatGPT API',
+        'Dashboard de analytics',
+        'Treinamento personalizado',
+        'WebSocket para tempo real',
+        'Integração com CRM'
+      ],
+      projectUrl: 'https://chatbot-demo.amaronetto.dev',
+      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
+      status: 'live'
+    },
+        {
+      id: 7,
+      title: 'AI-Powered Chat Bot',
+      image: project2,
+      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
+      type: 'AI Application',
+      year: '2023',
+      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
+      features: [
+        'NLP avançado para PT/EN',
+        'Integração com ChatGPT API',
+        'Dashboard de analytics',
+        'Treinamento personalizado',
+        'WebSocket para tempo real',
+        'Integração com CRM'
+      ],
+      projectUrl: 'https://chatbot-demo.amaronetto.dev',
+      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
+      status: 'live'
+    },
+        {
+      id: 8,
+      title: 'AI-Powered Chat Bot',
+      image: project2,
+      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
+      type: 'AI Application',
+      year: '2023',
+      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
+      features: [
+        'NLP avançado para PT/EN',
+        'Integração com ChatGPT API',
+        'Dashboard de analytics',
+        'Treinamento personalizado',
+        'WebSocket para tempo real',
+        'Integração com CRM'
+      ],
+      projectUrl: 'https://chatbot-demo.amaronetto.dev',
+      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
+      status: 'live'
+    },
+        {
+      id: 9,
+      title: 'AI-Powered Chat Bot',
+      image: project2,
+      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
+      type: 'AI Application',
+      year: '2023',
+      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
+      features: [
+        'NLP avançado para PT/EN',
+        'Integração com ChatGPT API',
+        'Dashboard de analytics',
+        'Treinamento personalizado',
+        'WebSocket para tempo real',
+        'Integração com CRM'
+      ],
+      projectUrl: 'https://chatbot-demo.amaronetto.dev',
+      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
+      status: 'live'
+    },
+        {
+      id: 10,
+      title: 'AI-Powered Chat Bot',
+      image: project2,
+      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
+      type: 'AI Application',
+      year: '2023',
+      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
+      features: [
+        'NLP avançado para PT/EN',
+        'Integração com ChatGPT API',
+        'Dashboard de analytics',
+        'Treinamento personalizado',
+        'WebSocket para tempo real',
+        'Integração com CRM'
+      ],
+      projectUrl: 'https://chatbot-demo.amaronetto.dev',
+      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
+      status: 'live'
+    },
+        {
+      id: 11,
+      title: 'AI-Powered Chat Bot',
+      image: project2,
+      tags: ['Python', 'TensorFlow', 'FastAPI', 'WebSocket'],
+      type: 'AI Application',
+      year: '2023',
+      description: 'Chatbot inteligente com processamento de linguagem natural para atendimento ao cliente. Integração com modelos de AI para respostas contextuais e aprendizado contínuo.',
+      features: [
+        'NLP avançado para PT/EN',
+        'Integração com ChatGPT API',
+        'Dashboard de analytics',
+        'Treinamento personalizado',
+        'WebSocket para tempo real',
+        'Integração com CRM'
+      ],
+      projectUrl: 'https://chatbot-demo.amaronetto.dev',
+      codeUrl: 'https://github.com/amaronetto/ai-chatbot',
+      status: 'live'
+    },
+
   ];
 
   const itemsPerPage = 3;

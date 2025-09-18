@@ -85,10 +85,56 @@ const CollaboratorsSection = () => {
         whatsapp: 'https://wa.me/5511555443322',
         email: 'juliana@productexcellence.com'
       }
-    }
+    },
+        {
+      id: 6,
+      name: 'Juliana Santos',
+      subtitle: 'Product Manager',
+      image: collaborator2,
+      company: 'Product Excellence',
+      description: 'Gerente de produtos com visão estratégica e foco no usuário. Juliana alinha stakeholders e garante que todos os projetos atendam às necessidades reais do mercado.',
+      collaboration: 'Juliana lidera a estratégia de produtos em nossos projetos mais complexos. Sua capacidade de transformar ideias em roadmaps claros é fundamental para o sucesso.',
+      expertise: 'Strategy, Analytics, Agile, Roadmapping',
+      social: {
+        instagram: 'https://instagram.com/juliana_pm',
+        whatsapp: 'https://wa.me/5511555443322',
+        email: 'juliana@productexcellence.com'
+      }
+    },
+        {
+      id: 7,
+      name: 'Juliana Santos',
+      subtitle: 'Product Manager',
+      image: collaborator2,
+      company: 'Product Excellence',
+      description: 'Gerente de produtos com visão estratégica e foco no usuário. Juliana alinha stakeholders e garante que todos os projetos atendam às necessidades reais do mercado.',
+      collaboration: 'Juliana lidera a estratégia de produtos em nossos projetos mais complexos. Sua capacidade de transformar ideias em roadmaps claros é fundamental para o sucesso.',
+      expertise: 'Strategy, Analytics, Agile, Roadmapping',
+      social: {
+        instagram: 'https://instagram.com/juliana_pm',
+        whatsapp: 'https://wa.me/5511555443322',
+        email: 'juliana@productexcellence.com'
+      }
+    },
+        {
+      id: 8,
+      name: 'Juliana Santos',
+      subtitle: 'Product Manager',
+      image: collaborator2,
+      company: 'Product Excellence',
+      description: 'Gerente de produtos com visão estratégica e foco no usuário. Juliana alinha stakeholders e garante que todos os projetos atendam às necessidades reais do mercado.',
+      collaboration: 'Juliana lidera a estratégia de produtos em nossos projetos mais complexos. Sua capacidade de transformar ideias em roadmaps claros é fundamental para o sucesso.',
+      expertise: 'Strategy, Analytics, Agile, Roadmapping',
+      social: {
+        instagram: 'https://instagram.com/juliana_pm',
+        whatsapp: 'https://wa.me/5511555443322',
+        email: 'juliana@productexcellence.com'
+      }
+    },
+
   ];
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 4;
   const totalPages = Math.ceil(collaborators.length / itemsPerPage);
   const startIndex = currentIndex * itemsPerPage;
   const visibleCollaborators = collaborators.slice(startIndex, startIndex + itemsPerPage);
@@ -159,7 +205,7 @@ const CollaboratorsSection = () => {
           </div>
 
           {/* Collaborators Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[480px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[480px]">
             {visibleCollaborators.map((collaborator) => (
               <div
                 key={collaborator.id}
@@ -174,30 +220,26 @@ const CollaboratorsSection = () => {
                   {/* Front Card */}
                   <Card className="absolute inset-0 w-full h-full backface-hidden border-0 bg-card/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
                     <CardContent className="p-0 h-full">
-                      <div className="flex flex-col h-full">
-                        {/* Image - 3/4 of card */}
-                        <div className="relative h-3/4 overflow-hidden rounded-t-lg">
-                          <img
-                            src={collaborator.image}
-                            alt={collaborator.name}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        </div>
-                        
-                        {/* Content - 1/4 of card */}
-                        <div className="h-1/4 p-4 flex flex-col justify-center">
-                          <h3 className="font-semibold text-lg text-foreground mb-1">
-                            {collaborator.name}
-                          </h3>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <p className="text-primary font-medium mb-2">
+                      <div className="relative w-full h-full">
+                        {/* Imagem de Fundo Ocupando Todo o Card */}
+                        <img
+                          src={collaborator.image}
+                          alt={collaborator.name}
+                          className="absolute inset-0 w-full h-full object-cover rounded-lg"
+                          loading="lazy"
+                        />
+
+                        {/* Contêiner para o Gradiente e o Texto */}
+                        <div className="absolute inset-0 flex flex-col justify-end rounded-lg bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4">
+                          <div className="text-white">
+                            <h3 className="font-semibold text-lg drop-shadow-md">
+                              {collaborator.name}
+                            </h3>
+                            <p className="text-primary font-medium text-sm drop-shadow-md">
                               {collaborator.subtitle}
                             </p>
-                            <span className="mx-2 mb-2">|</span>
-                            <div className="flex items-center text-sm text-muted-foreground mb-2">
-                              <Building className="h-4 w-4 mr-1" />
+                            <div className="flex items-center text-sm text-white/80 mt-2 drop-shadow-md">
+                              <Building className="h-4 w-4 mr-1.5" />
                               {collaborator.company}
                             </div>
                           </div>
