@@ -113,7 +113,7 @@ export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToE
         )} />
         <FormField control={form.control} name="technologies" render={({ field }) => (
           <FormItem>
-            <FormLabel>Tecnologias</FormLabel>
+            <FormLabel>Habilidades</FormLabel>
             <FormControl><Textarea placeholder="Liste cada tecnologia em uma nova linha..." {...field} rows={4} /></FormControl>
             <FormMessage />
           </FormItem>

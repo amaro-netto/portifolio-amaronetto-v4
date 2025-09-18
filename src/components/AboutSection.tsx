@@ -180,7 +180,7 @@ const AboutSection = () => {
                                 </ul>
                               </div>
                               <div>
-                                <h4 className="font-medium mb-2">Tecnologias:</h4>
+                                <h4 className="font-medium mb-2">Habilidades:</h4>
                                 <div className="flex flex-wrap gap-1">
                                   {exp.technologies?.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>)}
                                 </div>
