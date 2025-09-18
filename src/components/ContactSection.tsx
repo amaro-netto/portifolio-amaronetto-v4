@@ -12,7 +12,8 @@ import {
   Github, 
   Linkedin,
   Calendar,
-  Clock,
+  Facebook,
+  Clock, // Adicionei o ícone do Facebook
   CheckCircle,
   Send,
   MapPin,
@@ -112,6 +113,13 @@ const ContactSection = () => {
       value: '@ti.amaronetto',
       url: 'https://instagram.com/ti.amaronetto',
       color: 'text-pink-500'
+    },
+    {
+      icon: Facebook,
+      label: 'Facebook',
+      value: '/Amaro-Netto-Solu%C3%A7%C3%B5es/61578435551178/',
+      url: 'https://www.facebook.com/people/Amaro-Netto-Solu%C3%A7%C3%B5es/61578435551178/',
+      color: 'text-blue-600'
     },
     {
       icon: Github,
