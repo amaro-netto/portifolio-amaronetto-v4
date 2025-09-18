@@ -118,7 +118,7 @@ const AboutSection = () => {
                 MINHA <span className="text-primary">JORNADA</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed text-lg mb-8 text-justify">
-                Com mais de 8 anos de experiência em tecnologia, construí uma carreira sólida 
+                Com mais de 10 anos de experiência em tecnologia, construí uma carreira sólida 
                 combinando desenvolvimento, design e liderança técnica. Minha paixão é 
                 transformar desafios complexos em soluções elegantes que geram impacto real.
               </p>

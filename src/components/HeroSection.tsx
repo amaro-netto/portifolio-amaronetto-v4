@@ -43,7 +43,7 @@ const HeroSection = () => {
                 </h1>
                 
                 <p className="text-xl md:text-2xl text-white/90 font-medium">
-                  Profissional de TI e Designer Gráfico/Web
+                  Profissional de TI e Designer
                 </p>
                 
                 <p className="text-lg text-white/80 max-w-2xl leading-relaxed">
