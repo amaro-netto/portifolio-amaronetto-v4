@@ -1,10 +1,14 @@
-import { useState } from 'react';
+// src/components/ContactSection.tsx (atualizado com suas alterações + reCAPTCHA)
+
+import { useState, useCallback } from 'react'; // Adicionado useCallback
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'; // Adicionado hook do reCAPTCHA
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client'; // Adicionado cliente Supabase
 import { 
   MessageCircle, 
   Mail, 
@@ -13,7 +17,7 @@ import {
   Linkedin,
   Calendar,
   Facebook,
-  Clock, // Adicionei o ícone do Facebook
+  Clock,
   CheckCircle,
   Send,
   MapPin,
@@ -29,6 +33,7 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { executeRecaptcha } = useGoogleReCaptcha(); // Hook para usar o reCAPTCHA
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -38,10 +43,19 @@ const ContactSection = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // --- A FUNÇÃO HANDLE SUBMIT FOI TOTALMENTE SUBSTITUÍDA POR ESTA ---
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation
+
+    if (!executeRecaptcha) {
+      toast({ 
+        title: "Erro de Configuração", 
+        description: "O reCAPTCHA não está pronto. Tente recarregar a página.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.message) {
       toast({
         title: "Campos obrigatórios",
@@ -51,7 +65,6 @@ const ContactSection = () => {
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast({
@@ -65,8 +78,21 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission (replace with actual backend call)
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Gera o token de segurança do reCAPTCHA
+      const token = await executeRecaptcha('contactForm');
+
+      // Invoca a Supabase Function, enviando os dados do formulário e o token
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          ...formData,
+          token: token,
+        },
+      });
+
+      if (error) {
+        const errorMessage = error.context?.error?.message || "Houve um problema. Por favor, tente novamente mais tarde.";
+        throw new Error(errorMessage);
+      }
       
       toast({
         title: "Mensagem enviada!",
@@ -74,23 +100,19 @@ const ContactSection = () => {
         variant: "default"
       });
       
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
-    } catch (error) {
+      setFormData({ name: '', email: '', phone: '', message: '' });
+
+    } catch (error: any) {
       toast({
         title: "Erro ao enviar",
-        description: "Houve um problema ao enviar sua mensagem. Tente novamente.",
-        variant: "destructive"
+        description: error.message,
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [executeRecaptcha, formData, toast]);
+  // --- FIM DA FUNÇÃO ATUALIZADA ---
 
   const socialLinks = [
     {
@@ -144,6 +166,7 @@ const ContactSection = () => {
     }
   ];
 
+  // Nenhuma alteração é necessária no código de renderização abaixo (return)
   return (
     <section id="contato" className="section-snap bg-background pb-20">
       <div className="container mx-auto px-4 py-20 h-full">
