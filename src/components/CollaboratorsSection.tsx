@@ -1,6 +1,6 @@
-// src/components/CollaboratorsSection.tsx (versão final, dinâmica)
+// src/components/CollaboratorsSection.tsx (com ordenação por 'position')
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,23 +8,21 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ChevronLeft, ChevronRight, Instagram, MessageCircle, Mail, Building, Users } from 'lucide-react';
 
-// 1. Função que busca os colaboradores no Supabase
+// A única alteração está aqui, na cláusula 'order'
 const fetchCollaborators = async () => {
   const { data, error } = await supabase
     .from('collaborators')
     .select('*')
-    .order('created_at', { ascending: false });
-
+    .order('position', { ascending: true }); // <-- MUDANÇA AQUI
+    
   if (error) throw new Error(error.message);
   return data;
 };
-
 
 const CollaboratorsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flippedCard, setFlippedCard] = useState<number | null>(null);
 
-  // 2. Usando o useQuery para buscar os dados dos colaboradores
   const { data: collaborators, isLoading, error } = useQuery({
     queryKey: ['collaborators'],
     queryFn: fetchCollaborators,
@@ -36,13 +34,17 @@ const CollaboratorsSection = () => {
   const visibleCollaborators = collaborators ? collaborators.slice(startIndex, startIndex + itemsPerPage) : [];
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalPages);
-    setFlippedCard(null);
+    if (totalPages > 0) {
+      setCurrentIndex((prev) => (prev + 1) % totalPages);
+      setFlippedCard(null);
+    }
   };
 
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
-    setFlippedCard(null);
+    if (totalPages > 0) {
+      setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+      setFlippedCard(null);
+    }
   };
 
   const handleCardClick = (collaboratorId: number) => {
@@ -67,7 +69,6 @@ const CollaboratorsSection = () => {
         </div>
 
         <div className="relative">
-          {/* Navigation */}
           <div className="flex items-center justify-between mb-8">
             <Button variant="outline" size="sm" onClick={goToPrev} disabled={totalPages <= 1} className="focus-ring">
               <ChevronLeft className="h-4 w-4 mr-1" /> Anterior
@@ -81,22 +82,19 @@ const CollaboratorsSection = () => {
             </Button>
           </div>
 
-          {/* 3. Lógica para Loading e Erro */}
-          {isLoading && (
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[480px]">
-              {Array.from({ length: 4 }).map((_, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[480px]">
+            {isLoading && (
+              Array.from({ length: 4 }).map((_, i) => (
                 <Card key={i} className="h-[450px]">
                   <CardContent className="p-0 h-full flex flex-col">
                     <Skeleton className="w-full h-full rounded-lg" />
                   </CardContent>
                 </Card>
-              ))}
-            </div>
-          )}
-          {error && <p className="text-destructive">Não foi possível carregar os colaboradores.</p>}
+              ))
+            )}
 
-          {/* Grid de Colaboradores (renderiza quando os dados chegam) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[480px]">
+            {error && <p className="col-span-4 text-center text-destructive">Não foi possível carregar os colaboradores.</p>}
+            
             {visibleCollaborators && visibleCollaborators.map((collaborator) => (
               <div key={collaborator.id} className="perspective-1000 h-[450px]">
                 <div
@@ -105,7 +103,6 @@ const CollaboratorsSection = () => {
                   }`}
                   onClick={() => handleCardClick(collaborator.id)}
                 >
-                  {/* Front Card */}
                   <Card className="absolute inset-0 w-full h-full backface-hidden border-0 bg-card/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
                     <CardContent className="p-0 h-full">
                       <div className="relative w-full h-full">
@@ -128,17 +125,34 @@ const CollaboratorsSection = () => {
                       </div>
                     </CardContent>
                   </Card>
-
-                  {/* Back Card */}
                   <Card className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 border-0 bg-primary/5 backdrop-blur-sm">
                     <CardContent className="p-6 h-full flex flex-col">
-                      {/* Conteúdo do verso do card continua o mesmo, usando a variável 'collaborator' */}
                       <div className="flex-1 space-y-4">
-                         {/* ... (código do verso do card que você já tem) ... */}
+                        <div>
+                          <h4 className="font-semibold text-sm text-foreground mb-2">Sobre o Colaborador</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{collaborator.description}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm text-foreground mb-2">Nossa Colaboração</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{collaborator.collaboration}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-sm text-foreground mb-2">Especialidades</h4>
+                          <p className="text-xs text-muted-foreground">{collaborator.expertise}</p>
+                        </div>
                       </div>
                       <div className="border-t border-border pt-4">
                         <div className="flex items-center justify-center space-x-3">
-                          {/* ... (botões de redes sociais que você já tem) ... */}
+                          <span className="text-sm font-medium text-foreground">Contactar</span>
+                          <Button variant="outline" size="sm" onClick={(e) => openSocialLink(collaborator.social_instagram, e)} className="p-1.5">
+                            <Instagram className="h-3 w-3" />
+                          </Button>
+                          <Button variant="outline" size="sm" onClick={(e) => openSocialLink(collaborator.social_whatsapp, e)} className="p-1.5">
+                            <MessageCircle className="h-3 w-3" />
+                          </Button>
+                          <Button variant="outline" size="sm" onClick={(e) => openSocialLink(`mailto:${collaborator.social_email}`, e)} className="p-1.5">
+                            <Mail className="h-3 w-3" />
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
@@ -148,7 +162,6 @@ const CollaboratorsSection = () => {
             ))}
           </div>
 
-          {/* Pagination Dots */}
           <div className="flex justify-center mt-8 space-x-2">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button

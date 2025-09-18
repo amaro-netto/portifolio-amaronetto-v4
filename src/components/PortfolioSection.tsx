@@ -1,4 +1,4 @@
-// src/components/PortfolioSection.tsx (versão final completa com duas imagens)
+// src/components/PortfolioSection.tsx (com ordenação por 'position')
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -10,12 +10,12 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ChevronLeft, ChevronRight, ExternalLink, Github, Eye } from 'lucide-react';
 
-// Função para buscar os projetos no Supabase
+// A única alteração está aqui, na cláusula 'order'
 const fetchProjects = async () => {
   const { data, error } = await supabase
     .from('projects')
     .select('*')
-    .order('created_at', { ascending: false });
+    .order('position', { ascending: true }); // <-- MUDANÇA AQUI
     
   if (error) throw new Error(error.message);
   return data;
@@ -31,7 +31,6 @@ const PortfolioSection = () => {
   });
   
   const itemsPerPage = 3;
-  // Garante que o cálculo só é feito quando 'projects' já foi carregado
   const totalPages = projects ? Math.ceil(projects.length / itemsPerPage) : 0;
   const startIndex = currentIndex * itemsPerPage;
   const visibleProjects = projects ? projects.slice(startIndex, startIndex + itemsPerPage) : [];
@@ -62,7 +61,6 @@ const PortfolioSection = () => {
         </div>
 
         <div className="relative">
-          {/* Navegação do Carrossel */}
           <div className="flex items-center justify-between mb-8">
             <Button variant="outline" size="sm" onClick={goToPrev} disabled={totalPages <= 1} className="focus-ring">
               <ChevronLeft className="h-4 w-4 mr-1" /> Anterior
@@ -75,10 +73,8 @@ const PortfolioSection = () => {
             </Button>
           </div>
 
-          {/* Grid de Projetos */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
             {isLoading && (
-              // Efeito de "skeleton" enquanto os dados carregam
               Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="space-y-2">
                   <Skeleton className="aspect-square w-full" />
@@ -100,7 +96,6 @@ const PortfolioSection = () => {
               >
                 <CardContent className="p-0 h-full flex flex-col">
                   <div className="relative overflow-hidden rounded-t-lg h-3/4">
-                    {/* IMAGEM 1: Usando a imagem do card */}
                     <img
                       src={project.image_card_url} 
                       alt={project.title}
@@ -128,7 +123,6 @@ const PortfolioSection = () => {
             ))}
           </div>
 
-          {/* Paginação */}
           <div className="flex justify-center mt-8 space-x-2">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
@@ -143,7 +137,6 @@ const PortfolioSection = () => {
           </div>
         </div>
 
-        {/* Modal (Dialog) para Detalhes do Projeto */}
         {selectedProjectData && (
           <Dialog open={selectedProject !== null} onOpenChange={() => setSelectedProject(null)}>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -156,7 +149,6 @@ const PortfolioSection = () => {
               </DialogHeader>
               <div className="space-y-6">
                 <div className="relative rounded-lg overflow-hidden">
-                  {/* IMAGEM 2: Usando a imagem do modal, com fallback para a imagem do card */}
                   <img
                     src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url}
                     alt={selectedProjectData.title}

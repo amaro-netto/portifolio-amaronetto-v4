@@ -1,4 +1,4 @@
-// src/components/AboutSection.tsx (versão final completa e dinâmica)
+// src/components/AboutSection.tsx (com ordenação por 'position')
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,7 +8,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Skeleton } from '@/components/ui/skeleton';
 import { Calendar, Building, Code, Network, Palette, Shield } from 'lucide-react';
 
-// Objeto para mapear o nome do ícone (do DB) para o componente React
 const iconMap = {
   Code: Code,
   Network: Network,
@@ -16,21 +15,23 @@ const iconMap = {
   Shield: Shield,
 };
 
-// Função para buscar as experiências no Supabase
+// A única alteração está aqui, na cláusula 'order'
 const fetchExperiences = async () => {
-  const { data, error } = await supabase.from('experiences').select('*').order('years', { ascending: false });
+  const { data, error } = await supabase
+    .from('experiences')
+    .select('*')
+    .order('position', { ascending: true }); // <-- MUDANÇA AQUI: de 'created_at' para 'position'
+  
   if (error) throw new Error(error.message);
   return data;
 };
 
 const AboutSection = () => {
-  // Hook para buscar os dados dinamicamente
   const { data: experiences, isLoading } = useQuery({
     queryKey: ['experiences'],
     queryFn: fetchExperiences
   });
   
-  // O objeto de skills continua estático, como no seu projeto original
   const skills = {
     hardSkills: [
       { name: 'React & Next.js', icon: Code },
