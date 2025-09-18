@@ -6,17 +6,26 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Calendar, Building, Code, Network, Palette, Shield, PenTool, Megaphone, LifeBuoy } from 'lucide-react';
+// 1. IMPORTAR TODOS OS NOVOS ÍCONES
+import { Calendar, Building, Code, Network, Palette, Shield, PenTool, Megaphone, LifeBuoy, Database, Server, Cloud, ClipboardList, Users, Briefcase, BarChart3, LayoutTemplate } from 'lucide-react';
 
-// Mapa de ícones atualizado para corresponder ao formulário do admin
+// 2. ATUALIZAR O MAPA DE ÍCONES PARA INCLUIR OS NOVOS
 const iconMap = {
   Code: Code,
+  Database: Database,
+  Server: Server,
   Network: Network,
-  Palette: Palette,
+  Cloud: Cloud,
   Shield: Shield,
-  PenTool: PenTool,
-  Megaphone: Megaphone,
   LifeBuoy: LifeBuoy,
+  Briefcase: Briefcase,
+  Users: Users,
+  ClipboardList: ClipboardList,
+  Megaphone: Megaphone,
+  BarChart3: BarChart3,
+  PenTool: PenTool,
+  Palette: Palette,
+  LayoutTemplate: LayoutTemplate,
 };
 
 // Busca as experiências ordenando pela coluna 'position'
@@ -131,9 +140,7 @@ const AboutSection = () => {
                       const IconComponent = iconMap[exp.icon as keyof typeof iconMap] || Code;
                       return (
                          <div key={`icon-${exp.id}`} className="relative z-10 pt-2">
-                          <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md">
-                            <IconComponent className="h-4 w-4 text-primary-foreground" />
-                          </div>
+                          <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md"><IconComponent className="h-4 w-4 text-primary-foreground" /></div>
                         </div>
                       );
                     })}

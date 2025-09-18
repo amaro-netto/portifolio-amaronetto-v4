@@ -1,4 +1,4 @@
-// src/components/admin/ExperienceForm.tsx (versão final e completa)
+// src/components/admin/ExperienceForm.tsx (com correção de fundo e mais ícones)
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,6 @@ const experienceSchema = z.object({
   icon: z.string({ required_error: "Selecione um ícone." }),
 });
 
-// Converte uma string com quebras de linha em um array de strings
 const stringToArrayByNewline = (str: string | undefined) => str ? str.split('\n').map(item => item.trim()).filter(Boolean) : [];
 
 export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToEdit?: any, onFinished: () => void }) {
@@ -75,15 +74,16 @@ export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToE
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-h-[70vh] overflow-y-auto pr-4">
+        {/* ... outros campos do formulário ... */}
         <FormField control={form.control} name="role" render={({ field }) => (
-          <FormItem><FormLabel>Cargo</FormLabel><FormControl><Input placeholder="Tech Lead & Designer" {...field} /></FormControl><FormMessage /></FormItem>
+            <FormItem><FormLabel>Cargo</FormLabel><FormControl><Input placeholder="Tech Lead & Designer" {...field} /></FormControl><FormMessage /></FormItem>
         )} />
         <div className="grid grid-cols-2 gap-4">
             <FormField control={form.control} name="company" render={({ field }) => (
-              <FormItem><FormLabel>Empresa</FormLabel><FormControl><Input placeholder="Freelancer" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>Empresa</FormLabel><FormControl><Input placeholder="Freelancer" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="years" render={({ field }) => (
-              <FormItem><FormLabel>Período</FormLabel><FormControl><Input placeholder="2022 - Atual" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>Período</FormLabel><FormControl><Input placeholder="2022 - Atual" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </div>
         <FormField control={form.control} name="icon" render={({ field }) => (
@@ -91,35 +91,37 @@ export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToE
             <FormLabel>Ícone</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl><SelectTrigger><SelectValue placeholder="Selecione um ícone para a timeline" /></SelectTrigger></FormControl>
-              <SelectContent>
-                <SelectItem value="Code">Desenvolvimento (Código)</SelectItem>
-                <SelectItem value="PenTool">Design (Ferramenta de Caneta)</SelectItem>
-                <SelectItem value="Palette">Design (Paleta de Cores)</SelectItem>
-                <SelectItem value="Megaphone">Marketing (Megafone)</SelectItem>
-                <SelectItem value="Network">Infra/DevOps (Rede)</SelectItem>
-                <SelectItem value="Shield">Segurança (Escudo)</SelectItem>
-                <SelectItem value="LifeBuoy">Suporte (Bóia)</SelectItem>
+              {/* CORREÇÃO 1: Adicionada a classe bg-popover para dar um fundo sólido */}
+              <SelectContent className="bg-popover">
+                {/* CORREÇÃO 2: Adicionados mais ícones */}
+                <SelectItem value="Code">TI: Desenvolvimento</SelectItem>
+                <SelectItem value="Database">TI: Banco de Dados</SelectItem>
+                <SelectItem value="Server">TI: Servidores / Infra</SelectItem>
+                <SelectItem value="Network">TI: Redes / DevOps</SelectItem>
+                <SelectItem value="Cloud">TI: Nuvem</SelectItem>
+                <SelectItem value="Shield">TI: Segurança</SelectItem>
+                <SelectItem value="LifeBuoy">TI: Suporte</SelectItem>
+                <SelectItem value="Briefcase">Gestão: Negócios / Consultoria</SelectItem>
+                <SelectItem value="Users">Gestão: Liderança / Equipes</SelectItem>
+                <SelectItem value="ClipboardList">Gestão: Projetos</SelectItem>
+                <SelectItem value="Megaphone">Marketing: Campanhas</SelectItem>
+                <SelectItem value="BarChart3">Marketing: Análise de Dados</SelectItem>
+                <SelectItem value="PenTool">Design: Vetorial / UI</SelectItem>
+                <SelectItem value="Palette">Design: Identidade Visual</SelectItem>
+                <SelectItem value="LayoutTemplate">Design: Layout / UX</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />
           </FormItem>
         )} />
         <FormField control={form.control} name="description" render={({ field }) => (
-          <FormItem><FormLabel>Descrição</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
+            <FormItem><FormLabel>Descrição</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
         )} />
         <FormField control={form.control} name="achievements" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Principais Conquistas (uma por linha)</FormLabel>
-            <FormControl><Textarea placeholder="Liste cada conquista em uma nova linha..." {...field} rows={4} /></FormControl>
-            <FormMessage />
-          </FormItem>
+            <FormItem><FormLabel>Principais Conquistas (uma por linha)</FormLabel><FormControl><Textarea placeholder="Liste cada conquista em uma nova linha..." {...field} rows={4} /></FormControl><FormMessage /></FormItem>
         )} />
         <FormField control={form.control} name="technologies" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Tecnologias (uma por linha)</FormLabel>
-            <FormControl><Textarea placeholder="Liste cada tecnologia em uma nova linha..." {...field} rows={4} /></FormControl>
-            <FormMessage />
-          </FormItem>
+            <FormItem><FormLabel>Tecnologias (uma por linha)</FormLabel><FormControl><Textarea placeholder="Liste cada tecnologia em uma nova linha..." {...field} rows={4} /></FormControl><FormMessage /></FormItem>
         )} />
         <Button type="submit" disabled={saveExperienceMutation.isPending}>
           {saveExperienceMutation.isPending ? 'Salvando...' : 'Salvar Experiência'}
