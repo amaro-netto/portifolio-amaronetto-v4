@@ -1,4 +1,4 @@
-// src/components/admin/ProjectForm.tsx (versão final com exclusão de imagem antiga)
+// src/components/admin/ProjectForm.tsx (versão final com upload corrigido e boas práticas)
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,7 +52,6 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
 
       // Lógica para a IMAGEM DO CARD
       if (values.image_card_file && values.image_card_file.length > 0) {
-        // Se estiver editando e já houver uma imagem antiga, delete-a
         if (projectToEdit?.image_card_url) {
           const oldFilePath = projectToEdit.image_card_url.split('/project_images/')[1];
           if (oldFilePath) {
@@ -69,7 +68,6 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
 
       // Lógica para a IMAGEM DO MODAL
       if (values.image_modal_file && values.image_modal_file.length > 0) {
-        // Se estiver editando e já houver uma imagem antiga, delete-a
         if (projectToEdit?.image_modal_url) {
           const oldFilePath = projectToEdit.image_modal_url.split('/project_images/')[1];
           if (oldFilePath) {
@@ -118,6 +116,10 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
   function onSubmit(values: z.infer<typeof projectSchema>) {
     saveProjectMutation.mutate(values);
   }
+  
+  // MODIFICAÇÃO: Criando uma referência para o register dos arquivos para evitar conflito
+  const imageCardFileRegister = form.register("image_card_file");
+  const imageModalFileRegister = form.register("image_modal_file");
 
   return (
     <Form {...form}>
@@ -125,19 +127,20 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
         <FormField control={form.control} name="title" render={({ field }) => (
           <FormItem><FormLabel>Título do Projeto</FormLabel><FormControl><Input placeholder="Ex: E-commerce Mobile App" {...field} /></FormControl><FormMessage /></FormItem>
         )} />
+        
         <div className="grid grid-cols-2 gap-4">
           <FormField control={form.control} name="type" render={({ field }) => (
             <FormItem><FormLabel>Tipo</FormLabel><FormControl><Input placeholder="Mobile Application" {...field} /></FormControl><FormMessage /></FormItem>
           )} />
           <FormField control={form.control} name="year" render={({ field }) => (
-            <FormItem><FormLabel>Ano</FormLabel><FormControl><Input placeholder="2024" {...field} /></FormControl><FormMessage /></FormItem>
+             <FormItem><FormLabel>Ano</FormLabel><FormControl><Input placeholder="2024" {...field} /></FormControl><FormMessage /></FormItem>
           )} />
         </div>
         <FormField control={form.control} name="tags" render={({ field }) => (
           <FormItem><FormLabel>Tags (separadas por vírgula)</FormLabel><FormControl><Input placeholder="React Native, Redux, Firebase" {...field} /></FormControl><FormMessage /></FormItem>
         )} />
         <FormField control={form.control} name="description" render={({ field }) => (
-          <FormItem><FormLabel>Sobre o Projeto (Descrição)</FormLabel><FormControl><Textarea placeholder="Descreva o projeto..." {...field} /></FormControl><FormMessage /></FormItem>
+           <FormItem><FormLabel>Sobre o Projeto (Descrição)</FormLabel><FormControl><Textarea placeholder="Descreva o projeto..." {...field} /></FormControl><FormMessage /></FormItem>
         )} />
         <FormField control={form.control} name="features" render={({ field }) => (
           <FormItem><FormLabel>Principais Funcionalidades (separadas por vírgula)</FormLabel><FormControl><Textarea placeholder="Interface nativa, Integração com Stripe, etc..." {...field} /></FormControl><FormMessage /></FormItem>
@@ -150,12 +153,27 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
               <FormItem><FormLabel>URL do Código (Ver Código)</FormLabel><FormControl><Input placeholder="https://github.com/..." {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </div>
-        <FormField control={form.control} name="image_card_file" render={({ field }) => (
-          <FormItem><FormLabel>Imagem do Card (capa)</FormLabel><FormControl><Input type="file" accept="image/webp, image/jpeg, image/png" {...form.register("image_card_file")} /></FormControl>{projectToEdit?.image_card_url && <p className="text-xs text-muted-foreground mt-1">Deixe em branco para manter a imagem atual.</p>}<FormMessage /></FormItem>
-        )} />
-        <FormField control={form.control} name="image_modal_file" render={({ field }) => (
-          <FormItem><FormLabel>Imagem do Modal (detalhes)</FormLabel><FormControl><Input type="file" accept="image/webp, image/jpeg, image/png" {...form.register("image_modal_file")} /></FormControl>{projectToEdit?.image_modal_url && <p className="text-xs text-muted-foreground mt-1">Deixe em branco para manter a imagem atual.</p>}<FormMessage /></FormItem>
-        )} />
+        
+        {/* MODIFICAÇÃO: Simplificado o campo de upload para usar apenas o register */}
+        <FormItem>
+          <FormLabel>Imagem do Card (capa)</FormLabel>
+          <FormControl>
+            <Input type="file" accept="image/webp, image/jpeg, image/png" {...imageCardFileRegister} />
+          </FormControl>
+          {projectToEdit?.image_card_url && <p className="text-xs text-muted-foreground mt-1">Deixe em branco para manter a imagem atual.</p>}
+          <FormMessage />
+        </FormItem>
+
+        {/* MODIFICAÇÃO: Simplificado o campo de upload para usar apenas o register */}
+        <FormItem>
+          <FormLabel>Imagem do Modal (detalhes)</FormLabel>
+          <FormControl>
+            <Input type="file" accept="image/webp, image/jpeg, image/png" {...imageModalFileRegister} />
+          </FormControl>
+          {projectToEdit?.image_modal_url && <p className="text-xs text-muted-foreground mt-1">Deixe em branco para manter a imagem atual.</p>}
+          <FormMessage />
+        </FormItem>
+
         <Button type="submit" disabled={saveProjectMutation.isPending}>
           {saveProjectMutation.isPending ? 'Salvando...' : 'Salvar Projeto'}
         </Button>
