@@ -1,4 +1,4 @@
-// src/components/admin/CollaboratorForm.tsx (revisado e corrigido)
+// src/components/admin/CollaboratorForm.tsx (versão final com exclusão de imagem antiga)
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -49,10 +49,20 @@ export function CollaboratorForm({ collaboratorToEdit, onFinished }: { collabora
       let finalImageUrl = collaboratorToEdit?.image_url;
 
       if (values.image_file && values.image_file.length > 0) {
+        // --- NOVA LÓGICA DE EXCLUSÃO ---
+        if (collaboratorToEdit?.image_url) {
+          const oldFilePath = collaboratorToEdit.image_url.split('/collaborator_images/')[1];
+          if (oldFilePath) {
+            await supabase.storage.from('collaborator_images').remove([oldFilePath]);
+          }
+        }
+        // --- FIM DA NOVA LÓGICA ---
+        
         const file = values.image_file[0];
         const fileName = `${uuidv4()}-${file.name}`;
         const { error: uploadError } = await supabase.storage.from('collaborator_images').upload(fileName, file);
         if (uploadError) throw new Error(`Erro no upload da imagem: ${uploadError.message}`);
+        
         finalImageUrl = supabase.storage.from('collaborator_images').getPublicUrl(fileName).data.publicUrl;
       }
 
@@ -82,7 +92,7 @@ export function CollaboratorForm({ collaboratorToEdit, onFinished }: { collabora
       queryClient.invalidateQueries({ queryKey: ['collaborators'] });
       onFinished();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({ title: "Erro!", description: error.message, variant: "destructive" });
     },
   });

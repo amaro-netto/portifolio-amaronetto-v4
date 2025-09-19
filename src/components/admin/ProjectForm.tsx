@@ -1,4 +1,4 @@
-// src/components/admin/ProjectForm.tsx (com a correção final na lógica de salvar)
+// src/components/admin/ProjectForm.tsx (versão final com exclusão de imagem antiga)
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +25,6 @@ const projectSchema = z.object({
   image_modal_file: z.instanceof(FileList).optional(),
 });
 
-// Padronizado para usar vírgula como separador para ambos os campos de lista
 const stringToArray = (str: string | undefined) => str ? str.split(',').map(item => item.trim()).filter(Boolean) : [];
 
 export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any, onFinished: () => void }) {
@@ -51,25 +50,40 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
       let imageCardUrl = projectToEdit?.image_card_url;
       let imageModalUrl = projectToEdit?.image_modal_url;
 
+      // Lógica para a IMAGEM DO CARD
       if (values.image_card_file && values.image_card_file.length > 0) {
+        // Se estiver editando e já houver uma imagem antiga, delete-a
+        if (projectToEdit?.image_card_url) {
+          const oldFilePath = projectToEdit.image_card_url.split('/project_images/')[1];
+          if (oldFilePath) {
+            await supabase.storage.from('project_images').remove([oldFilePath]);
+          }
+        }
+        
         const file = values.image_card_file[0];
         const fileName = `card-${uuidv4()}-${file.name}`;
-        const { error } = await supabase.storage.from('project_images').upload(fileName, file);
-        if (error) throw new Error(`Erro no upload da imagem do card: ${error.message}`);
+        const { error: uploadError } = await supabase.storage.from('project_images').upload(fileName, file);
+        if (uploadError) throw new Error(`Erro no upload da imagem do card: ${uploadError.message}`);
         imageCardUrl = supabase.storage.from('project_images').getPublicUrl(fileName).data.publicUrl;
       }
 
+      // Lógica para a IMAGEM DO MODAL
       if (values.image_modal_file && values.image_modal_file.length > 0) {
+        // Se estiver editando e já houver uma imagem antiga, delete-a
+        if (projectToEdit?.image_modal_url) {
+          const oldFilePath = projectToEdit.image_modal_url.split('/project_images/')[1];
+          if (oldFilePath) {
+            await supabase.storage.from('project_images').remove([oldFilePath]);
+          }
+        }
+
         const file = values.image_modal_file[0];
         const fileName = `modal-${uuidv4()}-${file.name}`;
-        const { error } = await supabase.storage.from('project_images').upload(fileName, file);
-        if (error) throw new Error(`Erro no upload da imagem do modal: ${error.message}`);
+        const { error: uploadError } = await supabase.storage.from('project_images').upload(fileName, file);
+        if (uploadError) throw new Error(`Erro no upload da imagem do modal: ${uploadError.message}`);
         imageModalUrl = supabase.storage.from('project_images').getPublicUrl(fileName).data.publicUrl;
       }
 
-      // --- CORREÇÃO AQUI ---
-      // Construímos o objeto de dados campo a campo para garantir que todos os nomes
-      // correspondem exatamente às colunas do banco de dados.
       const projectData = {
         title: values.title,
         description: values.description,
@@ -82,7 +96,6 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
         image_card_url: imageCardUrl,
         image_modal_url: imageModalUrl,
       };
-      // --- FIM DA CORREÇÃO ---
 
       if (projectToEdit) {
         const { error } = await supabase.from('projects').update(projectData).eq('id', projectToEdit.id);
@@ -97,7 +110,7 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       onFinished();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({ title: "Erro!", description: error.message, variant: "destructive" });
     },
   });
