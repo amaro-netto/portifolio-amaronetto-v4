@@ -1,27 +1,20 @@
-// src/components/ContactSection.tsx (atualizado com suas alterações + reCAPTCHA)
+// src/components/ContactSection.tsx (modificado para aceitar SVGs customizados)
 
-import { useState, useCallback } from 'react'; // Adicionado useCallback
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'; // Adicionado hook do reCAPTCHA
+import { useState, useCallback } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client'; // Adicionado cliente Supabase
-import { 
-  MessageCircle, 
-  Mail, 
-  Instagram, 
-  Github, 
-  Linkedin,
-  Calendar,
-  Facebook,
+import { supabase } from '@/integrations/supabase/client';
+// MODIFICAÇÃO: Removemos os ícones de redes sociais e mantivemos apenas os que são usados em outras partes do componente.
+import {
   Clock,
   CheckCircle,
   Send,
   MapPin,
-  Phone
 } from 'lucide-react';
 
 const ContactSection = () => {
@@ -33,7 +26,7 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { executeRecaptcha } = useGoogleReCaptcha(); // Hook para usar o reCAPTCHA
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -43,13 +36,12 @@ const ContactSection = () => {
     }));
   };
 
-  // --- A FUNÇÃO HANDLE SUBMIT FOI TOTALMENTE SUBSTITUÍDA POR ESTA ---
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!executeRecaptcha) {
-      toast({ 
-        title: "Erro de Configuração", 
+      toast({
+        title: "Erro de Configuração",
         description: "O reCAPTCHA não está pronto. Tente recarregar a página.",
         variant: "destructive"
       });
@@ -78,10 +70,8 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      // Gera o token de segurança do reCAPTCHA
       const token = await executeRecaptcha('contactForm');
 
-      // Invoca a Supabase Function, enviando os dados do formulário e o token
       const { error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           ...formData,
@@ -93,13 +83,13 @@ const ContactSection = () => {
         const errorMessage = error.context?.error?.message || "Houve um problema. Por favor, tente novamente mais tarde.";
         throw new Error(errorMessage);
       }
-      
+
       toast({
         title: "Mensagem enviada!",
         description: "Obrigado pelo contato. Responderei em até 24 horas.",
         variant: "default"
       });
-      
+
       setFormData({ name: '', email: '', phone: '', message: '' });
 
     } catch (error: any) {
@@ -112,61 +102,55 @@ const ContactSection = () => {
       setIsSubmitting(false);
     }
   }, [executeRecaptcha, formData, toast]);
-  // --- FIM DA FUNÇÃO ATUALIZADA ---
 
+  // --- MODIFICAÇÃO: A estrutura do array socialLinks foi alterada ---
+  // A propriedade 'icon' foi substituída por 'iconSrc' que aponta para o caminho do seu SVG na pasta 'public'.
+  // A propriedade 'color' foi removida.
   const socialLinks = [
     {
-      icon: MessageCircle,
+      iconSrc: '/icons/whatsapp.svg', // Exemplo de caminho
       label: 'WhatsApp',
       value: '+55 (21) 96403-9120',
       url: 'https://wa.me/5521964039120',
-      color: 'text-green-500'
     },
     {
-      icon: Mail,
+      iconSrc: '/icons/email.svg', // Exemplo de caminho
       label: 'E-mail',
       value: 'ti.amaronetto@gmail.com',
       url: 'mailto:ti.amaronetto@gmail.com',
-      color: 'text-blue-500'
     },
     {
-      icon: Instagram,
+      iconSrc: '/icons/instagram.svg', // Exemplo de caminho
       label: 'Instagram',
       value: '@ti.amaronetto',
       url: 'https://instagram.com/ti.amaronetto',
-      color: 'text-pink-500'
     },
     {
-      icon: Facebook,
+      iconSrc: '/icons/facebook.svg', // Exemplo de caminho
       label: 'Facebook',
       value: '/Amaro-Netto-Solu%C3%A7%C3%B5es/61578435551178/',
       url: 'https://www.facebook.com/people/Amaro-Netto-Solu%C3%A7%C3%B5es/61578435551178/',
-      color: 'text-blue-600'
     },
     {
-      icon: Github,
+      iconSrc: '/icons/github.svg', // Exemplo de caminho
       label: 'GitHub',
       value: '/amaro-netto',
       url: 'https://github.com/amaro-netto',
-      color: 'text-foreground'
     },
     {
-      icon: Linkedin,
+      iconSrc: '/icons/linkedin.svg', // Exemplo de caminho
       label: 'LinkedIn',
       value: '/in/amarosilvanetto',
       url: 'https://linkedin.com/in/amarosilvanetto',
-      color: 'text-sky-600'
     },
     {
-      icon: Calendar,
+      iconSrc: '/icons/agenda.svg', // Exemplo de caminho
       label: 'Agenda',
       value: 'Agendar Reunião',
       url: 'https://calendly.com/amaronetto',
-      color: 'text-primary'
     }
   ];
 
-  // Nenhuma alteração é necessária no código de renderização abaixo (return)
   return (
     <section id="contato" className="section-snap bg-background pb-20">
       <div className="container mx-auto px-4 py-20 h-full">
@@ -189,17 +173,17 @@ const ContactSection = () => {
               </h3>
               <div className="flex items-center gap-4 flex-wrap">
                 {socialLinks.map((social, index) => {
-                  const IconComponent = social.icon;
+                  // MODIFICAÇÃO: A lógica de renderização foi simplificada para usar uma tag <img>
                   return (
                     <Button
                       key={index}
                       variant="outline"
                       size="lg"
-                      className="p-3"
+                      className="p-0"
                       onClick={() => window.open(social.url, '_blank')}
                       aria-label={social.label}
                     >
-                      <IconComponent className={`h-6 w-6 ${social.color}`} />
+                      <img src={social.iconSrc} alt={social.label} className="h-12 w-12" />
                     </Button>
                   );
                 })}
