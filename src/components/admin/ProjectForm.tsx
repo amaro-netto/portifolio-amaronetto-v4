@@ -1,4 +1,4 @@
-// src/components/admin/ProjectForm.tsx (com a correção na linha 129)
+// src/components/admin/ProjectForm.tsx (com a correção final na lógica de salvar)
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +25,8 @@ const projectSchema = z.object({
   image_modal_file: z.instanceof(FileList).optional(),
 });
 
-const stringToArray = (str: string | undefined) => str ? str.split(',').map(item => item.trim()) : [];
+// Padronizado para usar vírgula como separador para ambos os campos de lista
+const stringToArray = (str: string | undefined) => str ? str.split(',').map(item => item.trim()).filter(Boolean) : [];
 
 export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any, onFinished: () => void }) {
   const queryClient = useQueryClient();
@@ -66,15 +67,22 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
         imageModalUrl = supabase.storage.from('project_images').getPublicUrl(fileName).data.publicUrl;
       }
 
+      // --- CORREÇÃO AQUI ---
+      // Construímos o objeto de dados campo a campo para garantir que todos os nomes
+      // correspondem exatamente às colunas do banco de dados.
       const projectData = {
-        ...values,
+        title: values.title,
+        description: values.description,
+        type: values.type,
+        year: values.year,
         tags: stringToArray(values.tags),
         features: stringToArray(values.features),
+        project_url: values.project_url,
+        code_url: values.code_url,
         image_card_url: imageCardUrl,
         image_modal_url: imageModalUrl,
       };
-      delete projectData.image_card_file;
-      delete projectData.image_modal_file;
+      // --- FIM DA CORREÇÃO ---
 
       if (projectToEdit) {
         const { error } = await supabase.from('projects').update(projectData).eq('id', projectToEdit.id);
@@ -126,7 +134,7 @@ export function ProjectForm({ projectToEdit, onFinished }: { projectToEdit?: any
               <FormItem><FormLabel>URL do Projeto (Ver Projeto)</FormLabel><FormControl><Input placeholder="https://..." {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="code_url" render={({ field }) => (
-              <FormItem><FormLabel>URL do Código (Ver Código)</FormLabel><FormControl><Input placeholder="https://github.com/..." {...field} /></FormControl><FormMessage /></FormItem> // <-- CORREÇÃO AQUI
+              <FormItem><FormLabel>URL do Código (Ver Código)</FormLabel><FormControl><Input placeholder="https://github.com/..." {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </div>
         <FormField control={form.control} name="image_card_file" render={({ field }) => (
