@@ -5,20 +5,15 @@ import amaroPortrait from '@/assets/amaro-portrait2.webp';
 
 const StudyProfileSection = () => {
   const learningPlatforms = [
-    { 
-      name: 'AWS Academy', 
-      icon: '/placeholder.svg', 
-      url: 'https://aws.amazon.com/certification/'
+   { 
+      name: 'Alura', 
+      icon: '/icons/logo-alura.webp', 
+      url: 'https://cursos.alura.com.br/user/amarosilvanetto'
     },
-    { 
-      name: 'Google Cloud', 
-      icon: '/placeholder.svg', 
-      url: 'https://cloud.google.com/certification'
-    },
-    { 
-      name: 'Microsoft Learn', 
-      icon: '/placeholder.svg', 
-      url: 'https://docs.microsoft.com/learn/'
+            { 
+      name: 'DIO', 
+      icon: '/icons/dio.webp', 
+      url: 'https://www.dio.me/users/amarosilva002'
     },
     { 
       name: 'Coursera', 
@@ -27,24 +22,10 @@ const StudyProfileSection = () => {
     },
     { 
       name: 'Cisco', 
-      icon: '/icons/cisco.jfif', 
+      icon: '/icons/cisco.webp', 
       url: 'https://www.credly.com/users/amaro-amarante-da-silva-netto/badges#credly'
     },
-    { 
-      name: 'Alura', 
-      icon: '/icons/logo-alura.webp', 
-      url: 'https://cursos.alura.com.br/user/amarosilvanetto'
-    },
-    { 
-      name: 'Rocketseat', 
-      icon: '/placeholder.svg', 
-      url: 'https://rocketseat.com.br'
-    },
-    { 
-      name: 'Pluralsight', 
-      icon: '/placeholder.svg', 
-      url: 'https://pluralsight.com'
-    }
+
   ];
 
 
@@ -73,10 +54,6 @@ const StudyProfileSection = () => {
 
             {/* Learning Platforms */}
             <div>
-              <h3 className="font-display text-xl font-semibold text-foreground mb-4 flex items-center">
-                <BookOpen className="h-5 w-5 mr-2 text-primary" />
-                PLATAFORMAS DE APRENDIZADO
-              </h3>
               <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-6">
                 {learningPlatforms.map((platform) => (
                   <div 
@@ -84,11 +61,11 @@ const StudyProfileSection = () => {
                     className="cursor-pointer hover:scale-105 transition-all duration-300 group text-center"
                     onClick={() => window.open(platform.url, '_blank')}
                   >
-                    <div className="w-16 h-16 mx-auto mb-2 bg-white rounded-lg shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
+                    <div className="w-16 h-16 mx-auto mb-2 rounded-lg shadow-md flex items-center justify-center group-hover:shadow-lg transition-all duration-300">
                       <img 
                         src={platform.icon} 
                         alt={`${platform.name} logo`}
-                        className="w-10 h-10 object-contain"
+                        className="w-16 h-16 object-contain"
                       />
                     </div>
                     <p className="text-xs font-medium text-foreground">{platform.name}</p>
