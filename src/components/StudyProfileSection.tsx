@@ -32,8 +32,8 @@ const StudyProfileSection = () => {
     },
     { 
       name: 'Alura', 
-      icon: '/placeholder.svg', 
-      url: 'https://alura.com.br'
+      icon: '/logo-alura.svg', 
+      url: 'https://cursos.alura.com.br/user/amarosilvanetto'
     },
     { 
       name: 'Rocketseat', 
