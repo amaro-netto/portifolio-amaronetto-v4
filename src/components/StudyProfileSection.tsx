@@ -22,17 +22,17 @@ const StudyProfileSection = () => {
     },
     { 
       name: 'Coursera', 
-      icon: '/placeholder.svg', 
-      url: 'https://coursera.org'
+      icon: '/icons/coursera.webp', 
+      url: 'https://www.coursera.org/learner/amaronetto'
     },
     { 
-      name: 'Udemy', 
-      icon: '/placeholder.svg', 
-      url: 'https://udemy.com'
+      name: 'Cisco', 
+      icon: '/icons/cisco.jfif', 
+      url: 'https://www.credly.com/users/amaro-amarante-da-silva-netto/badges#credly'
     },
     { 
       name: 'Alura', 
-      icon: '/logo-alura.svg', 
+      icon: '/icons/logo-alura.webp', 
       url: 'https://cursos.alura.com.br/user/amarosilvanetto'
     },
     { 
