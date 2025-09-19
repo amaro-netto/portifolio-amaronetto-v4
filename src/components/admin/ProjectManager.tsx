@@ -10,8 +10,9 @@ import { GripVertical, ArrowDownUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+// MODIFICAÇÃO: Importar DialogDescription
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription as AlertDialogDesc, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { ProjectForm } from './ProjectForm';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -34,28 +35,28 @@ const DraggableTableRow = ({ project, onEdit, onDelete }: { project: any, onEdit
   };
 
   return (
-    <TableRow ref={setNodeRef} style={style} {...attributes}>
-      <TableCell className="w-10">
-        <button {...listeners} className="cursor-grab p-2 active:cursor-grabbing">
-          <GripVertical className="h-5 w-5 text-muted-foreground" />
-        </button>
-      </TableCell>
-      <TableCell className="font-medium">{project.title}</TableCell>
-      <TableCell>{project.type}</TableCell>
-      <TableCell className="text-right space-x-2">
-        <Button variant="outline" size="sm" onClick={() => onEdit(project)}>Editar</Button>
-        <AlertDialog>
-          <AlertDialogTrigger asChild><Button variant="destructive" size="sm">Excluir</Button></AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader><AlertDialogTitle>Você tem certeza?</AlertDialogTitle><AlertDialogDescription>Esta ação não pode ser desfeita.</AlertDialogDescription></AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={() => onDelete(project.id)}>Sim, excluir</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </TableCell>
-    </TableRow>
+     <TableRow ref={setNodeRef} style={style} {...attributes}>
+       <TableCell className="w-10">
+         <button {...listeners} className="cursor-grab p-2 active:cursor-grabbing">
+           <GripVertical className="h-5 w-5 text-muted-foreground" />
+         </button>
+       </TableCell>
+       <TableCell className="font-medium">{project.title}</TableCell>
+       <TableCell>{project.type}</TableCell>
+       <TableCell className="text-right space-x-2">
+         <Button variant="outline" size="sm" onClick={() => onEdit(project)}>Editar</Button>
+         <AlertDialog>
+           <AlertDialogTrigger asChild><Button variant="destructive" size="sm">Excluir</Button></AlertDialogTrigger>
+           <AlertDialogContent>
+             <AlertDialogHeader><AlertDialogTitle>Você tem certeza?</AlertDialogTitle><AlertDialogDesc>Esta ação não pode ser desfeita.</AlertDialogDesc></AlertDialogHeader>
+             <AlertDialogFooter>
+               <AlertDialogCancel>Cancelar</AlertDialogCancel>
+               <AlertDialogAction onClick={() => onDelete(project.id)}>Sim, excluir</AlertDialogAction>
+             </AlertDialogFooter>
+           </AlertDialogContent>
+         </AlertDialog>
+       </TableCell>
+     </TableRow>
   );
 };
 
@@ -137,21 +138,21 @@ const ProjectManager = () => {
     return (
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-10"></TableHead>
-                <TableHead>Título</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {items.map((project) => (
-                <DraggableTableRow key={project.id} project={project} onEdit={handleEdit} onDelete={(id) => deleteMutation.mutate(id)} />
-              ))}
-            </TableBody>
-          </Table>
+           <Table>
+             <TableHeader>
+               <TableRow>
+                 <TableHead className="w-10"></TableHead>
+                 <TableHead>Título</TableHead>
+                 <TableHead>Tipo</TableHead>
+                 <TableHead className="text-right">Ações</TableHead>
+               </TableRow>
+             </TableHeader>
+             <TableBody>
+               {items.map((project) => (
+                 <DraggableTableRow key={project.id} project={project} onEdit={handleEdit} onDelete={(id) => deleteMutation.mutate(id)} />
+               ))}
+             </TableBody>
+           </Table>
         </SortableContext>
       </DndContext>
     );
@@ -161,24 +162,28 @@ const ProjectManager = () => {
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>Projetos</CardTitle>
-            <CardDescription>Arraste para reordenar ou organize por data.</CardDescription>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={handleAutoSort}>
-              <ArrowDownUp className="h-4 w-4 mr-2" />
-              Organizar por Data
-            </Button>
-            <Button onClick={handleAddNew}>Adicionar Novo Projeto</Button>
-          </div>
+           <div>
+             <CardTitle>Projetos</CardTitle>
+             <CardDescription>Arraste para reordenar ou organize por data.</CardDescription>
+           </div>
+           <div className="flex gap-2">
+             <Button variant="outline" size="sm" onClick={handleAutoSort}>
+               <ArrowDownUp className="h-4 w-4 mr-2" />
+               Organizar por Data
+             </Button>
+             <Button onClick={handleAddNew}>Adicionar Novo Projeto</Button>
+           </div>
         </div>
       </CardHeader>
       <CardContent>{renderContent()}</CardContent>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[625px]">
           <DialogHeader>
-            <DialogTitle>{projectToEdit ? 'Editar Projeto' : 'Adicionar Novo Projeto'}</DialogTitle>
+             <DialogTitle>{projectToEdit ? 'Editar Projeto' : 'Adicionar Novo Projeto'}</DialogTitle>
+             {/* MODIFICAÇÃO: Adicionada a descrição para acessibilidade */}
+             <DialogDescription>
+                Preencha as informações abaixo para adicionar ou editar um projeto.
+             </DialogDescription>
           </DialogHeader>
           <ProjectForm 
             projectToEdit={projectToEdit} 
