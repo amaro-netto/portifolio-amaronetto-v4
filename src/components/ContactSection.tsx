@@ -114,12 +114,6 @@ const ContactSection = () => {
       url: 'https://wa.me/5521964039120',
     },
     {
-      iconSrc: '/icons/email.svg', // Exemplo de caminho
-      label: 'E-mail',
-      value: 'ti.amaronetto@gmail.com',
-      url: 'mailto:ti.amaronetto@gmail.com',
-    },
-    {
       iconSrc: '/icons/instagram.svg', // Exemplo de caminho
       label: 'Instagram',
       value: '@ti.amaronetto',
@@ -148,7 +142,13 @@ const ContactSection = () => {
       label: 'Agenda',
       value: 'Agendar Reunião',
       url: 'https://calendly.com/amaronetto',
-    }
+    },
+    {
+      iconSrc: '/icons/email.svg', // Exemplo de caminho
+      label: 'E-mail',
+      value: 'ti.amaronetto@gmail.com',
+      url: 'mailto:ti.amaronetto@gmail.com',
+    },
   ];
 
   return (
