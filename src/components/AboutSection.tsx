@@ -1,6 +1,5 @@
 // src/components/AboutSection.tsx
 
-// 1. IMPORTAR O 'useState' DO REACT E O COMPONENTE 'Button'
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button'; // MODIFICAÇÃO: Importação do botão
+import { Button } from '@/components/ui/button';
 import { Calendar, Building, Code, Network, Palette, Shield, PenTool, Megaphone, LifeBuoy, Database, Server, Cloud, ClipboardList, Users, Briefcase, BarChart3, LayoutTemplate } from 'lucide-react';
 
 const iconMap = {
@@ -41,10 +40,8 @@ const AboutSection = () => {
     queryFn: fetchExperiences
   });
   
-  // 2. CRIAR ESTADO PARA CONTROLAR A EXIBIÇÃO DAS EXPERIÊNCIAS
   const [showAllExperiences, setShowAllExperiences] = useState(false);
 
-  // 3. DETERMINAR QUAIS EXPERIÊNCIAS SERÃO MOSTRADAS
   const displayedExperiences = experiences
     ? showAllExperiences ? experiences : experiences.slice(0, 5)
     : [];
@@ -93,31 +90,24 @@ const AboutSection = () => {
                 entre pessoas e possibilidades.
               </p>
             </div>
-
             <div>
               <h3 className="font-display text-xl font-semibold text-foreground mb-6">
                 HABILIDADES
               </h3>
-              
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="text-lg font-medium text-foreground mb-4">Hard Skills</h4>
                   <div className="flex flex-wrap gap-2">
                     {skills.hardSkills.map((skill) => (
-                      <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">
-                        {skill.name}
-                      </Badge>
+                      <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">{skill.name}</Badge>
                     ))}
                   </div>
                 </div>
-
                 <div>
                   <h4 className="text-lg font-medium text-foreground mb-4">Soft Skills</h4>
                   <div className="flex flex-wrap gap-2">
                     {skills.softSkills.map((skill) => (
-                       <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">
-                        {skill.name}
-                      </Badge>
+                       <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">{skill.name}</Badge>
                     ))}
                   </div>
                 </div>
@@ -139,77 +129,83 @@ const AboutSection = () => {
                 </div>
               )}
               
-              {/* MODIFICAÇÃO: Usar a variável 'displayedExperiences' ao invés de 'experiences' */}
               {experiences && (
                 <>
-                  <div className="relative flex">
-                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                    <div className="flex flex-col space-y-8 mr-6">
+                  {/* MODIFICAÇÃO INÍCIO: Refatoração completa da estrutura da timeline */}
+                  <div className="relative">
+                    {/* Linha vertical da timeline. Ajustada para centralizar nos ícones. */}
+                    <div className="absolute left-4 top-4 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
+                    
+                    {/* Container para as linhas de experiência */}
+                    <div className="flex flex-col gap-8">
                       {displayedExperiences.map((exp) => {
                         const IconComponent = iconMap[exp.icon as keyof typeof iconMap] || Code;
                         return (
-                           <div key={`icon-${exp.id}`} className="relative z-10 pt-2">
-                            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md"><IconComponent className="h-4 w-4 text-primary-foreground" /></div>
+                          // Cada experiência é uma linha flexível com alinhamento vertical centralizado
+                          <div key={exp.id} className="flex items-center gap-6">
+                            {/* Coluna do Ícone (agora parte da linha) */}
+                            <div className="relative z-10">
+                              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md">
+                                <IconComponent className="h-4 w-4 text-primary-foreground" />
+                              </div>
+                            </div>
+
+                            {/* Coluna do Card (agora parte da linha) */}
+                            <div className="flex-1">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Card className="cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
+                                    <CardHeader className="pb-4 p-4">
+                                      <div>
+                                        <CardTitle className="text-lg font-semibold leading-tight mb-2">{exp.role}</CardTitle>
+                                        <div className="flex justify-between items-center">
+                                          <CardDescription className="text-sm">{exp.company}</CardDescription>
+                                          <Badge variant="outline" className="text-xs">{exp.years}</Badge>
+                                        </div>
+                                      </div>
+                                    </CardHeader>
+                                  </Card>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-2xl">
+                                  <DialogHeader>
+                                    <DialogTitle className="flex items-center space-x-2"><IconComponent className="h-5 w-5 text-primary" /><span>{exp.role}</span></DialogTitle>
+                                    <DialogDescription className="flex items-center space-x-4 text-sm">
+                                      <span className="flex items-center space-x-1"><Building className="h-4 w-4" /><span>{exp.company}</span></span>
+                                      <span className="flex items-center space-x-1"><Calendar className="h-4 w-4" /><span>{exp.years}</span></span>
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="space-y-4">
+                                    <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
+                                    <div>
+                                      <h4 className="font-medium mb-2">Principais Conquistas:</h4>
+                                      <ul className="space-y-1 text-sm text-muted-foreground">
+                                        {exp.achievements?.map((achievement: string, idx: number) => (
+                                          <li key={idx} className="flex items-start space-x-2">
+                                            <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span>
+                                            <span>{achievement}</span>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                    <div>
+                                      <h4 className="font-medium mb-2">Tecnologias:</h4>
+                                      <div className="flex flex-wrap gap-1">
+                                        {exp.technologies?.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>)}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+                            </div>
                           </div>
                         );
                       })}
                     </div>
-                    <div className="flex flex-col space-y-8 flex-1">
-                      {displayedExperiences.map((exp) => {
-                         const IconComponent = iconMap[exp.icon as keyof typeof iconMap] || Code;
-                        return (
-                          <Dialog key={exp.id}>
-                            <DialogTrigger asChild>
-                              <Card className="cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
-                                <CardHeader className="pb-4 p-4">
-                                  <div>
-                                    <CardTitle className="text-lg font-semibold leading-tight mb-2">{exp.role}</CardTitle>
-                                    <div className="flex justify-between items-center">
-                                      <CardDescription className="text-sm">{exp.company}</CardDescription>
-                                      <Badge variant="outline" className="text-xs">{exp.years}</Badge>
-                                    </div>
-                                  </div>
-                                </CardHeader>
-                              </Card>
-                            </DialogTrigger>
-                            <DialogContent className="max-w-2xl">
-                                <DialogHeader>
-                                  <DialogTitle className="flex items-center space-x-2"><IconComponent className="h-5 w-5 text-primary" /><span>{exp.role}</span></DialogTitle>
-                                  <DialogDescription className="flex items-center space-x-4 text-sm">
-                                      <span className="flex items-center space-x-1"><Building className="h-4 w-4" /><span>{exp.company}</span></span>
-                                      <span className="flex items-center space-x-1"><Calendar className="h-4 w-4" /><span>{exp.years}</span></span>
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div className="space-y-4">
-                                  <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
-                                  <div>
-                                    <h4 className="font-medium mb-2">Principais Conquistas:</h4>
-                                    <ul className="space-y-1 text-sm text-muted-foreground">
-                                      {exp.achievements?.map((achievement: string, idx: number) => (
-                                        <li key={idx} className="flex items-start space-x-2">
-                                          <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span>
-                                          <span>{achievement}</span>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-medium mb-2">Tecnologias:</h4>
-                                    <div className="flex flex-wrap gap-1">
-                                      {exp.technologies?.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>)}
-                                    </div>
-                                  </div>
-                                </div>
-                            </DialogContent>
-                          </Dialog>
-                        );
-                      })}
-                    </div>
                   </div>
+                  {/* MODIFICAÇÃO FIM */}
 
-                  {/* 4. ADICIONAR O BOTÃO PARA MOSTRAR MAIS */}
                   {!showAllExperiences && experiences.length > 5 && (
-                    <div className="text-center pt-4">
+                    <div className="text-center pt-8"> {/* Aumentado o padding-top para dar mais respiro */}
                       <Button 
                         variant="outline" 
                         onClick={() => setShowAllExperiences(true)}
