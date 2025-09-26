@@ -174,12 +174,8 @@ const PortfolioSection = () => {
                   </ul>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-                  <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="flex-1">
-                    <ExternalLink className="h-4 w-4 mr-2" /> Ver Projeto
-                  </Button>
-                  <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="flex-1">
-                    <Github className="h-4 w-4 mr-2" /> Ver Código
-                  </Button>
+                  <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="flex-1"> Ver Projeto </Button>
+                  <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="flex-1"> Documentação </Button>
                 </div>
               </div>
             </DialogContent>
