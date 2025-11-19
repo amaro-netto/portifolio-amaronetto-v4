@@ -70,7 +70,7 @@ const AboutSection = () => {
         <img 
           src={iconValue} 
           alt="icon" 
-          className="h-full w-full object-contain p-2" // p-2 para dar respiro dentro da bolinha
+          className="h-full w-full object-contain p-2 brightness-0 invert" // p-2 para dar respiro dentro da bolinha
           onError={(e) => {
              e.currentTarget.style.display = 'none'; // Esconde se der erro
           }}
@@ -81,12 +81,21 @@ const AboutSection = () => {
     return <Briefcase className="h-5 w-5 text-primary-foreground" />;
   };
 
-  // Função auxiliar para o Modal (ícone escuro)
+// Função auxiliar para o Modal (ícone)
   const renderIconModal = (iconValue: string) => {
     if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
-      return <img src={iconValue} alt="icon" className="h-8 w-8 object-contain" />;
+      return (
+        <img 
+          src={iconValue} 
+          alt="icon" 
+          // ADICIONADO: 'brightness-0 invert' transforma qualquer cor em BRANCO puro
+          // Se quiser outra cor, precisaria usar a técnica de 'mask' ou editar o SVG original
+          className="h-8 w-8 object-contain brightness-0 invert" 
+        />
+      );
     }
-    return <Briefcase className="h-6 w-6 text-primary" />;
+    // Fallback do Lucide (ícone de maleta) também forçado para branco
+    return <Briefcase className="h-6 w-6 text-white" />;
   };
 
   return (
@@ -148,11 +157,11 @@ const AboutSection = () => {
             <div className="relative">
                 <div className="absolute left-5 top-5 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
                 
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-4">
                 {displayedExperiences.map((exp) => (
-                    <div key={exp.id} className="flex items-center gap-6">
+                    <div key={exp.id} className="flex items-center gap-4">
                     <div className="relative z-10">
-                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md overflow-hidden">
+                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
                             {/* Ícone na Timeline */}
                             {renderIcon(exp.icon)}
                         </div>
@@ -173,25 +182,28 @@ const AboutSection = () => {
                             </CardHeader>
                             </Card>
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+                        
+                        {/* --- ALTERAÇÃO AQUI: Cor de fundo alterada para dark (zinc-900) --- */}
+                        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-900 border-zinc-800 text-white">
                             <DialogHeader>
-                            <DialogTitle className="flex items-center space-x-3">
+                            {/* --- ALTERAÇÃO AQUI: Texto do título forçado para branco --- */}
+                            <DialogTitle className="flex items-center space-x-3 text-white">
                                 {/* Ícone no Modal */}
                                 {renderIconModal(exp.icon)}
                                 <span>{exp.role}</span>
                             </DialogTitle>
-                            <DialogDescription className="flex items-center space-x-4 text-sm pt-2">
+                            <DialogDescription className="flex items-center space-x-4 text-sm pt-2 text-primary font-medium">
                                 <span className="flex items-center space-x-1"><Building className="h-4 w-4" /><span>{exp.company}</span></span>
                                 <span className="flex items-center space-x-1"><Calendar className="h-4 w-4" /><span>{exp.years}</span></span>
                             </DialogDescription>
                             </DialogHeader>
                             <div className="space-y-4 mt-4">
-                            <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
+                            <p className="text-zinc-300 leading-relaxed">{exp.description}</p>
                             
                             {exp.achievements && exp.achievements.length > 0 && (
                                 <div>
-                                <h4 className="font-medium mb-2">Principais Conquistas:</h4>
-                                <ul className="space-y-1 text-sm text-muted-foreground">
+                                <h4 className="font-medium mb-2 text-white">Principais Conquistas:</h4>
+                                <ul className="space-y-1 text-sm text-zinc-400">
                                     {exp.achievements.map((achievement: string, idx: number) => (
                                     <li key={idx} className="flex items-start space-x-2">
                                         <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current flex-shrink-0"></span>
@@ -204,9 +216,9 @@ const AboutSection = () => {
                             
                             {exp.technologies && exp.technologies.length > 0 && (
                                 <div>
-                                <h4 className="font-medium mb-2">Tecnologias:</h4>
+                                <h4 className="font-medium mb-2 text-white">Tecnologias:</h4>
                                 <div className="flex flex-wrap gap-1">
-                                    {exp.technologies.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>)}
+                                    {exp.technologies.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20">{tech}</Badge>)}
                                 </div>
                                 </div>
                             )}
