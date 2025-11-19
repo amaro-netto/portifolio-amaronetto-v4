@@ -109,7 +109,7 @@
     "company": "Amaro Netto Soluções",
     "years": "12/2024 - Presente",
     "description": "Atuação em consultoria de Tecnologia da Informação, oferecendo soluções estratégicas em infraestrutura, segurança da informação, desenvolvimento de sistemas e automação de processos. Responsável pela análise e implementação de ambientes de TI seguros e escaláveis, integração de ferramentas corporativas, otimização de fluxos operacionais e desenvolvimento de aplicações sob medida. A atuação abrange desde suporte a empresas em demandas críticas até a aplicação de inteligência artificial e automação para aumentar a eficiência, reduzir custos e garantir conformidade tecnológica.",
-    "icon": "https://www.svgrepo.com/show/307899/it-professional-programmer-it-professional.svg",
+    "icon": "https://i.ibb.co/YFqLLj3S/it-professional-programmer-it-professional-svgrepo-com.png",
     "achievements": [
       "Estruturação de ambientes de TI com foco em disponibilidade e segurança.",
       "Desenvolvimento de aplicações personalizadas para demandas específicas de clientes.",
@@ -178,14 +178,14 @@
     "position": "6"
   },
   {
-    "id": "10",
     "role": "Designer Gráfico e UX/UI Designer",
     "company": "Amaro Netto Soluções",
     "years": "2025 - Presente",
     "description": "Liderando projetos de design de interfaces para clientes de diversos segmentos, com foco em usabilidade e estética.",
+    "icon": "https://www.svgrepo.com/show/204282/light-bulb-idea.svg",
     "achievements": [],
     "technologies": [],
-    "icon": "Megaphone",
+    "id": "10",
     "position": "2"
   }
 ]

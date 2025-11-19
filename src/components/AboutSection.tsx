@@ -3,13 +3,13 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Calendar, Building, Code, Network, Palette, Shield } from 'lucide-react';
+import { Calendar, Building, Code, Network, Palette, Shield, Briefcase } from 'lucide-react';
 
-// IMPORTAÇÃO DIRETA DO JSON
+// Importação direta do JSON
 import experiencesData from '@/data/experiences.json';
 
 const AboutSection = () => {
-  // Ordenação local
+  // Ordenação local por posição ou data
   const experiences = [...experiencesData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
   const [showAllExperiences, setShowAllExperiences] = useState(false);
@@ -62,11 +62,38 @@ const AboutSection = () => {
     ]
   };
 
+  // Função auxiliar para renderizar o ícone corretamente
+  const renderIcon = (iconValue: string) => {
+    // Se for URL (começa com http), renderiza imagem
+    if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
+      return (
+        <img 
+          src={iconValue} 
+          alt="icon" 
+          className="h-full w-full object-contain p-2" // p-2 para dar respiro dentro da bolinha
+          onError={(e) => {
+             e.currentTarget.style.display = 'none'; // Esconde se der erro
+          }}
+        />
+      );
+    }
+    // Fallback para ícone padrão se não for URL
+    return <Briefcase className="h-5 w-5 text-primary-foreground" />;
+  };
+
+  // Função auxiliar para o Modal (ícone escuro)
+  const renderIconModal = (iconValue: string) => {
+    if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
+      return <img src={iconValue} alt="icon" className="h-8 w-8 object-contain" />;
+    }
+    return <Briefcase className="h-6 w-6 text-primary" />;
+  };
+
   return (
     <section ref={sectionRef} id="sobre" className="section-snap bg-background">
       <div className="container mx-auto px-4 py-20 h-full">
         <div className="grid lg:grid-cols-2 gap-12 h-full">
-          {/* Coluna da Esquerda permanece igual */}
+          {/* Coluna da Esquerda (Bio e Skills) */}
           <div className="space-y-8">
             <div>
                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
@@ -114,7 +141,6 @@ const AboutSection = () => {
               EXPERIÊNCIA PROFISSIONAL
             </h3>
             
-            {/* JSON é instantâneo, sem loading state necessário, mas se quiser manter layout vazio: */}
             {experiences.length === 0 && (
               <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
             )}
@@ -126,17 +152,9 @@ const AboutSection = () => {
                 {displayedExperiences.map((exp) => (
                     <div key={exp.id} className="flex items-center gap-6">
                     <div className="relative z-10">
-                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md">
-                        {/* Importante: Certifique-se de que você tem os arquivos SVG/PNG em public/icons/ com o mesmo nome do campo 'icon' no JSON (ex: LifeBuoy.svg) */}
-                        <img 
-                            src={`/icons/${exp.icon}.svg`} 
-                            alt={`Ícone para ${exp.role}`} 
-                            className="h-5 w-5 invert" 
-                            onError={(e) => {
-                                // Fallback caso a imagem não exista
-                                e.currentTarget.style.display = 'none';
-                            }}
-                        />
+                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center border-4 border-background shadow-md overflow-hidden">
+                            {/* Ícone na Timeline */}
+                            {renderIcon(exp.icon)}
                         </div>
                     </div>
 
@@ -155,36 +173,43 @@ const AboutSection = () => {
                             </CardHeader>
                             </Card>
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl">
+                        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
                             <DialogHeader>
                             <DialogTitle className="flex items-center space-x-3">
-                                <img src={`/icons/${exp.icon}.svg`} alt="" className="h-6 w-6" />
+                                {/* Ícone no Modal */}
+                                {renderIconModal(exp.icon)}
                                 <span>{exp.role}</span>
                             </DialogTitle>
-                            <DialogDescription className="flex items-center space-x-4 text-sm">
+                            <DialogDescription className="flex items-center space-x-4 text-sm pt-2">
                                 <span className="flex items-center space-x-1"><Building className="h-4 w-4" /><span>{exp.company}</span></span>
                                 <span className="flex items-center space-x-1"><Calendar className="h-4 w-4" /><span>{exp.years}</span></span>
                             </DialogDescription>
                             </DialogHeader>
-                            <div className="space-y-4">
+                            <div className="space-y-4 mt-4">
                             <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
-                            <div>
+                            
+                            {exp.achievements && exp.achievements.length > 0 && (
+                                <div>
                                 <h4 className="font-medium mb-2">Principais Conquistas:</h4>
                                 <ul className="space-y-1 text-sm text-muted-foreground">
-                                {exp.achievements?.map((achievement: string, idx: number) => (
+                                    {exp.achievements.map((achievement: string, idx: number) => (
                                     <li key={idx} className="flex items-start space-x-2">
-                                    <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span>
-                                    <span>{achievement}</span>
+                                        <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current flex-shrink-0"></span>
+                                        <span>{achievement}</span>
                                     </li>
-                                ))}
+                                    ))}
                                 </ul>
-                            </div>
-                            <div>
+                                </div>
+                            )}
+                            
+                            {exp.technologies && exp.technologies.length > 0 && (
+                                <div>
                                 <h4 className="font-medium mb-2">Tecnologias:</h4>
                                 <div className="flex flex-wrap gap-1">
-                                {exp.technologies?.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>)}
+                                    {exp.technologies.map((tech: string) => <Badge key={tech} variant="secondary" className="text-xs">{tech}</Badge>)}
                                 </div>
-                            </div>
+                                </div>
+                            )}
                             </div>
                         </DialogContent>
                         </Dialog>
