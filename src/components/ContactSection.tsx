@@ -82,6 +82,7 @@ const ContactSection = () => {
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Horário</h4>
                                 <p className="text-sm text-muted-foreground">Seg - Sex: 09h às 18h</p>
+                                <p className="text-xs text-muted-foreground/70 mt-0.5">Sáb - Dom: Somente Mediante Agendamento</p>
                             </div>
                         </CardContent>
                     </Card>

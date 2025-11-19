@@ -110,7 +110,7 @@ const PortfolioSection = () => {
 
         {selectedProjectData && (
           <Dialog open={selectedProject !== null} onOpenChange={() => setSelectedProject(null)}>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto pr-6 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-muted-foreground/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-muted-foreground/40">
               <DialogHeader>
                 <DialogTitle className="text-2xl font-bold">{selectedProjectData.title}</DialogTitle>
                 <DialogDescription className="flex items-center space-x-4 text-base">
