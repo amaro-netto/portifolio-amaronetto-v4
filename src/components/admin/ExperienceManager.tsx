@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -14,21 +12,15 @@ import { useToast } from "@/hooks/use-toast";
 import { ExperienceForm } from './ExperienceForm';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Função de busca agora ordena por 'position' para respeitar a ordem manual
-const fetchExperiences = async () => {
-  const { data, error } = await supabase.from('experiences').select('*').order('position', { ascending: true });
-  if (error) throw new Error(error.message);
-  return data;
-};
+const API_URL = 'http://localhost:3001/api/experiences';
 
-// Componente para uma Linha da Tabela que pode ser arrastada
-const DraggableTableRow = ({ experience, onEdit, onDelete }: { experience: any, onEdit: (exp: any) => void, onDelete: (id: number) => void }) => {
+const DraggableTableRow = ({ experience, onEdit, onDelete }: { experience: any, onEdit: (exp: any) => void, onDelete: (id: string) => void }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: experience.id });
   
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1, // Deixa a linha semi-transparente ao arrastar
+    opacity: isDragging ? 0.5 : 1,
   };
 
   return (
@@ -64,84 +56,77 @@ const DraggableTableRow = ({ experience, onEdit, onDelete }: { experience: any, 
 };
 
 const ExperienceManager = () => {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
-  const [items, setItems] = useState<any[]>([]); // Estado local para gerenciar a ordem na tela
+  const [items, setItems] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [experienceToEdit, setExperienceToEdit] = useState<any | null>(null);
 
-  const { data: experiences, isLoading, error } = useQuery({ 
-    queryKey: ['experiences'], 
-    queryFn: fetchExperiences 
-  });
-
-  // Atualiza o estado local 'items' sempre que os dados do Supabase mudam
-  useEffect(() => {
-    if (experiences) {
-      setItems(experiences);
+  const fetchExperiences = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      const sortedData = data.sort((a: any, b: any) => (Number(a.position) || 0) - (Number(b.position) || 0));
+      setItems(sortedData);
+    } catch (error) {
+      toast({ title: "Erro", description: "Erro ao buscar experiências.", variant: "destructive" });
+    } finally {
+      setIsLoading(false);
     }
-  }, [experiences]);
-
-  // Mutação para salvar a nova ordem no banco de dados
-  const updateOrderMutation = useMutation({
-    mutationFn: async (orderedIds: number[]) => {
-      const { error } = await supabase.rpc('update_experience_order', { ids: orderedIds });
-      if (error) throw new Error(error.message);
-    },
-    onSuccess: () => {
-      toast({ title: "Sucesso!", description: "Ordem das experiências foi salva." });
-      queryClient.invalidateQueries({ queryKey: ['experiences'] });
-    },
-    onError: (error: any) => toast({ title: "Erro!", description: `Não foi possível salvar a ordem: ${error.message}`, variant: "destructive" }),
-  });
-
-  // Mutação para deletar um item
-  const deleteMutation = useMutation({
-    mutationFn: async (experienceId: number) => {
-      const { error } = await supabase.from('experiences').delete().eq('id', experienceId);
-      if (error) throw new Error(error.message);
-    },
-    onSuccess: () => {
-      toast({ title: "Sucesso!", description: "Experiência excluída." });
-      queryClient.invalidateQueries({ queryKey: ['experiences'] });
-    },
-    onError: (error: any) => {
-      toast({ title: "Erro!", description: error.message, variant: "destructive" });
-    },
-  });
-
-  // Função para organizar automaticamente por data de criação
-  const handleAutoSort = () => {
-    if (!items) return;
-    const sortedItems = [...items].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-    setItems(sortedItems);
-    const newOrderIds = sortedItems.map(item => item.id);
-    updateOrderMutation.mutate(newOrderIds);
   };
 
-  // Sensores para o dnd-kit (para detectar o clique e arrastar)
+  useEffect(() => {
+    fetchExperiences();
+  }, []);
+
+  const saveAll = async (newItems: any[]) => {
+    try {
+      const itemsWithPosition = newItems.map((item, index) => ({ ...item, position: index + 1 }));
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(itemsWithPosition)
+      });
+      setItems(itemsWithPosition);
+      toast({ title: "Sucesso!", description: "Ordem das experiências foi salva." });
+    } catch (error: any) {
+      toast({ title: "Erro!", description: `Não foi possível salvar: ${error.message}`, variant: "destructive" });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const newItems = items.filter(item => item.id !== id);
+    await saveAll(newItems);
+  };
+
+  const handleAutoSort = () => {
+    const sortedItems = [...items].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
+    saveAll(sortedItems);
+  };
+
   const sensors = useSensors(useSensor(PointerSensor));
 
-  // Função chamada quando o usuário solta um item após arrastar
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
     if (active.id !== over.id) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
       const newItems = arrayMove(items, oldIndex, newIndex);
-      setItems(newItems);
-      
-      const newOrderIds = newItems.map(item => item.id);
-      updateOrderMutation.mutate(newOrderIds);
+      saveAll(newItems);
     }
   };
 
   const handleAddNew = () => { setExperienceToEdit(null); setIsDialogOpen(true); };
   const handleEdit = (experience: any) => { setExperienceToEdit(experience); setIsDialogOpen(true); };
   
+  const onFormSuccess = () => {
+    setIsDialogOpen(false);
+    fetchExperiences();
+  };
+
   const renderContent = () => {
     if (isLoading) return (<div className="space-y-4 p-4"><Skeleton className="h-8 w-full" /><Skeleton className="h-8 w-full" /><Skeleton className="h-8 w-full" /></div>);
-    if (error) return <p className="text-center text-destructive py-4">Erro ao carregar: {error.message}</p>;
     if (!items || items.length === 0) return <p className="text-center text-muted-foreground py-4">Nenhuma experiência cadastrada.</p>;
     
     return (
@@ -159,7 +144,7 @@ const ExperienceManager = () => {
             </TableHeader>
             <TableBody>
               {items.map((exp) => (
-                <DraggableTableRow key={exp.id} experience={exp} onEdit={handleEdit} onDelete={(id) => deleteMutation.mutate(id)} />
+                <DraggableTableRow key={exp.id} experience={exp} onEdit={handleEdit} onDelete={handleDelete} />
               ))}
             </TableBody>
           </Table>
@@ -174,7 +159,7 @@ const ExperienceManager = () => {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Experiência Profissional</CardTitle>
-            <CardDescription>Arraste para reordenar ou organize por data.</CardDescription>
+            <CardDescription>Gerencie as experiências do arquivo JSON.</CardDescription>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={handleAutoSort}>
@@ -195,7 +180,7 @@ const ExperienceManager = () => {
           </DialogHeader>
           <ExperienceForm 
             experienceToEdit={experienceToEdit} 
-            onFinished={() => setIsDialogOpen(false)} 
+            onFinished={onFormSuccess} 
           />
         </DialogContent>
       </Dialog>

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "created_at": "2025-09-18 23:46:06.3087+00",
+    "name": "Dr. Isabela Mattos",
+    "subtitle": "Advogada Civil, Familiar e Consumidor",
+    "image_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/collaborator_images/12d3475d-ce05-4fc2-9b9f-5e217480b671-000001.webp",
+    "company": "Escritorio Particular",
+    "description": "Com ampla experiência e sólida trajetória no Direito das Famílias, oferecendo assessoria jurídica presencial em Angra dos Reis/RJ, além de atendimento virtual em todo o Brasil. Suporte eficiente e personalizado, focado em soluções seguras e eficazes para os desafios familiares de seus clientes.",
+    "collaboration": "Responsavel pelo entendimento Juridico para a criação da Plataforma de Calculo de Pensão Alimenticia.",
+    "expertise": "Guarda e regulamentação de visitas, investigação de paternidade, divórcio judicial e extrajudicial e partilha de bens, curatela, interdição e tutela, reconhecimento e dissolução de união estável, pensão alimentícia, exoneração e execução",
+    "social_instagram": "https://www.instagram.com/isabelamattos.adv/",
+    "social_whatsapp": "https://api.whatsapp.com/send?phone=5524999439507&text=Ol%C3%A1,%20bom%20dia!%20Estou%20com%20um%20problema%20de%20fam%C3%ADlia/c%C3%ADvel/consumidor%20e%20gostaria%20de%20uma%20consultoria.",
+    "social_email": "isabelamattos.adv@gmail.com",
+    "position": "1"
+  },
+  {
+    "id": "2",
+    "created_at": "2025-09-19 01:23:00.662316+00",
+    "name": "Dr. Ramon Zanardo",
+    "subtitle": "Advogado",
+    "image_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/collaborator_images/233aa346-98f2-4aa8-95d9-8f21a46b7f8c-000002.webp",
+    "company": "Escritorio Particular",
+    "description": "",
+    "collaboration": "Um cliente exímio, onde presto serviços ao escritorio do Dr. Ramon Zanardo com aquisição de equipamento de TI, assim como suporte técnico e manutenção de sistemas.",
+    "expertise": "Redes Sociais, Processos Civeis",
+    "social_instagram": "",
+    "social_whatsapp": "",
+    "social_email": "",
+    "position": "2"
+  }
+]

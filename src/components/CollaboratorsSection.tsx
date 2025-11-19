@@ -1,37 +1,22 @@
-// src/components/CollaboratorsSection.tsx (com ordenação por 'position')
-
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { ChevronLeft, ChevronRight, Instagram, MessageCircle, Mail, Building, Users } from 'lucide-react';
 
-// A única alteração está aqui, na cláusula 'order'
-const fetchCollaborators = async () => {
-  const { data, error } = await supabase
-    .from('collaborators')
-    .select('*')
-    .order('position', { ascending: true }); // <-- MUDANÇA AQUI
-    
-  if (error) throw new Error(error.message);
-  return data;
-};
+// IMPORTAÇÃO DIRETA DO JSON
+import collaboratorsData from '@/data/collaborators.json';
 
 const CollaboratorsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [flippedCard, setFlippedCard] = useState<number | null>(null);
+  const [flippedCard, setFlippedCard] = useState<string | null>(null); // Mudado para string se o ID no JSON for string
 
-  const { data: collaborators, isLoading, error } = useQuery({
-    queryKey: ['collaborators'],
-    queryFn: fetchCollaborators,
-  });
+  // Ordenação local
+  const collaborators = [...collaboratorsData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
 
   const itemsPerPage = 4;
-  const totalPages = collaborators ? Math.ceil(collaborators.length / itemsPerPage) : 0;
+  const totalPages = Math.ceil(collaborators.length / itemsPerPage);
   const startIndex = currentIndex * itemsPerPage;
-  const visibleCollaborators = collaborators ? collaborators.slice(startIndex, startIndex + itemsPerPage) : [];
+  const visibleCollaborators = collaborators.slice(startIndex, startIndex + itemsPerPage);
 
   const goToNext = () => {
     if (totalPages > 0) {
@@ -47,13 +32,13 @@ const CollaboratorsSection = () => {
     }
   };
 
-  const handleCardClick = (collaboratorId: number) => {
+  const handleCardClick = (collaboratorId: string) => {
     setFlippedCard(flippedCard === collaboratorId ? null : collaboratorId);
   };
 
   const openSocialLink = (url: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    window.open(url, '_blank');
+    if (url) window.open(url, '_blank');
   };
 
   return (
@@ -83,19 +68,7 @@ const CollaboratorsSection = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[480px]">
-            {isLoading && (
-              Array.from({ length: 4 }).map((_, i) => (
-                <Card key={i} className="h-[450px]">
-                  <CardContent className="p-0 h-full flex flex-col">
-                    <Skeleton className="w-full h-full rounded-lg" />
-                  </CardContent>
-                </Card>
-              ))
-            )}
-
-            {error && <p className="col-span-4 text-center text-destructive">Não foi possível carregar os colaboradores.</p>}
-            
-            {visibleCollaborators && visibleCollaborators.map((collaborator) => (
+            {visibleCollaborators.map((collaborator) => (
               <div key={collaborator.id} className="perspective-1000 h-[450px]">
                 <div
                   className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d cursor-pointer ${
@@ -107,7 +80,7 @@ const CollaboratorsSection = () => {
                     <CardContent className="p-0 h-full">
                       <div className="relative w-full h-full">
                         <img
-                          src={collaborator.image_url}
+                          src={collaborator.image_url || ''}
                           alt={collaborator.name}
                           className="absolute inset-0 w-full h-full object-cover rounded-lg"
                           loading="lazy"
@@ -143,15 +116,21 @@ const CollaboratorsSection = () => {
                       <div className="border-t border-border pt-4">
                         <div className="flex items-center justify-center space-x-3">
                           <span className="text-sm font-medium text-foreground">Contactar</span>
-                          <Button variant="outline" size="sm" onClick={(e) => openSocialLink(collaborator.social_instagram, e)} className="p-1.5">
-                            <Instagram className="h-3 w-3" />
-                          </Button>
-                          <Button variant="outline" size="sm" onClick={(e) => openSocialLink(collaborator.social_whatsapp, e)} className="p-1.5">
-                            <MessageCircle className="h-3 w-3" />
-                          </Button>
-                          <Button variant="outline" size="sm" onClick={(e) => openSocialLink(`mailto:${collaborator.social_email}`, e)} className="p-1.5">
-                            <Mail className="h-3 w-3" />
-                          </Button>
+                          {collaborator.social_instagram && (
+                            <Button variant="outline" size="sm" onClick={(e) => openSocialLink(collaborator.social_instagram, e)} className="p-1.5">
+                              <Instagram className="h-3 w-3" />
+                            </Button>
+                          )}
+                          {collaborator.social_whatsapp && (
+                            <Button variant="outline" size="sm" onClick={(e) => openSocialLink(collaborator.social_whatsapp, e)} className="p-1.5">
+                              <MessageCircle className="h-3 w-3" />
+                            </Button>
+                          )}
+                          {collaborator.social_email && (
+                            <Button variant="outline" size="sm" onClick={(e) => openSocialLink(`mailto:${collaborator.social_email}`, e)} className="p-1.5">
+                              <Mail className="h-3 w-3" />
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </CardContent>

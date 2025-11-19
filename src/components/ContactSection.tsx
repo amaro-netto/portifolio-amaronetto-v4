@@ -8,7 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 // MODIFICAÇÃO: Removemos os ícones de redes sociais e mantivemos apenas os que são usados em outras partes do componente.
 import {
   Clock,

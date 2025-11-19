@@ -1,39 +1,24 @@
-// src/components/PortfolioSection.tsx (com ordenação por 'position')
-
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ChevronLeft, ChevronRight, ExternalLink, Github, Eye } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 
-// A única alteração está aqui, na cláusula 'order'
-const fetchProjects = async () => {
-  const { data, error } = await supabase
-    .from('projects')
-    .select('*')
-    .order('position', { ascending: true }); // <-- MUDANÇA AQUI
-    
-  if (error) throw new Error(error.message);
-  return data;
-};
+// IMPORTAÇÃO DIRETA DO JSON
+import projectsData from '@/data/projects.json';
 
 const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  const { data: projects, isLoading, error } = useQuery({
-    queryKey: ['projects'],
-    queryFn: fetchProjects,
-  });
+  // Ordena localmente para garantir a visualização correta
+  const projects = [...projectsData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
   const itemsPerPage = 3;
-  const totalPages = projects ? Math.ceil(projects.length / itemsPerPage) : 0;
+  const totalPages = Math.ceil(projects.length / itemsPerPage);
   const startIndex = currentIndex * itemsPerPage;
-  const visibleProjects = projects ? projects.slice(startIndex, startIndex + itemsPerPage) : [];
+  const visibleProjects = projects.slice(startIndex, startIndex + itemsPerPage);
   
   const goToNext = () => {
     if (totalPages > 0) {
@@ -46,7 +31,7 @@ const PortfolioSection = () => {
     }
   };
   
-  const selectedProjectData = projects?.find(p => p.id === selectedProject);
+  const selectedProjectData = projects.find(p => p.id === selectedProject);
 
   return (
     <section id="portfolio" className="section-snap bg-muted/30">
@@ -74,21 +59,7 @@ const PortfolioSection = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
-            {isLoading && (
-              Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="space-y-2">
-                  <Skeleton className="aspect-square w-full" />
-                  <div className="p-4 space-y-2">
-                    <Skeleton className="h-4 w-1/4" />
-                    <Skeleton className="h-6 w-3/4" />
-                  </div>
-                </div>
-              ))
-            )}
-
-            {error && <p className="col-span-3 text-center text-destructive">Não foi possível carregar os projetos.</p>}
-            
-            {visibleProjects && visibleProjects.map((project) => (
+            {visibleProjects.map((project) => (
               <Card 
                 key={project.id}
                 className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-0 bg-secondary backdrop-blur-sm aspect-square flex flex-col"
@@ -97,7 +68,7 @@ const PortfolioSection = () => {
                 <CardContent className="p-0 h-full flex flex-col">
                   <div className="relative overflow-hidden rounded-t-lg h-3/4">
                     <img
-                      src={project.image_card_url} 
+                      src={project.image_card_url || ''} 
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       loading="lazy"
@@ -150,7 +121,7 @@ const PortfolioSection = () => {
               <div className="space-y-6">
                 <div className="relative rounded-lg overflow-hidden">
                   <img
-                    src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url}
+                    src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url || ''}
                     alt={selectedProjectData.title}
                     className="w-full h-64 md:h-80 object-cover"
                   />
@@ -174,8 +145,8 @@ const PortfolioSection = () => {
                   </ul>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-                  <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="flex-1"> Ver Projeto </Button>
-                  <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="flex-1"> Documentação </Button>
+                  {selectedProjectData.project_url && <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="flex-1"> Ver Projeto </Button>}
+                  {selectedProjectData.code_url && <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="flex-1"> Documentação </Button>}
                 </div>
               </div>
             </DialogContent>

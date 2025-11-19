@@ -1,8 +1,4 @@
-// src/components/admin/CollaboratorManager.tsx (com Drag-and-Drop)
-
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -16,15 +12,9 @@ import { useToast } from "@/hooks/use-toast";
 import { CollaboratorForm } from './CollaboratorForm';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// Atualizado para ordenar por 'position'
-const fetchCollaborators = async () => {
-  const { data, error } = await supabase.from('collaborators').select('*').order('position', { ascending: true });
-  if (error) throw new Error(error.message);
-  return data;
-};
+const API_URL = 'http://localhost:3001/api/collaborators';
 
-// Componente para a Linha da Tabela que pode ser arrastada
-const DraggableTableRow = ({ collaborator, onEdit, onDelete }: { collaborator: any, onEdit: (c: any) => void, onDelete: (id: number) => void }) => {
+const DraggableTableRow = ({ collaborator, onEdit, onDelete }: { collaborator: any, onEdit: (c: any) => void, onDelete: (id: string) => void }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: collaborator.id });
   
   const style = {
@@ -60,55 +50,53 @@ const DraggableTableRow = ({ collaborator, onEdit, onDelete }: { collaborator: a
 };
 
 const CollaboratorManager = () => {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
   const [items, setItems] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [collaboratorToEdit, setCollaboratorToEdit] = useState<any | null>(null);
 
-  const { data: collaborators, isLoading, error } = useQuery({ 
-    queryKey: ['collaborators'], 
-    queryFn: fetchCollaborators 
-  });
+  const fetchCollaborators = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+      const sortedData = data.sort((a: any, b: any) => (Number(a.position) || 0) - (Number(b.position) || 0));
+      setItems(sortedData);
+    } catch (error) {
+      toast({ title: "Erro", description: "Erro ao buscar colaboradores.", variant: "destructive" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (collaborators) {
-      setItems(collaborators);
+    fetchCollaborators();
+  }, []);
+
+  const saveAll = async (newItems: any[]) => {
+    try {
+      const itemsWithPosition = newItems.map((item, index) => ({ ...item, position: index + 1 }));
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(itemsWithPosition)
+      });
+      setItems(itemsWithPosition);
+      toast({ title: "Sucesso!", description: "Lista salva localmente." });
+    } catch (error: any) {
+      toast({ title: "Erro!", description: `Não foi possível salvar: ${error.message}`, variant: "destructive" });
     }
-  }, [collaborators]);
+  };
 
-  const updateOrderMutation = useMutation({
-    mutationFn: async (orderedIds: number[]) => {
-      const { error } = await supabase.rpc('update_collaborator_order', { ids: orderedIds });
-      if (error) throw new Error(error.message);
-    },
-    onSuccess: () => {
-      toast({ title: "Sucesso!", description: "Ordem dos colaboradores foi salva." });
-      queryClient.invalidateQueries({ queryKey: ['collaborators'] });
-    },
-    onError: (error: any) => toast({ title: "Erro!", description: `Não foi possível salvar a ordem: ${error.message}`, variant: "destructive" }),
-  });
-
-  const deleteMutation = useMutation({
-    mutationFn: async (collaboratorId: number) => {
-      const { error } = await supabase.from('collaborators').delete().eq('id', collaboratorId);
-      if (error) throw new Error(error.message);
-    },
-    onSuccess: () => {
-      toast({ title: "Sucesso!", description: "Colaborador excluído." });
-      queryClient.invalidateQueries({ queryKey: ['collaborators'] });
-    },
-    onError: (error: any) => {
-      toast({ title: "Erro!", description: error.message, variant: "destructive" });
-    },
-  });
+  const handleDelete = async (id: string) => {
+    const newItems = items.filter(item => item.id !== id);
+    await saveAll(newItems);
+  };
 
   const handleAutoSort = () => {
-    if (!items) return;
-    const sortedItems = [...items].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-    setItems(sortedItems);
-    const newOrderIds = sortedItems.map(item => item.id);
-    updateOrderMutation.mutate(newOrderIds);
+    const sortedItems = [...items].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
+    saveAll(sortedItems);
   };
 
   const sensors = useSensors(useSensor(PointerSensor));
@@ -119,19 +107,20 @@ const CollaboratorManager = () => {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
       const newItems = arrayMove(items, oldIndex, newIndex);
-      setItems(newItems);
-      
-      const newOrderIds = newItems.map(item => item.id);
-      updateOrderMutation.mutate(newOrderIds);
+      saveAll(newItems);
     }
   };
 
   const handleAddNew = () => { setCollaboratorToEdit(null); setIsDialogOpen(true); };
   const handleEdit = (collaborator: any) => { setCollaboratorToEdit(collaborator); setIsDialogOpen(true); };
+
+  const onFormSuccess = () => {
+    setIsDialogOpen(false);
+    fetchCollaborators();
+  };
   
   const renderContent = () => {
     if (isLoading) return (<div className="space-y-4 p-4"><Skeleton className="h-8 w-full" /><Skeleton className="h-8 w-full" /></div>);
-    if (error) return <p className="text-center text-destructive py-4">Erro ao carregar: {error.message}</p>;
     if (!items || items.length === 0) return <p className="text-center text-muted-foreground py-4">Nenhum colaborador cadastrado.</p>;
     
     return (
@@ -148,7 +137,7 @@ const CollaboratorManager = () => {
             </TableHeader>
             <TableBody>
               {items.map((collab) => (
-                <DraggableTableRow key={collab.id} collaborator={collab} onEdit={handleEdit} onDelete={(id) => deleteMutation.mutate(id)} />
+                <DraggableTableRow key={collab.id} collaborator={collab} onEdit={handleEdit} onDelete={handleDelete} />
               ))}
             </TableBody>
           </Table>
@@ -163,7 +152,7 @@ const CollaboratorManager = () => {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>Colaboradores</CardTitle>
-            <CardDescription>Arraste para reordenar ou organize por data.</CardDescription>
+            <CardDescription>Gerencie os colaboradores do arquivo JSON.</CardDescription>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={handleAutoSort}>
@@ -182,7 +171,7 @@ const CollaboratorManager = () => {
           </DialogHeader>
           <CollaboratorForm 
             collaboratorToEdit={collaboratorToEdit} 
-            onFinished={() => setIsDialogOpen(false)} 
+            onFinished={onFormSuccess} 
           />
         </DialogContent>
       </Dialog>
