@@ -4,7 +4,7 @@ import { arrayMove, SortableContext, useSortable, rectSortingStrategy } from '@d
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, Plus, Pencil, Trash2, Image as ImageIcon, Eye, ExternalLink, Github, Monitor, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,131 +16,116 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const API_URL = 'http://localhost:3001/api/projects';
 
-// --- PREVIEW FIEL AO SITE (CARD) ---
-const ProjectCardPreview = ({ project, isDragging }: { project: any, isDragging?: boolean }) => {
+// --- PREVIEW DO CARD (Proporção 4:3) ---
+const ProjectCardPreview = ({ project, actions, isDragging }: { project: any, actions?: React.ReactNode, isDragging?: boolean }) => {
   const [imgError, setImgError] = useState(false);
   useEffect(() => setImgError(false), [project.image_card_url]);
 
-  // As classes aqui são IDÊNTICAS ao PortfolioSection.tsx
   return (
-    <Card 
-      className={`group cursor-pointer hover:shadow-lg transition-all duration-300 border-0 bg-secondary backdrop-blur-sm aspect-square flex flex-col overflow-hidden ${isDragging ? 'opacity-50 ring-2 ring-primary' : ''}`}
-    >
-      <CardContent className="p-0 h-full flex flex-col">
-        <div className="relative overflow-hidden rounded-t-lg h-3/4 bg-muted">
-          {project.image_card_url && !imgError ? (
-            <img
-              src={project.image_card_url} 
-              alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full text-muted-foreground/50">
-                <ImageIcon className="h-10 w-10 mb-2" />
-                <span className="text-[10px]">Imagem Card</span>
-            </div>
-          )}
-          
-          {/* Overlay do Hover igual ao site */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 pointer-events-none">
-            <div className="text-white flex items-center space-x-2">
-                <Eye className="h-4 w-4" />
-                <span className="text-sm font-medium">Ver Detalhes</span>
-            </div>
+    <Card className={`overflow-hidden h-full flex flex-col border-muted-foreground/20 shadow-sm transition-all bg-background ${isDragging ? 'opacity-50 ring-2 ring-primary' : 'hover:shadow-md'}`}>
+      {/* Proporção 4:3 para o Card */}
+      <div className="relative aspect-[4/3] w-full bg-muted flex items-center justify-center overflow-hidden group">
+        {project.image_card_url && !imgError ? (
+          <img
+            src={project.image_card_url}
+            alt={project.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="flex flex-col items-center text-muted-foreground/50 p-4 text-center">
+            <ImageIcon className="h-8 w-8 mb-2" />
+            <span className="text-[10px]">Card (4:3)</span>
           </div>
+        )}
+        
+        <div className="absolute top-2 left-2 flex flex-wrap gap-1 max-w-[90%]">
+          {project.type && <Badge variant="secondary" className="shadow-sm text-[10px] bg-background/80 backdrop-blur">{project.type}</Badge>}
+          {project.year && <Badge variant="outline" className="shadow-sm text-[10px] bg-background/80 backdrop-blur border-0">{project.year}</Badge>}
+        </div>
+      </div>
+      
+      <div className="p-4 flex flex-col flex-1">
+        <h3 className="font-bold text-base mb-1 line-clamp-1" title={project.title}>{project.title || "Título do Projeto"}</h3>
+        
+        <div className="flex flex-wrap gap-1 mb-3">
+          {project.tags?.slice(0, 3).map((tag: string, i: number) => (
+            <span key={i} className="text-[10px] bg-secondary text-secondary-foreground px-1.5 py-0.5 rounded-sm">
+              {tag}
+            </span>
+          ))}
+          {project.tags?.length > 3 && <span className="text-[10px] text-muted-foreground">+{project.tags.length - 3}</span>}
         </div>
 
-        <div className="p-4 h-1/4 flex flex-col justify-center bg-secondary">
-          <div className="flex items-center justify-between mb-2">
-            <Badge variant="outline" className="text-xs text-blue-500 border-white/30 bg-transparent">
-                {project.type || "Tipo"}
-            </Badge>
-            <span className="text-xs text-muted-foreground">{project.year || "Ano"}</span>
-          </div>
-          <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-1">
-            {project.title || "Título do Projeto"}
-          </h3>                    
-        </div>
-      </CardContent>
+        <p className="text-xs text-muted-foreground line-clamp-2 mb-4 flex-1 leading-relaxed">
+          {project.description || "Descrição breve..."}
+        </p>
+        
+        {actions && <div className="mt-auto pt-3 border-t border-border flex items-center justify-between gap-2">{actions}</div>}
+      </div>
     </Card>
   );
 };
 
-// --- PREVIEW FIEL AO SITE (MODAL) ---
+// --- PREVIEW DO MODAL (Proporção 21:9) ---
 const ProjectModalPreview = ({ project }: { project: any }) => {
-    const [imgError, setImgError] = useState(false);
-    useEffect(() => setImgError(false), [project.image_modal_url]);
+  const [imgError, setImgError] = useState(false);
+  useEffect(() => setImgError(false), [project.image_modal_url]);
 
-    // Estrutura copiada do DialogContent do PortfolioSection.tsx
-    return (
-        <div className="bg-background rounded-lg border shadow-sm p-6 max-h-full overflow-y-auto">
-            <div className="mb-6">
-                <h2 className="text-2xl font-bold">{project.title || "Título do Projeto"}</h2>
-                <div className="flex items-center space-x-4 text-base mt-2 text-muted-foreground">
-                  <Badge>{project.type || "Tipo"}</Badge>
-                  <span>{project.year || "Ano"}</span>
+  return (
+    <div className="bg-background rounded-xl border shadow-sm overflow-hidden flex flex-col h-full">
+        {/* Proporção 21:9 para o Modal */}
+        <div className="relative w-full aspect-[21/9] bg-muted flex items-center justify-center overflow-hidden">
+            {project.image_modal_url && !imgError ? (
+                <img
+                    src={project.image_modal_url}
+                    alt="Modal Cover"
+                    className="w-full h-full object-cover"
+                    onError={() => setImgError(true)}
+                />
+            ) : (
+                <div className="flex flex-col items-center text-muted-foreground/50">
+                    <ImageIcon className="h-10 w-10 mb-2" />
+                    <span className="text-xs">Imagem Modal (21:9)</span>
                 </div>
-            </div>
-
-            <div className="space-y-6">
-                <div className="relative rounded-lg overflow-hidden aspect-video bg-muted">
-                   {/* Tenta usar modal, se não tiver usa card, igual ao site */}
-                   {(project.image_modal_url || project.image_card_url) && !imgError ? (
-                       <img
-                        src={project.image_modal_url || project.image_card_url}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        onError={() => setImgError(true)}
-                      />
-                   ) : (
-                       <div className="flex flex-col items-center justify-center h-full text-muted-foreground/50">
-                            <ImageIcon className="h-12 w-12 mb-2" />
-                            <span className="text-xs">Imagem Modal ou Card</span>
-                       </div>
-                   )}
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tags?.length > 0 ? project.tags.map((tag: string, i: number) => (
-                      <Badge key={i} variant="secondary">{tag}</Badge>
-                  )) : <Badge variant="outline">Tags aparecerão aqui</Badge>}
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-lg mb-3">Sobre o Projeto</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                      {project.description || "Descrição do projeto..."}
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-lg mb-3">Principais Funcionalidades</h3>
-                  <ul className="grid md:grid-cols-2 gap-2 text-sm text-muted-foreground">
-                    {project.features?.length > 0 ? project.features.map((feature: string, idx: number) => (
-                      <li key={idx} className="flex items-start space-x-2">
-                        <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current flex-shrink-0"></span>
-                        <span>{feature}</span>
-                      </li>
-                    )) : (
-                        <>
-                            <li className="flex items-start space-x-2"><span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span><span>Funcionalidade 1</span></li>
-                            <li className="flex items-start space-x-2"><span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current"></span><span>Funcionalidade 2</span></li>
-                        </>
-                    )}
-                  </ul>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-                  <Button className="flex-1 opacity-50 cursor-not-allowed" title="Botão de exemplo"> Ver Projeto </Button>
-                  <Button variant="outline" className="flex-1 opacity-50 cursor-not-allowed" title="Botão de exemplo"> Documentação </Button>
+            )}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 pt-16 text-white">
+                <h2 className="text-2xl font-bold">{project.title || "Título no Modal"}</h2>
+                <div className="flex items-center gap-2 text-sm opacity-90 mt-1">
+                    <Badge variant="outline" className="text-white border-white/40">{project.type}</Badge>
+                    <span>{project.year}</span>
                 </div>
             </div>
         </div>
-    );
+        <div className="p-6 space-y-6">
+            <div className="flex gap-2">
+                {project.tags?.map((tag: string, i: number) => <Badge key={i} variant="secondary">{tag}</Badge>)}
+            </div>
+            <div className="space-y-3">
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                    {project.description || "A descrição completa do projeto aparecerá aqui..."}
+                </p>
+                {/* Exibe funcionalidades se houver */}
+                {project.features && project.features.length > 0 && (
+                   <ul className="list-disc list-inside text-xs text-muted-foreground mt-2">
+                      {project.features.map((feat: string, i: number) => <li key={i}>{feat}</li>)}
+                   </ul>
+                )}
+            </div>
+            <div className="flex gap-3 pt-2">
+                <Button className="flex-1 gap-2" disabled>
+                    <ExternalLink className="h-4 w-4" /> Ver Projeto
+                </Button>
+                <Button variant="outline" className="flex-1 gap-2" disabled>
+                    <Github className="h-4 w-4" /> Código
+                </Button>
+            </div>
+        </div>
+    </div>
+  );
 };
 
-// --- DRAGGABLE WRAPPER (Para a lista) ---
+// --- DRAGGABLE WRAPPER ---
 const SortableProjectItem = ({ project, onEdit, onDelete }: any) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: project.id });
   
@@ -151,22 +136,26 @@ const SortableProjectItem = ({ project, onEdit, onDelete }: any) => {
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="relative h-full group/item">
-       {/* Na lista, usamos o mesmo Card Preview */}
-       <ProjectCardPreview project={project} isDragging={isDragging} />
-       
-       {/* Botões de Ação Flutuantes (só aparecem no hover do item na lista) */}
-       <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover/item:opacity-100 transition-opacity z-20">
-            <button {...attributes} {...listeners} className="bg-background/80 backdrop-blur p-2 rounded-md shadow-sm hover:bg-background cursor-grab active:cursor-grabbing text-muted-foreground">
-                <GripVertical className="h-4 w-4" />
-            </button>
-            <Button size="icon" variant="secondary" className="h-8 w-8 shadow-sm" onClick={() => onEdit(project)}>
-                <Pencil className="h-3.5 w-3.5" />
-            </Button>
-            <Button size="icon" variant="destructive" className="h-8 w-8 shadow-sm" onClick={() => onDelete(project.id)}>
-                <Trash2 className="h-3.5 w-3.5" />
-            </Button>
-       </div>
+    <div ref={setNodeRef} style={style} className="relative h-full">
+       <ProjectCardPreview 
+         project={project} 
+         isDragging={isDragging}
+         actions={
+            <>
+               <button {...attributes} {...listeners} className="cursor-grab hover:bg-muted p-1.5 rounded-md touch-none">
+                  <GripVertical className="h-4 w-4 text-muted-foreground" />
+               </button>
+               <div className="flex gap-2">
+                 <Button variant="outline" size="sm" className="h-8 px-2" onClick={() => onEdit(project)}>
+                    <Pencil className="h-3.5 w-3.5 mr-1.5" />
+                 </Button>
+                 <Button variant="destructive" size="sm" className="h-8 px-2" onClick={() => onDelete(project.id)}>
+                    <Trash2 className="h-3.5 w-3.5" />
+                 </Button>
+               </div>
+            </>
+         }
+       />
     </div>
   );
 };
@@ -197,7 +186,7 @@ const ProjectManager = () => {
       const sortedData = data.sort((a: any, b: any) => (Number(a.position) || 0) - (Number(b.position) || 0));
       setItems(sortedData);
     } catch (error) {
-      toast({ title: "Erro", description: "Servidor local offline?", variant: "destructive" });
+      toast({ title: "Erro", description: "Falha ao carregar projetos.", variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
@@ -215,13 +204,13 @@ const ProjectManager = () => {
       setItems(itemsWithPosition);
       return true;
     } catch (error) {
-      toast({ title: "Erro", description: "Erro ao salvar.", variant: "destructive" });
+      toast({ title: "Erro", description: "Erro ao salvar no servidor local.", variant: "destructive" });
       return false;
     }
   };
 
   const handleSaveItem = async () => {
-    if (!formData.title) return toast({ title: "Erro", description: "Título obrigatório", variant: "destructive" });
+    if (!formData.title) return toast({ title: "Erro", description: "O título é obrigatório", variant: "destructive" });
     
     const newItem = editingId 
       ? { ...formData, id: editingId }
@@ -243,7 +232,7 @@ const ProjectManager = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if(!confirm("Excluir projeto?")) return;
+    if(!confirm("Tem certeza que deseja excluir este projeto?")) return;
     const newItems = items.filter(item => item.id !== id);
     if(await saveAll(newItems)) toast({ title: "Deletado", description: "Projeto removido." });
   };
@@ -275,13 +264,15 @@ const ProjectManager = () => {
 
   const handleAddTag = () => {
     if (!tagInput.trim()) return;
-    setFormData({ ...formData, tags: [...(formData.tags || []), tagInput.trim()] });
+    const newTags = [...(formData.tags || []), tagInput.trim()];
+    setFormData({ ...formData, tags: newTags });
     setTagInput("");
   };
 
   const handleAddFeature = () => {
     if (!featureInput.trim()) return;
-    setFormData({ ...formData, features: [...(formData.features || []), featureInput.trim()] });
+    const newFeatures = [...(formData.features || []), featureInput.trim()];
+    setFormData({ ...formData, features: newFeatures });
     setFeatureInput("");
   };
 
@@ -295,103 +286,109 @@ const ProjectManager = () => {
                   <Plus className="h-5 w-5" /> Novo Projeto
                </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-7xl max-h-[95vh] overflow-hidden flex flex-col p-0 gap-0">
-               <div className="p-6 border-b flex-shrink-0 bg-background z-10">
-                   <DialogHeader>
-                      <DialogTitle>{editingId ? "Editar Projeto" : "Novo Projeto"}</DialogTitle>
-                      <DialogDescription>Edite os detalhes e veja como ficará no site em tempo real.</DialogDescription>
-                   </DialogHeader>
-               </div>
+            <DialogContent className="max-w-6xl max-h-[95vh] overflow-y-auto">
+               <DialogHeader>
+                  <DialogTitle>{editingId ? "Editar Projeto" : "Novo Projeto"}</DialogTitle>
+                  <DialogDescription>Configure as imagens (Card e Modal) e visualize o resultado.</DialogDescription>
+               </DialogHeader>
 
-               <div className="flex-1 overflow-hidden grid lg:grid-cols-12 h-full">
-                  {/* COLUNA ESQUERDA: FORMULÁRIO (Scrollável) */}
-                  <div className="lg:col-span-5 overflow-y-auto p-6 border-r space-y-6 bg-muted/10">
+               <div className="grid lg:grid-cols-12 gap-8 py-4">
+                  {/* FORMULÁRIO (5 COLUNAS) */}
+                  <div className="lg:col-span-5 space-y-5">
                      <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                            <Label>Título</Label>
-                           <Input value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
+                           <Input value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} placeholder="Nome do projeto" />
                         </div>
                         <div className="space-y-2">
                            <Label>Ano</Label>
-                           <Input value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} />
+                           <Input value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} placeholder="2025" />
                         </div>
                      </div>
                      
                      <div className="space-y-2">
                         <Label>Tipo</Label>
-                        <Input value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} placeholder="Ex: Web App" />
+                        <Input value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} placeholder="Web App" />
                      </div>
 
-                     <div className="space-y-2">
-                        <Label>Imagens</Label>
-                        <div className="grid gap-3 p-3 border rounded bg-background">
-                            <Input value={formData.image_card_url} onChange={e => setFormData({...formData, image_card_url: e.target.value})} placeholder="URL Card (Quadrado)" className="text-xs" />
-                            <Input value={formData.image_modal_url} onChange={e => setFormData({...formData, image_modal_url: e.target.value})} placeholder="URL Modal (Wide)" className="text-xs" />
+                     <div className="p-4 border rounded-lg bg-muted/20 space-y-4">
+                        <h4 className="font-medium text-sm flex items-center gap-2"><ImageIcon className="h-4 w-4" /> Imagens</h4>
+                        <div className="space-y-2">
+                            <Label className="text-xs text-muted-foreground">Card (4:3)</Label>
+                            <Input value={formData.image_card_url} onChange={e => setFormData({...formData, image_card_url: e.target.value})} placeholder="URL..." />
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="text-xs text-muted-foreground">Modal (21:9)</Label>
+                            <Input value={formData.image_modal_url} onChange={e => setFormData({...formData, image_modal_url: e.target.value})} placeholder="URL..." />
                         </div>
                      </div>
 
                      <div className="space-y-2">
                         <Label>Descrição</Label>
-                        <Textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} rows={4} />
+                        <Textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} rows={3} />
                      </div>
 
                      {/* Tags */}
                      <div className="space-y-2">
                         <Label>Tags</Label>
                         <div className="flex gap-2">
-                           <Input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddTag())} placeholder="Nova tag..." />
-                           <Button type="button" onClick={handleAddTag} size="sm" variant="secondary">Add</Button>
+                           <Input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddTag())} placeholder="Add Tag..." />
+                           <Button type="button" onClick={handleAddTag} variant="secondary" size="sm">Add</Button>
                         </div>
-                        <div className="flex flex-wrap gap-1">
+                        <div className="flex flex-wrap gap-1 mt-2">
                            {formData.tags?.map((tag: string, i: number) => (
-                              <Badge key={i} variant="secondary" className="cursor-pointer hover:bg-destructive hover:text-white" onClick={() => setFormData({...formData, tags: formData.tags.filter((t: string) => t !== tag)})}>{tag} ×</Badge>
+                              <Badge key={i} variant="secondary" className="cursor-pointer hover:bg-destructive hover:text-white" onClick={() => setFormData({...formData, tags: formData.tags.filter((t: string) => t !== tag)})}>
+                                 {tag} ×
+                              </Badge>
                            ))}
                         </div>
                      </div>
 
-                     {/* Features (Funcionalidades) */}
+                     {/* Features */}
                      <div className="space-y-2">
-                        <Label>Funcionalidades (Lista)</Label>
+                        <Label>Funcionalidades</Label>
                         <div className="flex gap-2">
                            <Input value={featureInput} onChange={e => setFeatureInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddFeature())} placeholder="Nova funcionalidade..." />
-                           <Button type="button" onClick={handleAddFeature} size="sm" variant="secondary">Add</Button>
+                           <Button type="button" onClick={handleAddFeature} variant="secondary" size="sm">Add</Button>
                         </div>
-                        <ul className="list-disc list-inside text-xs text-muted-foreground space-y-1">
+                        <ul className="list-disc list-inside text-xs text-muted-foreground space-y-1 mt-2">
                            {formData.features?.map((feat: string, i: number) => (
-                              <li key={i} className="cursor-pointer hover:text-destructive truncate" onClick={() => setFormData({...formData, features: formData.features.filter((f: string) => f !== feat)})}>{feat}</li>
+                              <li key={i} className="cursor-pointer hover:text-destructive" onClick={() => setFormData({...formData, features: formData.features.filter((f: string) => f !== feat)})}>{feat}</li>
                            ))}
                         </ul>
                      </div>
 
                      <div className="grid grid-cols-2 gap-4 pt-2">
-                        <div className="space-y-2"><Label>Link Projeto</Label><Input value={formData.project_url} onChange={e => setFormData({...formData, project_url: e.target.value})} /></div>
-                        <div className="space-y-2"><Label>Link Código</Label><Input value={formData.code_url} onChange={e => setFormData({...formData, code_url: e.target.value})} /></div>
+                        <div className="space-y-2">
+                           <Label>Link Projeto</Label>
+                           <Input value={formData.project_url} onChange={e => setFormData({...formData, project_url: e.target.value})} />
+                        </div>
+                        <div className="space-y-2">
+                           <Label>Link Código</Label>
+                           <Input value={formData.code_url} onChange={e => setFormData({...formData, code_url: e.target.value})} />
+                        </div>
                      </div>
                   </div>
 
-                  {/* COLUNA DIREITA: PREVIEW (Fixo) */}
-                  <div className="lg:col-span-7 p-6 bg-muted/30 flex flex-col h-full overflow-hidden">
+                  {/* PREVIEW (7 COLUNAS) */}
+                  <div className="lg:col-span-7 space-y-2">
+                     <Label className="flex items-center gap-2 text-muted-foreground"><Eye className="h-4 w-4" /> Visualização em Tempo Real</Label>
+                     
                      <Tabs value={previewMode} onValueChange={setPreviewMode} className="w-full h-full flex flex-col">
-                        <div className="flex items-center justify-between mb-4 flex-shrink-0">
-                            <Label className="flex items-center gap-2 text-muted-foreground"><Eye className="h-4 w-4" /> Visualização Fiel</Label>
-                            <TabsList>
-                                <TabsTrigger value="card" className="text-xs"><Smartphone className="h-3 w-3 mr-2" /> Card</TabsTrigger>
-                                <TabsTrigger value="modal" className="text-xs"><Monitor className="h-3 w-3 mr-2" /> Modal</TabsTrigger>
-                            </TabsList>
-                        </div>
+                        <TabsList className="grid w-full grid-cols-2 mb-4">
+                            <TabsTrigger value="card" className="gap-2"><Smartphone className="h-4 w-4" /> Card (4:3)</TabsTrigger>
+                            <TabsTrigger value="modal" className="gap-2"><Monitor className="h-4 w-4" /> Modal (21:9)</TabsTrigger>
+                        </TabsList>
 
-                        <div className="flex-1 flex items-center justify-center overflow-hidden border-2 border-dashed border-muted-foreground/20 rounded-xl bg-background/50 relative">
-                            {/* Background pattern opcional para dar destaque */}
-                            <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-
-                            <TabsContent value="card" className="mt-0 w-full max-w-[350px] z-10 animate-in zoom-in-95 duration-300">
-                                <div className="pointer-events-none select-none">
+                        <div className="flex-1 bg-muted/30 border-2 border-dashed border-muted rounded-xl p-8 flex items-center justify-center min-h-[500px]">
+                            <TabsContent value="card" className="mt-0 w-full max-w-[300px]">
+                                <div className="pointer-events-none select-none shadow-xl transform transition-all hover:scale-105">
                                     <ProjectCardPreview project={formData} />
                                 </div>
                             </TabsContent>
                             
-                            <TabsContent value="modal" className="mt-0 w-full max-w-3xl h-[90%] z-10 animate-in zoom-in-95 duration-300">
-                                <div className="pointer-events-none select-none h-full">
+                            <TabsContent value="modal" className="mt-0 w-full h-full max-w-4xl">
+                                <div className="pointer-events-none select-none shadow-2xl h-full flex items-center">
                                     <ProjectModalPreview project={formData} />
                                 </div>
                             </TabsContent>
@@ -400,15 +397,15 @@ const ProjectManager = () => {
                   </div>
                </div>
                
-               <div className="p-4 border-t bg-background flex justify-end gap-3 flex-shrink-0">
+               <div className="flex justify-end gap-3 pt-4 border-t">
                   <Button variant="ghost" onClick={() => setIsDialogOpen(false)}>Cancelar</Button>
-                  <Button onClick={handleSaveItem} className="min-w-[150px]">{editingId ? "Salvar Alterações" : "Criar Projeto"}</Button>
+                  <Button onClick={handleSaveItem}>{editingId ? "Salvar Alterações" : "Criar Projeto"}</Button>
                </div>
             </DialogContent>
          </Dialog>
       </div>
 
-      {/* LISTA PRINCIPAL (Grid) */}
+      {/* GRID LIST */}
       {isLoading ? (
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1,2,3].map(i => <Skeleton key={i} className="h-[300px] w-full rounded-xl" />)}

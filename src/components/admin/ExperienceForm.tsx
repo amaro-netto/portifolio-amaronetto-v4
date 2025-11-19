@@ -1,131 +1,172 @@
-// src/components/admin/ExperienceForm.tsx (com correção de fundo e mais ícones)
-
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Plus, X, Image as ImageIcon } from "lucide-react";
 
-const experienceSchema = z.object({
-  role: z.string().min(3, { message: "O cargo é obrigatório." }),
-  company: z.string().optional(),
-  years: z.string().optional(),
-  description: z.string().optional(),
-  achievements: z.string().optional(),
-  technologies: z.string().optional(),
-  icon: z.string({ required_error: "Selecione um ícone." }),
-});
+const API_URL = 'http://localhost:3001/api/experiences';
 
-const stringToArrayByNewline = (str: string | undefined) => str ? str.split('\n').map(item => item.trim()).filter(Boolean) : [];
+interface ExperienceFormProps {
+  experienceToEdit?: any;
+  onFinished: () => void;
+}
 
-export function ExperienceForm({ experienceToEdit, onFinished }: { experienceToEdit?: any, onFinished: () => void }) {
-  const queryClient = useQueryClient();
+export function ExperienceForm({ experienceToEdit, onFinished }: ExperienceFormProps) {
   const { toast } = useToast();
-
-  const form = useForm<z.infer<typeof experienceSchema>>({
-    resolver: zodResolver(experienceSchema),
-    defaultValues: {
-      role: experienceToEdit?.role || "",
-      company: experienceToEdit?.company || "",
-      years: experienceToEdit?.years || "",
-      description: experienceToEdit?.description || "",
-      achievements: experienceToEdit?.achievements?.join('\n') || "",
-      technologies: experienceToEdit?.technologies?.join('\n') || "",
-      icon: experienceToEdit?.icon || undefined,
-    },
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const [formData, setFormData] = useState({
+    role: "",
+    company: "",
+    years: "",
+    description: "",
+    icon: "", // Agora será a URL
+    achievements: [] as string[],
+    technologies: [] as string[]
   });
 
-  const saveExperienceMutation = useMutation({
-    mutationFn: async (values: z.infer<typeof experienceSchema>) => {
-      const experienceData = {
-        ...values,
-        achievements: stringToArrayByNewline(values.achievements),
-        technologies: stringToArrayByNewline(values.technologies),
-      };
+  const [achievementInput, setAchievementInput] = useState("");
+  const [techInput, setTechInput] = useState("");
 
-      if (experienceToEdit) {
-        const { error } = await supabase.from('experiences').update(experienceData).eq('id', experienceToEdit.id);
-        if (error) throw error;
+  useEffect(() => {
+    if (experienceToEdit) {
+      setFormData({
+        role: experienceToEdit.role || "",
+        company: experienceToEdit.company || "",
+        years: experienceToEdit.years || "",
+        description: experienceToEdit.description || "",
+        icon: experienceToEdit.icon || "",
+        achievements: experienceToEdit.achievements || [],
+        technologies: experienceToEdit.technologies || []
+      });
+    }
+  }, [experienceToEdit]);
+
+  const handleAddAchievement = () => {
+    if (!achievementInput.trim()) return;
+    setFormData(prev => ({ ...prev, achievements: [...prev.achievements, achievementInput.trim()] }));
+    setAchievementInput("");
+  };
+
+  const handleAddTech = () => {
+    if (!techInput.trim()) return;
+    setFormData(prev => ({ ...prev, technologies: [...prev.technologies, techInput.trim()] }));
+    setTechInput("");
+  };
+
+  const removeItem = (field: 'achievements' | 'technologies', index: number) => {
+    setFormData(prev => ({ ...prev, [field]: prev[field].filter((_, i) => i !== index) }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(API_URL);
+      const currentList = await response.json();
+
+      let newList;
+      // Converte para string para comparação segura
+      const editId = experienceToEdit ? String(experienceToEdit.id) : null;
+
+      if (editId) {
+        newList = currentList.map((item: any) => 
+          String(item.id) === editId ? { ...formData, id: item.id, created_at: item.created_at, position: item.position } : item
+        );
       } else {
-        const { error } = await supabase.from('experiences').insert(experienceData);
-        if (error) throw error;
+        const newItem = { 
+          ...formData, 
+          id: Date.now().toString(), 
+          created_at: new Date().toISOString(),
+          position: 0 
+        };
+        newList = [newItem, ...currentList];
       }
-    },
-    onSuccess: () => {
-      toast({ title: "Sucesso!", description: "Experiência salva." });
-      queryClient.invalidateQueries({ queryKey: ['experiences'] });
-      onFinished();
-    },
-    onError: (error) => {
-      toast({ title: "Erro!", description: error.message, variant: "destructive" });
-    },
-  });
 
-  function onSubmit(values: z.infer<typeof experienceSchema>) {
-    saveExperienceMutation.mutate(values);
-  }
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newList)
+      });
+
+      toast({ title: "Sucesso!", description: "Salvo com sucesso." });
+      onFinished();
+    } catch (error) {
+      console.error(error);
+      toast({ title: "Erro", description: "Falha ao salvar.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-h-[70vh] overflow-y-auto pr-4">
-        {/* ... outros campos do formulário ... */}
-        <FormField control={form.control} name="role" render={({ field }) => (
-            <FormItem><FormLabel>Cargo</FormLabel><FormControl><Input placeholder="Tech Lead & Designer" {...field} /></FormControl><FormMessage /></FormItem>
-        )} />
-        <div className="grid grid-cols-2 gap-4">
-            <FormField control={form.control} name="company" render={({ field }) => (
-                <FormItem><FormLabel>Empresa</FormLabel><FormControl><Input placeholder="Freelancer" {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="years" render={({ field }) => (
-                <FormItem><FormLabel>Período</FormLabel><FormControl><Input placeholder="2022 - Atual" {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
+    <form onSubmit={handleSubmit} className="space-y-4 py-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Cargo</Label>
+          <Input value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} required />
         </div>
-        <FormField control={form.control} name="icon" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Ícone</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl><SelectTrigger><SelectValue placeholder="Selecione um ícone para a timeline" /></SelectTrigger></FormControl>
-              {/* CORREÇÃO 2: Usando uma cor sólida diretamente */}
-                <SelectContent className="bg-white dark:bg-slate-900">
-                {/* CORREÇÃO 2: Adicionados mais ícones */}
-                <SelectItem value="Code">TI: Desenvolvimento</SelectItem>
-                <SelectItem value="Database">TI: Banco de Dados</SelectItem>
-                <SelectItem value="Server">TI: Servidores / Infra</SelectItem>
-                <SelectItem value="Network">TI: Redes / DevOps</SelectItem>
-                <SelectItem value="Cloud">TI: Nuvem</SelectItem>
-                <SelectItem value="Shield">TI: Segurança</SelectItem>
-                <SelectItem value="LifeBuoy">TI: Suporte</SelectItem>
-                <SelectItem value="Briefcase">Gestão: Negócios / Consultoria</SelectItem>
-                <SelectItem value="Users">Gestão: Liderança / Equipes</SelectItem>
-                <SelectItem value="ClipboardList">Gestão: Projetos</SelectItem>
-                <SelectItem value="Megaphone">Marketing: Campanhas</SelectItem>
-                <SelectItem value="BarChart3">Marketing: Análise de Dados</SelectItem>
-                <SelectItem value="PenTool">Design: Vetorial / UI</SelectItem>
-                <SelectItem value="Palette">Design: Identidade Visual</SelectItem>
-                <SelectItem value="LayoutTemplate">Design: Layout / UX</SelectItem>
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )} />
-        <FormField control={form.control} name="description" render={({ field }) => (
-            <FormItem><FormLabel>Descrição</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
-        )} />
-        <FormField control={form.control} name="achievements" render={({ field }) => (
-            <FormItem><FormLabel>Principais Conquistas (uma por linha)</FormLabel><FormControl><Textarea placeholder="Liste cada conquista em uma nova linha..." {...field} rows={4} /></FormControl><FormMessage /></FormItem>
-        )} />
-        <FormField control={form.control} name="technologies" render={({ field }) => (
-            <FormItem><FormLabel>Tecnologias (uma por linha)</FormLabel><FormControl><Textarea placeholder="Liste cada tecnologia em uma nova linha..." {...field} rows={4} /></FormControl><FormMessage /></FormItem>
-        )} />
-        <Button type="submit" disabled={saveExperienceMutation.isPending}>
-          {saveExperienceMutation.isPending ? 'Salvando...' : 'Salvar Experiência'}
-        </Button>
-      </form>
-    </Form>
+        <div className="space-y-2">
+          <Label>Empresa</Label>
+          <Input value={formData.company} onChange={e => setFormData({...formData, company: e.target.value})} required />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Período</Label>
+          <Input value={formData.years} onChange={e => setFormData({...formData, years: e.target.value})} required />
+        </div>
+        
+        {/* CAMPO DE URL DO ÍCONE COM PREVIEW */}
+        <div className="space-y-2">
+            <Label>URL do Ícone</Label>
+            <div className="flex gap-2 items-center">
+                <div className="flex-1">
+                    <Input 
+                        value={formData.icon} 
+                        onChange={e => setFormData({...formData, icon: e.target.value})} 
+                        placeholder="https://exemplo.com/icone.svg" 
+                    />
+                </div>
+                {/* Preview da Imagem */}
+                <div className="h-10 w-10 bg-muted rounded border flex items-center justify-center overflow-hidden shrink-0">
+                    {formData.icon ? (
+                        <img src={formData.icon} alt="Preview" className="h-6 w-6 object-contain" onError={(e) => e.currentTarget.style.display = 'none'} />
+                    ) : (
+                        <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                    )}
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Descrição</Label>
+        <Textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} rows={3} />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Tecnologias</Label>
+        <div className="flex gap-2">
+          <Input value={techInput} onChange={e => setTechInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddTech())} placeholder="Add..." />
+          <Button type="button" onClick={handleAddTech} size="sm" variant="secondary"><Plus className="h-4 w-4" /></Button>
+        </div>
+        <div className="flex flex-wrap gap-2 mt-2">
+          {formData.technologies.map((item, idx) => (
+            <Badge key={idx} variant="secondary" className="cursor-pointer hover:bg-destructive hover:text-white" onClick={() => removeItem('technologies', idx)}>{item} ×</Badge>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex justify-end gap-2 pt-4">
+        <Button type="button" variant="outline" onClick={onFinished}>Cancelar</Button>
+        <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Salvando..." : "Salvar"}</Button>
+      </div>
+    </form>
   );
 }

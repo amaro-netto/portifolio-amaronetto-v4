@@ -1,57 +1,105 @@
 import { useState, useEffect } from 'react';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, useSortable, rectSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, ArrowDownUp } from 'lucide-react';
+import { GripVertical, Plus, Pencil, Trash2, Briefcase, Building } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { ExperienceForm } from './ExperienceForm';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ExperienceForm } from './ExperienceForm';
 
 const API_URL = 'http://localhost:3001/api/experiences';
 
-const DraggableTableRow = ({ experience, onEdit, onDelete }: { experience: any, onEdit: (exp: any) => void, onDelete: (id: string) => void }) => {
+// --- CARD VISUAL ---
+const ExperienceCard = ({ experience, actions, isDragging }: { experience: any, actions?: React.ReactNode, isDragging?: boolean }) => {
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [experience.icon]);
+
+  return (
+    <Card className={`h-full border-muted-foreground/20 shadow-sm bg-card transition-all ${isDragging ? 'opacity-50 ring-2 ring-primary' : 'hover:shadow-md'}`}>
+      <CardContent className="p-5 flex flex-col h-full">
+        <div className="flex items-start justify-between mb-4">
+            <div className="bg-primary/10 p-3 rounded-lg h-12 w-12 flex items-center justify-center overflow-hidden shrink-0">
+                {experience.icon && !imgError ? (
+                    <img 
+                        src={experience.icon} 
+                        alt="icon" 
+                        className="h-full w-full object-contain" 
+                        onError={() => setImgError(true)} 
+                    />
+                ) : (
+                    <Briefcase className="h-5 w-5 text-primary" />
+                )}
+            </div>
+            {experience.years && <Badge variant="outline" className="text-xs">{experience.years}</Badge>}
+        </div>
+        
+        <h3 className="font-bold text-lg leading-tight mb-1">{experience.role}</h3>
+        <div className="flex items-center text-sm text-muted-foreground mb-3">
+            <Building className="h-3 w-3 mr-1" />
+            {experience.company}
+        </div>
+
+        <p className="text-xs text-muted-foreground line-clamp-3 mb-4 leading-relaxed flex-1">
+            {experience.description}
+        </p>
+
+        {/* CORREÇÃO AQUI: Tags com melhor contraste */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
+            {experience.technologies?.slice(0, 3).map((tech: string, i: number) => (
+                <Badge 
+                  key={i} 
+                  variant="secondary" 
+                  className="text-[10px] px-1.5 py-0.5 font-normal bg-muted text-foreground hover:bg-muted/80"
+                >
+                    {tech}
+                </Badge>
+            ))}
+            {experience.technologies?.length > 3 && (
+              <span className="text-[10px] text-muted-foreground self-center">
+                +{experience.technologies.length - 3}
+              </span>
+            )}
+        </div>
+
+        {actions && <div className="mt-auto pt-3 border-t flex justify-end gap-2">{actions}</div>}
+      </CardContent>
+    </Card>
+  );
+};
+
+// --- ITEM ARRASTÁVEL ---
+const SortableExperienceItem = ({ experience, onEdit, onDelete }: any) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: experience.id });
   
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 999 : 'auto',
   };
 
   return (
-    <TableRow ref={setNodeRef} style={style} {...attributes}>
-      <TableCell className="w-10">
-        <button {...listeners} className="cursor-grab p-2 active:cursor-grabbing">
-          <GripVertical className="h-5 w-5 text-muted-foreground" />
-        </button>
-      </TableCell>
-      <TableCell className="font-medium">{experience.role}</TableCell>
-      <TableCell>{experience.company}</TableCell>
-      <TableCell>{experience.years}</TableCell>
-      <TableCell className="text-right space-x-2">
-        <Button variant="outline" size="sm" onClick={() => onEdit(experience)}>Editar</Button>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="destructive" size="sm">Excluir</Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-              <AlertDialogDescription>Esta ação não pode ser desfeita.</AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={() => onDelete(experience.id)}>Sim, excluir</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </TableCell>
-    </TableRow>
+    <div ref={setNodeRef} style={style} className="relative h-full group">
+       <ExperienceCard experience={experience} isDragging={isDragging} actions={
+           <>
+               <Button variant="outline" size="sm" className="h-8 px-2" onClick={() => onEdit(experience)}>
+                    <Pencil className="h-3.5 w-3.5 mr-1.5" /> Editar
+               </Button>
+               <Button variant="destructive" size="sm" className="h-8 px-2" onClick={() => onDelete(experience.id)}>
+                    <Trash2 className="h-3.5 w-3.5" />
+               </Button>
+           </>
+       } />
+       <button {...attributes} {...listeners} className="absolute top-3 right-3 cursor-grab hover:bg-muted p-1.5 rounded-md touch-none opacity-0 group-hover:opacity-100 transition-opacity">
+          <GripVertical className="h-4 w-4 text-muted-foreground" />
+       </button>
+    </div>
   );
 };
 
@@ -60,7 +108,7 @@ const ExperienceManager = () => {
   const [items, setItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [experienceToEdit, setExperienceToEdit] = useState<any | null>(null);
+  const [editingExperience, setEditingExperience] = useState<any | null>(null);
 
   const fetchExperiences = async () => {
     setIsLoading(true);
@@ -70,121 +118,95 @@ const ExperienceManager = () => {
       const sortedData = data.sort((a: any, b: any) => (Number(a.position) || 0) - (Number(b.position) || 0));
       setItems(sortedData);
     } catch (error) {
-      toast({ title: "Erro", description: "Erro ao buscar experiências.", variant: "destructive" });
+      toast({ title: "Erro", description: "Falha ao conectar com servidor local.", variant: "destructive" });
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchExperiences();
-  }, []);
+  useEffect(() => { fetchExperiences(); }, []);
 
-  const saveAll = async (newItems: any[]) => {
+  const saveOrder = async (newItems: any[]) => {
     try {
       const itemsWithPosition = newItems.map((item, index) => ({ ...item, position: index + 1 }));
       await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(itemsWithPosition)
       });
       setItems(itemsWithPosition);
-      toast({ title: "Sucesso!", description: "Ordem das experiências foi salva." });
-    } catch (error: any) {
-      toast({ title: "Erro!", description: `Não foi possível salvar: ${error.message}`, variant: "destructive" });
+    } catch (error) {
+      toast({ title: "Erro", description: "Erro ao salvar ordem.", variant: "destructive" });
     }
   };
 
   const handleDelete = async (id: string) => {
-    const newItems = items.filter(item => item.id !== id);
-    await saveAll(newItems);
+    if(!confirm("Excluir esta experiência?")) return;
+    const newItems = items.filter(item => String(item.id) !== String(id));
+    await saveOrder(newItems);
+    toast({ title: "Sucesso", description: "Item removido." });
   };
 
-  const handleAutoSort = () => {
-    const sortedItems = [...items].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
-    saveAll(sortedItems);
-  };
-
-  const sensors = useSensors(useSensor(PointerSensor));
-
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
     if (active.id !== over.id) {
       const oldIndex = items.findIndex((item) => item.id === active.id);
       const newIndex = items.findIndex((item) => item.id === over.id);
       const newItems = arrayMove(items, oldIndex, newIndex);
-      saveAll(newItems);
+      saveOrder(newItems);
     }
   };
 
-  const handleAddNew = () => { setExperienceToEdit(null); setIsDialogOpen(true); };
-  const handleEdit = (experience: any) => { setExperienceToEdit(experience); setIsDialogOpen(true); };
-  
-  const onFormSuccess = () => {
-    setIsDialogOpen(false);
-    fetchExperiences();
+  const handleOpenDialog = (experience: any = null) => {
+    if (experience) {
+        setEditingExperience({ ...experience, id: String(experience.id) });
+    } else {
+        setEditingExperience(null);
+    }
+    setIsDialogOpen(true);
   };
 
-  const renderContent = () => {
-    if (isLoading) return (<div className="space-y-4 p-4"><Skeleton className="h-8 w-full" /><Skeleton className="h-8 w-full" /><Skeleton className="h-8 w-full" /></div>);
-    if (!items || items.length === 0) return <p className="text-center text-muted-foreground py-4">Nenhuma experiência cadastrada.</p>;
-    
-    return (
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-10"></TableHead>
-                <TableHead>Cargo</TableHead>
-                <TableHead>Empresa</TableHead>
-                <TableHead>Período</TableHead>
-                <TableHead className="text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {items.map((exp) => (
-                <DraggableTableRow key={exp.id} experience={exp} onEdit={handleEdit} onDelete={handleDelete} />
-              ))}
-            </TableBody>
-          </Table>
-        </SortableContext>
-      </DndContext>
-    );
+  const onFormFinished = () => {
+    setIsDialogOpen(false);
+    fetchExperiences(); 
   };
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>Experiência Profissional</CardTitle>
-            <CardDescription>Gerencie as experiências do arquivo JSON.</CardDescription>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={handleAutoSort}>
-              <ArrowDownUp className="h-4 w-4 mr-2" />
-              Organizar por Data
-            </Button>
-            <Button onClick={handleAddNew}>Adicionar Experiência</Button>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        {renderContent()}
-      </CardContent>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-[625px]">
-          <DialogHeader>
-            <DialogTitle>{experienceToEdit ? 'Editar Experiência' : 'Adicionar Nova Experiência'}</DialogTitle>
-          </DialogHeader>
-          <ExperienceForm 
-            experienceToEdit={experienceToEdit} 
-            onFinished={onFormSuccess} 
-          />
-        </DialogContent>
-      </Dialog>
-    </Card>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+         <h2 className="text-2xl font-bold hidden md:block">Trajetória Profissional</h2>
+         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+               <Button size="lg" className="shadow-lg shadow-primary/20 gap-2" onClick={() => handleOpenDialog(null)}>
+                  <Plus className="h-5 w-5" /> Nova Experiência
+               </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+               <DialogHeader>
+                  <DialogTitle>{editingExperience ? "Editar Experiência" : "Nova Experiência"}</DialogTitle>
+                  <DialogDescription>Adicione detalhes sobre sua jornada profissional.</DialogDescription>
+               </DialogHeader>
+               <ExperienceForm experienceToEdit={editingExperience} onFinished={onFormFinished} />
+            </DialogContent>
+         </Dialog>
+      </div>
+
+      {isLoading ? (
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1,2,3].map(i => <Skeleton key={i} className="h-[250px] w-full rounded-xl" />)}
+         </div>
+      ) : (
+         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={items} strategy={rectSortingStrategy}>
+               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {items.map((exp) => (
+                     <SortableExperienceItem key={exp.id} experience={exp} onEdit={handleOpenDialog} onDelete={handleDelete} />
+                  ))}
+               </div>
+            </SortableContext>
+         </DndContext>
+      )}
+    </div>
   );
 };
 
