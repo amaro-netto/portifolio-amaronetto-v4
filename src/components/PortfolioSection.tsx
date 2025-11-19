@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,11 +11,28 @@ import projectsData from '@/data/projects.json';
 const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [itemsPerPage, setItemsPerPage] = useState(3); // Estado para controlar itens por página
 
-  // Ordena localmente para garantir a visualização correta
+  // Lógica para detectar tamanho da tela
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerPage(1); // Mobile: 1 por vez
+      } else {
+        setItemsPerPage(3); // Desktop: 3 por vez
+      }
+    };
+
+    // Executa ao carregar
+    handleResize();
+
+    // Executa ao redimensionar a tela
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const projects = [...projectsData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
-  const itemsPerPage = 3;
   const totalPages = Math.ceil(projects.length / itemsPerPage);
   const startIndex = currentIndex * itemsPerPage;
   const visibleProjects = projects.slice(startIndex, startIndex + itemsPerPage);
@@ -58,7 +75,8 @@ const PortfolioSection = () => {
             </Button>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
+          {/* Grid ajustado para exibir 1 coluna no mobile */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
             {visibleProjects.map((project) => (
               <Card 
                 key={project.id}

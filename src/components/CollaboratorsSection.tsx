@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Instagram, MessageCircle, Mail, Building, Users } from 'lucide-react';
@@ -8,12 +8,26 @@ import collaboratorsData from '@/data/collaborators.json';
 
 const CollaboratorsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [flippedCard, setFlippedCard] = useState<string | null>(null); // Mudado para string se o ID no JSON for string
+  const [flippedCard, setFlippedCard] = useState<string | null>(null);
+  const [itemsPerPage, setItemsPerPage] = useState(4); // Estado para controle de paginação
 
-  // Ordenação local
+  // Lógica Responsiva
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerPage(1); // Mobile: 1 card
+      } else {
+        setItemsPerPage(4); // Desktop: 4 cards
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const collaborators = [...collaboratorsData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
 
-  const itemsPerPage = 4;
   const totalPages = Math.ceil(collaborators.length / itemsPerPage);
   const startIndex = currentIndex * itemsPerPage;
   const visibleCollaborators = collaborators.slice(startIndex, startIndex + itemsPerPage);
@@ -67,6 +81,7 @@ const CollaboratorsSection = () => {
             </Button>
           </div>
 
+          {/* Grid ajustado para 1 coluna no mobile */}
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-[480px]">
             {visibleCollaborators.map((collaborator) => (
               <div key={collaborator.id} className="perspective-1000 h-[450px]">

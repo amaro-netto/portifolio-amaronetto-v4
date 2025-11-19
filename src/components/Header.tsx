@@ -37,9 +37,11 @@ const Header = () => {
 
   return (
     <header
+      // ALTERAÇÃO AQUI: Adicionei '|| isMenuOpen' na condicional.
+      // Se o menu estiver aberto, o fundo fica sólido imediatamente.
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/80 backdrop-blur-md shadow-md'
+        isScrolled || isMenuOpen
+          ? 'bg-background/95 backdrop-blur-md shadow-md' // Fundo escuro (95% opacidade)
           : 'bg-transparent'
       }`}
     >
@@ -51,7 +53,6 @@ const Header = () => {
             className="flex items-center gap-2 text-foreground transition-colors rounded-lg"
             aria-label="Ir para o início"
           >
-            {/* Sempre usa a logo clara para fundo escuro */}
             <img src={logoLight} alt="Amaro Netto Logo" className="h-6 w-6" />
             <span className="font-display text-xl font-bold text-foreground">
               Amaro <span className="text-primary">Netto</span>
@@ -93,13 +94,14 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-border">
+          // ALTERAÇÃO AQUI: Adicionei 'bg-background' para garantir que o menu tenha fundo
+          <div className="md:hidden mt-4 py-4 border-t border-border bg-background rounded-b-lg shadow-xl">
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-left px-4 py-2 text-base font-medium text-muted-foreground hover:text-foreground transition-colors focus-ring rounded-lg"
+                  className="text-left px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors focus-ring rounded-lg"
                 >
                   {item.label}
                 </button>

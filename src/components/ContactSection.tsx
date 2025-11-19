@@ -1,15 +1,10 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card'; // Certifique-se de importar CardContent
+import { Card, CardContent } from '@/components/ui/card';
 import { 
   Clock, 
   MapPin, 
   GraduationCap,
-  MessageCircle,
-  Mail,
-  Instagram,
-  Facebook,
-  Github,
-  Linkedin
+  MessageCircle
 } from 'lucide-react';
 
 import amaroPortrait from '@/assets/amaro-portrait2.webp';
@@ -33,34 +28,43 @@ const ContactSection = () => {
   ];
 
   return (
-    // AJUSTE 1: Aumentei 'py-16' para 'pt-32 pb-20' para dar mais espaço no topo
-    <section id="contato" className="section-snap bg-background pt-32 pb-20 border-t border-border/30">
+    <section id="contato" className="section-snap bg-background pt-32 pb-0 border-t border-border/30">
       <div className="container mx-auto px-4 h-full">
         
         {/* Cabeçalho */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
              VAMOS <span className="text-primary">CONVERSAR?</span>
            </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end">
+        {/* AJUSTE 1 (Foto mais perto): 
+           Reduzi 'gap-12' para 'gap-6' no mobile. 
+           Isso aproxima a foto (coluna de baixo) do conteúdo de estudos.
+        */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
           
           {/* --- COLUNA ESQUERDA (CONTEÚDO) --- */}
-          <div className="lg:col-span-7 space-y-10">
+          {/* AJUSTE 2 (Simetria): 
+             Removi 'space-y-10'. Agora controlamos o espaçamento manualmente em cada bloco
+             para garantir que a linha fique exatamente no meio.
+          */}
+          <div className="lg:col-span-7 flex flex-col">
                 
                 {/* 1. REDES SOCIAIS */}
-                <div>
+                {/* Adicionei 'pb-8' para dar espaço até a linha de baixo */}
+                <div className="pb-8">
                     <h3 className="font-semibold text-xl mb-5 flex items-center gap-2 text-foreground">
                        <MessageCircle className="h-5 w-5 text-primary" /> Redes Sociais
                     </h3>
-                    <div className="flex flex-wrap gap-3">
+                    
+                    <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:gap-3 no-scrollbar">
                         {socialLinks.map((social, index) => (
                         <Button
                             key={index}
                             variant="ghost"
                             size="icon"
-                            className="h-12 w-12 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all p-2.5 border border-transparent hover:border-primary/20"
+                            className="shrink-0 h-12 w-12 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all p-2.5 border border-transparent hover:border-primary/20"
                             onClick={() => window.open(social.url, '_blank')}
                             title={social.label}
                         >
@@ -70,9 +74,12 @@ const ContactSection = () => {
                     </div>
                 </div>
 
-                {/* 2. HORÁRIO E LOCALIZAÇÃO (EM CARDS) */}
-                {/* AJUSTE 2: Agora são componentes Card reais */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border/30">
+                {/* 2. HORÁRIO E LOCALIZAÇÃO */}
+                {/* AJUSTE 3 (Simetria): 
+                   'pt-8' (topo) e 'pb-8' (baixo) criam distâncias iguais para as linhas divisórias.
+                   A borda está no topo deste bloco.
+                */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 pb-8 border-t border-border/30">
                     {/* Card Horário */}
                     <Card className="border-muted-foreground/20 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
                         <CardContent className="p-5 flex items-start gap-4">
@@ -82,7 +89,7 @@ const ContactSection = () => {
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Horário</h4>
                                 <p className="text-sm text-muted-foreground">Seg - Sex: 09h às 18h</p>
-                                <p className="text-xs text-muted-foreground/70 mt-0.5">Sáb - Dom: Somente Mediante Agendamento</p>
+                                <p className="text-xs text-muted-foreground/70 mt-0.5">Sáb - Dom: Somente Agendado</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -103,7 +110,8 @@ const ContactSection = () => {
                 </div>
 
                 {/* 3. PERFIL DE ESTUDOS */}
-                <div className="pt-6 border-t border-border/30">
+                {/* AJUSTE 4: 'pt-8' para manter a simetria com a linha superior */}
+                <div className="pt-8 border-t border-border/30">
                      <div className="mb-6">
                         <h3 className="font-semibold text-xl mb-3 flex items-center gap-2 text-foreground">
                             <GraduationCap className="h-6 w-6 text-primary" /> 
@@ -116,7 +124,6 @@ const ContactSection = () => {
                         </p>
                     </div>
 
-                    {/* AJUSTE 3: Removido o título "CERTIFICAÇÕES" */}
                     <div>
                         <div className="flex flex-wrap gap-4">
                             {learningPlatforms.map((platform) => (
@@ -126,7 +133,7 @@ const ContactSection = () => {
                                 onClick={() => window.open(platform.url, '_blank')}
                             >
                                 <img src={platform.icon} alt={platform.name} className="w-6 h-6 object-contain grayscale group-hover:grayscale-0 transition-all" />
-                                <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                                <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors hidden md:block">
                                     {platform.name}
                                 </span>
                             </div>
@@ -137,7 +144,7 @@ const ContactSection = () => {
           </div>
 
           {/* --- COLUNA DIREITA (FOTO) --- */}
-          <div className="lg:col-span-5 relative flex items-end justify-center lg:justify-end h-full min-h-[400px] lg:min-h-[600px]">
+          <div className="lg:col-span-5 relative flex items-end justify-center lg:justify-end h-full min-h-[350px] lg:min-h-[600px]">
                 <div className="absolute bottom-0 right-10 w-64 h-64 bg-primary/20 blur-[100px] rounded-full opacity-60 pointer-events-none" />
                 
                 <img 
