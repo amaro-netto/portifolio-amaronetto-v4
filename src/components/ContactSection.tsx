@@ -268,10 +268,8 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
-      
       {/* RODAPÉ INTEGRADO - Agora ele aparece no final desta seção */}
       <Footer />
-      
     </section>
   );
 };

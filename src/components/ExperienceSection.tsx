@@ -144,16 +144,19 @@ const ExperienceSection = () => {
                       <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
                     )}
                     
-                    <div className="relative pl-4"> 
-                        {/* Linha Vertical */}
-                        <div className="absolute left-[5px] top-3 bottom-4 w-[2px] bg-border"></div>
+                    {/* CONTAINER DA TIMELINE AJUSTADO */}
+                    <div className="relative pl-8"> {/* Aumentado para 32px de espaço */}
+                        
+                        {/* Linha Vertical - Centralizada matematicamente com a bolinha */}
+                        <div className="absolute left-[15px] top-2 bottom-4 w-[2px] bg-border"></div>
                         
                         <div className="flex flex-col gap-6"> 
                         {displayedExperiences.map((exp) => (
-                            <div key={exp.id} className="flex items-start gap-6 group relative">
+                            <div key={exp.id} className="flex items-start gap-4 group relative">
                                 
-                                {/* Bolinha Minimalista */}
-                                <div className="absolute left-[-11px] top-[5px] z-10">
+                                {/* Bolinha Minimalista Alinhada */}
+                                {/* left -22px compensa o padding de 32px e centraliza a bolinha de 12px (w-3) em 16px */}
+                                <div className="absolute left-[-22px] top-[6px] z-10">
                                     <div className="w-3 h-3 bg-primary rounded-full ring-4 ring-background group-hover:scale-125 transition-transform duration-300 shadow-sm"></div>
                                 </div>
 
