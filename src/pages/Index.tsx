@@ -2,7 +2,7 @@ import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import PortfolioSection from '@/components/PortfolioSection';
-import CollaboratorsSection from '@/components/CollaboratorsSection';
+// CollaboratorsSection removido
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 
@@ -15,7 +15,7 @@ const Index = () => {
         <HeroSection />
         <AboutSection />
         <PortfolioSection />
-        <CollaboratorsSection />
+        {/* Seção de Colaboradores removida */}
         <ContactSection />
       </main>
       
