@@ -7,18 +7,14 @@ import { Calendar, Building, Code, Network, Palette, Shield, Briefcase, ChevronD
 import experiencesData from '@/data/experiences.json';
 
 const AboutSection = () => {
-  // Ordenação por posição
   const experiences = [...experiencesData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
   const [showAllExperiences, setShowAllExperiences] = useState(false);
-  
-  // --- ESTADOS DO MENU RETRÁTIL (MOBILE) ---
   const [isSkillsOpen, setIsSkillsOpen] = useState(false);
   const [isExperienceOpen, setIsExperienceOpen] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Observer para resetar a visualização de "ver todos" quando sair da tela
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -66,33 +62,31 @@ const AboutSection = () => {
     ]
   };
 
-  // Renderiza ícone na Timeline (pequeno)
   const renderIcon = (iconValue: string) => {
     if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
       return (
         <img 
           src={iconValue} 
-          alt="icon" 
+          alt=""
           className="h-full w-full object-contain p-2 brightness-0 invert" 
           onError={(e) => { e.currentTarget.style.display = 'none'; }}
         />
       );
     }
-    return <Briefcase className="h-5 w-5 text-primary-foreground" />;
+    return <Briefcase className="h-5 w-5 text-primary-foreground" aria-hidden="true" />;
   };
 
-  // Renderiza ícone no Modal (grande)
   const renderIconModal = (iconValue: string) => {
     if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
       return (
         <img 
           src={iconValue} 
-          alt="icon" 
+          alt=""
           className="h-8 w-8 object-contain brightness-0 invert" 
         />
       );
     }
-    return <Briefcase className="h-6 w-6 text-white" />;
+    return <Briefcase className="h-6 w-6 text-white" aria-hidden="true" />;
   };
 
   return (
@@ -118,20 +112,25 @@ const AboutSection = () => {
               </p>
             </div>
 
-            {/* --- SEÇÃO HABILIDADES (COM ACORDEÃO MOBILE) --- */}
+            {/* --- SEÇÃO HABILIDADES --- */}
             <div className="border border-border/40 rounded-xl p-4 md:p-6 bg-secondary/10">
-              <div 
-                className="flex items-center justify-between cursor-pointer md:cursor-default"
+              {/* ACESSIBILIDADE: Transformado em botão real para navegação por teclado */}
+              <button 
+                className="w-full flex items-center justify-between cursor-pointer md:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                 onClick={() => setIsSkillsOpen(!isSkillsOpen)}
+                aria-expanded={isSkillsOpen}
+                aria-controls="skills-content"
               >
                   <h3 className="font-display text-xl font-semibold text-foreground flex items-center gap-2">
                     HABILIDADES
                   </h3>
-                  <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isSkillsOpen ? 'rotate-180' : ''}`} />
-              </div>
+                  <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isSkillsOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+              </button>
 
-              {/* Conteúdo: Animação de expansão no mobile */}
-              <div className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${isSkillsOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 md:max-h-none md:opacity-100'}`}>
+              <div 
+                id="skills-content"
+                className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${isSkillsOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 md:max-h-none md:opacity-100'}`}
+              >
                 <div className="grid md:grid-cols-2 gap-8">
                   <div>
                     <h4 className="text-sm uppercase tracking-wider font-semibold text-muted-foreground mb-3">Hard Skills</h4>
@@ -161,38 +160,38 @@ const AboutSection = () => {
           {/* --- COLUNA DIREITA (TIMELINE) --- */}
           <div className="space-y-6 animate-in slide-in-from-right-5 fade-in duration-500 delay-100">
             
-            {/* --- SEÇÃO EXPERIÊNCIA (COM ACORDEÃO MOBILE) --- */}
+            {/* --- SEÇÃO EXPERIÊNCIA --- */}
             <div className="border border-border/40 rounded-xl p-4 md:p-6 md:border-none md:p-0 md:bg-transparent">
-                <div 
-                    className="flex items-center justify-between cursor-pointer md:cursor-default md:mb-6"
+                {/* ACESSIBILIDADE: Transformado em botão real */}
+                <button 
+                    className="w-full flex items-center justify-between cursor-pointer md:cursor-default md:mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                     onClick={() => setIsExperienceOpen(!isExperienceOpen)}
+                    aria-expanded={isExperienceOpen}
+                    aria-controls="experience-content"
                 >
                     <h3 className="font-display text-xl font-semibold text-foreground">
                       EXPERIÊNCIA PROFISSIONAL
                     </h3>
-                    <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isExperienceOpen ? 'rotate-180' : ''}`} />
-                </div>
+                    <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isExperienceOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
+                </button>
             
-                <div className={`mt-6 md:mt-0 transition-all duration-300 ${isExperienceOpen ? 'block' : 'hidden md:block'}`}>
-                    
+                <div 
+                    id="experience-content"
+                    className={`mt-6 md:mt-0 transition-all duration-300 ${isExperienceOpen ? 'block' : 'hidden md:block'}`}
+                >
                     {experiences.length === 0 && (
                       <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
                     )}
                     
                     <div className="relative pl-2">
-                        {/* Linha Vertical da Timeline */}
                         <div className="absolute left-[27px] top-2 bottom-4 w-0.5 bg-gradient-to-b from-primary/50 to-transparent -translate-x-1/2"></div>
                         
                         <div className="flex flex-col gap-6">
                         {displayedExperiences.map((exp, index) => (
                             <div key={exp.id} className="flex items-start gap-4 group">
-                                {/* Ícone na Timeline */}
                                 <div className="relative z-10 mt-1">
                                     <div className="w-10 h-10 bg-card border-2 border-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                                         <div className="w-6 h-6 flex items-center justify-center">
-                                           {/* Reutilizando icon mas com cor ajustada para o tema claro/escuro via classe do pai */}
-                                            {/* Nota: Se o ícone for svg externo e usar filter brightness-0, ele ficará preto ou branco. Aqui mantemos a lógica original. */}
-                                            {/* Ajuste manual: forçar bg-primary dentro para manter consistência com o arquivo original se desejado, ou usar cores do tema */}
                                             <div className="absolute inset-0 bg-primary rounded-full -z-10"></div> 
                                             {renderIcon(exp.icon)}
                                         </div>
@@ -202,7 +201,13 @@ const AboutSection = () => {
                                 <div className="flex-1 min-w-0">
                                     <Dialog>
                                     <DialogTrigger asChild>
-                                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border-muted">
+                                        <Card 
+                                            className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border-muted focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                                            role="button"
+                                            tabIndex={0}
+                                            // ACESSIBILIDADE: Label claro para o card
+                                            aria-label={`Ver detalhes da experiência: ${exp.role} na empresa ${exp.company}`}
+                                        >
                                         <CardHeader className="p-4">
                                             <div>
                                             <CardTitle className="text-base md:text-lg font-bold leading-tight mb-1 group-hover:text-primary transition-colors">
@@ -219,7 +224,6 @@ const AboutSection = () => {
                                     
                                     {/* Modal Otimizado */}
                                     <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-950 border-zinc-800 text-zinc-100 gap-0 p-0 overflow-hidden flex flex-col">
-                                        
                                         <DialogHeader className="p-6 pb-4 bg-zinc-900/50 border-b border-zinc-800 sticky top-0 z-20 backdrop-blur-sm">
                                             <DialogTitle className="flex items-center gap-3 text-xl text-white">
                                                 <div className="p-2 bg-primary/20 rounded-lg">
@@ -228,16 +232,16 @@ const AboutSection = () => {
                                                 <span>{exp.role}</span>
                                             </DialogTitle>
                                             <DialogDescription className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm pt-2 text-primary/90 font-medium">
-                                                <span className="flex items-center gap-1.5"><Building className="h-4 w-4" />{exp.company}</span>
+                                                <span className="flex items-center gap-1.5"><Building className="h-4 w-4" aria-hidden="true" />{exp.company}</span>
                                                 <span className="hidden sm:inline text-zinc-600">•</span>
-                                                <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{exp.years}</span>
+                                                <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" aria-hidden="true" />{exp.years}</span>
                                             </DialogDescription>
                                         </DialogHeader>
 
                                         <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar">
                                             <div>
                                                 <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                                                    <Briefcase className="w-4 h-4 text-primary" /> Descrição
+                                                    <Briefcase className="w-4 h-4 text-primary" aria-hidden="true" /> Descrição
                                                 </h4>
                                                 <p className="text-zinc-300 leading-relaxed text-sm md:text-base text-justify">
                                                     {exp.description}
@@ -250,7 +254,7 @@ const AboutSection = () => {
                                                 <ul className="space-y-2 text-sm text-zinc-400">
                                                     {exp.achievements.map((achievement: string, idx: number) => (
                                                     <li key={idx} className="flex items-start gap-2.5">
-                                                        <span className="text-primary mt-1.5 block w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></span>
+                                                        <span className="text-primary mt-1.5 block w-1.5 h-1.5 rounded-full bg-current flex-shrink-0" aria-hidden="true"></span>
                                                         <span className="leading-relaxed">{achievement}</span>
                                                     </li>
                                                     ))}
@@ -285,9 +289,10 @@ const AboutSection = () => {
                             variant="outline" 
                             onClick={() => setShowAllExperiences(true)}
                             className="w-full md:w-auto min-w-[200px] border-primary/20 hover:bg-primary/5 hover:text-primary transition-all"
+                            aria-label="Ver todas as experiências profissionais"
                         >
                             Ver trajetória completa
-                            <ChevronDown className="ml-2 h-4 w-4" />
+                            <ChevronDown className="ml-2 h-4 w-4" aria-hidden="true" />
                         </Button>
                         </div>
                     )}

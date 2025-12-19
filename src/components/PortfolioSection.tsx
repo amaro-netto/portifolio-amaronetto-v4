@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChevronLeft, ChevronRight, Eye, ExternalLink, Code2, Calendar, Layers } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink, Code2, Calendar, Layers } from 'lucide-react';
 import projectsData from '@/data/projects.json';
 import { cn } from '@/lib/utils';
 
@@ -12,8 +12,6 @@ const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [itemsPerPage, setItemsPerPage] = useState(3);
-  
-  // Estado para controlar o carregamento individual das imagens
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -76,24 +74,26 @@ const PortfolioSection = () => {
               onClick={goToPrev} 
               disabled={totalPages <= 1} 
               className="focus-ring hover:bg-primary/10 hover:text-primary transition-colors"
-              aria-label="Projetos anteriores"
+              aria-label="Ir para página anterior de projetos"
             >
-              <ChevronLeft className="h-4 w-4 mr-1" /> Anterior
+              <ChevronLeft className="h-4 w-4 mr-1" aria-hidden="true" /> Anterior
             </Button>
-            <div className="text-sm text-muted-foreground bg-background/50 px-3 py-1 rounded-full border border-border/50 backdrop-blur-sm">
+            
+            <div className="text-sm text-muted-foreground bg-background/50 px-3 py-1 rounded-full border border-border/50 backdrop-blur-sm" role="status" aria-label={`Página ${currentIndex + 1} de ${totalPages}`}>
               <span className="font-medium text-primary">{String(currentIndex + 1).padStart(2, '0')}</span> 
               <span className="mx-1 opacity-50">/</span> 
               <span>{String(totalPages).padStart(2, '0')}</span>
             </div>
+            
             <Button 
               variant="outline" 
               size="sm" 
               onClick={goToNext} 
               disabled={totalPages <= 1} 
               className="focus-ring hover:bg-primary/10 hover:text-primary transition-colors"
-              aria-label="Próximos projetos"
+              aria-label="Ir para próxima página de projetos"
             >
-              Próximo <ChevronRight className="h-4 w-4 ml-1" />
+              Próximo <ChevronRight className="h-4 w-4 ml-1" aria-hidden="true" />
             </Button>
           </div>
 
@@ -102,33 +102,33 @@ const PortfolioSection = () => {
             {visibleProjects.map((project, idx) => (
               <Card 
                 key={project.id}
-                className="group cursor-pointer hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 border-border/60 bg-card overflow-hidden flex flex-col h-full animate-in fade-in zoom-in-95"
+                className="group cursor-pointer hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 border-border/60 bg-card overflow-hidden flex flex-col h-full animate-in fade-in zoom-in-95 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                 style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'both' }}
                 onClick={() => setSelectedProject(project.id)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && setSelectedProject(project.id)}
+                // ACESSIBILIDADE: Descrição completa para leitores de tela
+                aria-label={`Ver detalhes do projeto: ${project.title}`}
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedProject(project.id)}
               >
                 <CardContent className="p-0 h-full flex flex-col">
                   {/* Imagem do Card com Skeleton */}
                   <div className="relative overflow-hidden h-48 md:h-56 bg-muted">
-                    {/* Skeleton Loader (visível apenas enquanto carrega) */}
                     {!loadedImages[project.id] && (
                         <Skeleton className="absolute inset-0 w-full h-full" />
                     )}
                     
                     <img
                       src={project.image_card_url || ''} 
-                      alt={project.title}
+                      alt="" // Alt vazio pois a imagem é decorativa para o botão que já tem label
                       className={cn(
                         "w-full h-full object-cover transition-all duration-700 group-hover:scale-110",
-                        loadedImages[project.id] ? "opacity-100" : "opacity-0" // Fade-in effect
+                        loadedImages[project.id] ? "opacity-100" : "opacity-0"
                       )}
                       loading="lazy"
                       onLoad={() => handleImageLoad(project.id)}
                     />
                     
-                    {/* Overlay e Badges (só aparecem após carregar ou se quiser, sempre) */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
                     
                     <div className="absolute top-3 right-3 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 delay-75 z-10">
@@ -165,11 +165,6 @@ const PortfolioSection = () => {
                                 {tag}
                             </span>
                         ))}
-                        {(project.tags?.length || 0) > 3 && (
-                            <span className="text-[10px] px-2 py-1 rounded-md bg-secondary/50 text-muted-foreground border border-border/50">
-                                +{(project.tags?.length || 0) - 3}
-                            </span>
-                        )}
                     </div>
                   </div>
                 </CardContent>
@@ -177,7 +172,7 @@ const PortfolioSection = () => {
             ))}
           </div>
 
-          {/* Paginação */}
+          {/* Paginação (Bolinhas) */}
           <div className="flex justify-center mt-10 space-x-2">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
@@ -186,13 +181,15 @@ const PortfolioSection = () => {
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 focus-ring ${
                   index === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 hover:bg-primary/50'
                 }`}
-                aria-label={`Ir para página ${index + 1}`}
+                // ACESSIBILIDADE: Label claro para navegação de páginas
+                aria-label={`Ir para página ${index + 1} de ${totalPages}`}
+                aria-current={index === currentIndex ? "page" : undefined}
               />
             ))}
           </div>
         </div>
 
-        {/* --- MODAL DE DETALHES --- */}
+        {/* --- MODAL DE DETALHES DO PROJETO --- */}
         {selectedProjectData && (
           <Dialog open={selectedProject !== null} onOpenChange={(open) => !open && setSelectedProject(null)}>
             <DialogContent className="sm:max-w-4xl max-h-[90vh] p-0 gap-0 overflow-hidden flex flex-col bg-background border-border shadow-2xl">
@@ -204,10 +201,10 @@ const PortfolioSection = () => {
                     </DialogTitle>
                     <DialogDescription className="flex items-center gap-3 text-sm pt-1">
                         <Badge variant="outline" className="flex items-center gap-1.5">
-                            <Layers className="w-3 h-3" /> {selectedProjectData.type}
+                            <Layers className="w-3 h-3" aria-hidden="true" /> {selectedProjectData.type}
                         </Badge>
                         <span className="text-muted-foreground flex items-center gap-1 text-xs">
-                            <Calendar className="w-3 h-3" /> {selectedProjectData.year}
+                            <Calendar className="w-3 h-3" aria-hidden="true" /> {selectedProjectData.year}
                         </span>
                     </DialogDescription>
                 </div>
@@ -215,20 +212,20 @@ const PortfolioSection = () => {
 
               <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
                 
-                {/* Imagem Principal do Modal com Skeleton */}
-                <div className="relative rounded-xl overflow-hidden border border-border/50 shadow-inner bg-muted/20 group min-h-[200px]">
-                    {!loadedImages[`modal-${selectedProjectData.id}`] && (
+                {/* Imagem Principal */}
+                <div className="relative rounded-xl overflow-hidden border border-border/50 shadow-inner bg-muted/20 group">
+                  {!loadedImages[`modal-${selectedProjectData.id}`] && (
                         <Skeleton className="absolute inset-0 w-full h-full" />
+                  )}
+                  <img
+                    src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url || ''}
+                    alt="" 
+                    className={cn(
+                        "w-full h-auto max-h-[400px] object-cover object-top transition-all duration-700 hover:scale-[1.02]",
+                        loadedImages[`modal-${selectedProjectData.id}`] ? "opacity-100" : "opacity-0"
                     )}
-                    <img
-                        src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url || ''}
-                        alt={selectedProjectData.title}
-                        className={cn(
-                            "w-full h-auto max-h-[400px] object-cover object-top transition-all duration-700 hover:scale-[1.02]",
-                            loadedImages[`modal-${selectedProjectData.id}`] ? "opacity-100" : "opacity-0"
-                        )}
-                        onLoad={() => handleImageLoad(`modal-${selectedProjectData.id}`)}
-                    />
+                    onLoad={() => handleImageLoad(`modal-${selectedProjectData.id}`)}
+                  />
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
@@ -274,22 +271,16 @@ const PortfolioSection = () => {
                         <div className="flex flex-col gap-3">
                             {selectedProjectData.project_url && (
                                 <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="w-full shadow-lg shadow-primary/20">
-                                    <ExternalLink className="w-4 h-4 mr-2" /> 
+                                    <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" /> 
                                     Ver Projeto Online
                                 </Button>
                             )}
                             
                             {selectedProjectData.code_url && (
                                 <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="w-full">
-                                    <Code2 className="w-4 h-4 mr-2" /> 
+                                    <Code2 className="w-4 h-4 mr-2" aria-hidden="true" /> 
                                     Repositório / Docs
                                 </Button>
-                            )}
-                            
-                            {!selectedProjectData.project_url && !selectedProjectData.code_url && (
-                                <div className="text-center p-3 text-xs text-muted-foreground bg-muted/30 rounded-lg">
-                                    Projeto privado ou interno.
-                                </div>
                             )}
                         </div>
                     </div>
