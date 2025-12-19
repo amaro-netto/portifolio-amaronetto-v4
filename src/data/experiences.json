@@ -3,6 +3,7 @@
     "role": "Consultor de TI & Designer",
     "company": "Amaro Netto Soluções",
     "years": "12/2024 - Presente",
+    "duration": "1 ano",
     "description": "Atuação em consultoria de Tecnologia da Informação, oferecendo soluções estratégicas em infraestrutura, segurança da informação, desenvolvimento de sistemas e automação de processos. Responsável pela análise e implementação de ambientes de TI seguros e escaláveis, integração de ferramentas corporativas, otimização de fluxos operacionais e desenvolvimento de aplicações sob medida. A atuação abrange desde suporte a empresas em demandas críticas até a aplicação de inteligência artificial e automação para aumentar a eficiência, reduzir custos e garantir conformidade tecnológica.",
     "icon": "Users",
     "achievements": [
@@ -32,6 +33,7 @@
     "role": "Gestor do Núcleo de Serviços da Coordenação de Redes",
     "company": "Defensoria Pública do Estado do Rio de Janeiro",
     "years": "03/2024 – 11/2024",
+    "duration": "9 meses",
     "description": "Gestor operacional e técnica de equipes, contratos e projetos de TIC, atuando como elo estratégico entre fornecedores, áreas técnicas e administrativas. As atividades incluíram a liderança e distribuição de demandas da equipe, fiscalização de 11 contratos de TIC, monitoramento de SLAs, controle de faturamento e documentação, além do planejamento e execução de projetos de TI, com homologação e validação de entregas. Também houve destaque na criação de fluxos padronizados, elaboração de documentação técnica e coordenação de reuniões com fornecedores e setores internos.",
     "icon": "Users",
     "achievements": [
@@ -59,6 +61,7 @@
     "role": "Analista de Redes",
     "company": "Defensoria Pública do Estado do Rio de Janeiro",
     "years": "11/2023 – 02/2024",
+    "duration": "4 meses",
     "description": "Atuação direcionada à administração de infraestrutura crítica e segurança de redes, garantindo conectividade estável, controle de acessos e disponibilidade de serviços corporativos. As responsabilidades abrangeram a gestão de Active Directory e File Server, configuração de proxy e balanceamento de carga via NGINX, administração de firewall Check Point e VPNs, além do gerenciamento de certificados digitais e políticas de segurança de e-mail e endpoints. Também foi responsável pela operação de servidores e aplicações críticas, como GLPI, SEI, WordPress, Grafana e Zabbix.",
     "icon": "Users",
     "achievements": [
@@ -84,6 +87,7 @@
     "role": "Técnico de Suporte TI N1 e N2",
     "company": "Defensoria Pública do Estado do Rio de Janeiro",
     "years": "04/2016 – 10/2023",
+    "duration": "7 anos e 6 meses",
     "description": "Experiência sólida em suporte técnico de campo e remoto, prestando atendimento multicanal em ambientes de alta demanda. As atribuições envolveram diagnóstico e solução de incidentes relacionados a hardware, software, conectividade e periféricos, instalação e configuração de sistemas e impressoras, gestão de chamados no GLPI, além de suporte logístico em eventos e ações externas. Também foi responsável pela documentação técnica detalhada para subsidiar análises de níveis superiores e apoiar decisões de infraestrutura.",
     "icon": "Users",
     "achievements": [
@@ -110,6 +114,7 @@
     "role": "Designer",
     "company": "Freelancer ",
     "years": "2016 - 2020",
+    "duration": "4 anos",
     "description": "Projetos de design gráfico e web para pequenas empresas e startups.",
     "icon": "Megaphone",
     "achievements": [],
@@ -122,6 +127,7 @@
     "role": "Professor Design Gráfico",
     "company": "SEVEN Design School",
     "years": "2014 - 2016",
+    "duration": "2 anos",
     "description": "Professor de Design Gráfico, ministrando aulas de Photoshop, Illustrator, InDesign, Dreamweaver e Autodesk Maya, com foco em fundamentos do design, ferramentas digitais e desenvolvimento de projetos criativos.",
     "achievements": [],
     "technologies": [],
@@ -133,6 +139,7 @@
     "role": "Assistente de Diretor de Arte",
     "company": "Target Mídia Publicidade Ltda",
     "years": "2013 - 2016",
+    "duration": "3 anos",
     "description": "Assistente de Diretor de Arte, responsável por avaliar projetos visuais, sugerir melhorias criativas, auxiliar na execução de campanhas e garantir a consistência estética conforme o conceito proposto.",
     "achievements": [],
     "technologies": [],
@@ -144,6 +151,7 @@
     "role": "Trainee Design",
     "company": "Target Mídia Publicidade Ltda",
     "years": "2013",
+    "duration": "1 ano",
     "description": "Criação de materiais promocionais e suporte em eventos corporativos.",
     "achievements": [],
     "technologies": [],
@@ -154,6 +162,7 @@
     "role": "Técnico de Informática",
     "company": "Freelancer ",
     "years": "12/2010 - 04/2016",
+    "duration": "5 anos e 4 meses",
     "description": "Atuação autônoma prestando serviços de tecnologia para pequenas empresas e escritórios, com foco em manutenção de computadores, suporte a usuários e administração de redes locais. Responsável por garantir a continuidade das operações e a satisfação dos clientes.",
     "icon": "LifeBuoy",
     "achievements": [
