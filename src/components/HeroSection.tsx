@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Code, Palette, Shield, Network, ArrowRight, Mail } from 'lucide-react';
 import amaroPortrait from '@/assets/amaro-portrait.webp';
+import amaroPortraitLight from '@/assets/amaro-portrait-white.webp'; // Nova imagem importada
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -59,9 +60,8 @@ const HeroSection = () => {
               </p>
             </div>
 
-            {/* Botões - CORREÇÃO DE CONTRASTE AQUI */}
+            {/* Botões */}
             <div className="flex flex-row gap-3 w-full max-w-sm mx-auto lg:mx-0">
-              {/* Botão 1: Sólido (Primary) */}
               <Button
                 onClick={() => scrollToSection('portfolio')}
                 className="flex-1 bg-primary hover:bg-primary-hover text-white shadow-tech transition-all duration-300 hover:shadow-glow transform hover:-translate-y-1 h-12 text-sm md:text-base group"
@@ -71,7 +71,6 @@ const HeroSection = () => {
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
               
-              {/* Botão 2: Outline (Borda Branca Fixa) */}
               <Button
                 onClick={() => scrollToSection('contato')}
                 variant="outline"
@@ -115,7 +114,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* --- COLUNA DIREITA: IMAGEM --- */}
+        {/* --- COLUNA DIREITA: IMAGEM (AJUSTADA PARA TEMA) --- */}
         <div className="
             flex-1 
             w-full 
@@ -133,23 +132,34 @@ const HeroSection = () => {
               {/* Efeito de brilho */}
               <div className="absolute inset-0 bg-gradient-primary blur-[100px] opacity-20 transform translate-y-20 pointer-events-none"></div>
               
+              {/* IMAGEM MODO CLARO (Visível no Light, Oculta no Dark) */}
+              <img
+                src={amaroPortraitLight}
+                alt="Foto de perfil de Amaro Netto"
+                width={800} 
+                height={1000}
+                className="
+                  block dark:hidden  /* Lógica de troca */
+                  relative z-10 w-auto object-contain object-bottom
+                  h-[45vh] max-h-[400px]
+                  lg:h-[90vh] lg:max-h-none lg:mr-auto 
+                  drop-shadow-2xl
+                "
+                loading="eager"
+                fetchPriority="high" 
+              />
+
+              {/* IMAGEM MODO ESCURO (Oculta no Light, Visível no Dark) */}
               <img
                 src={amaroPortrait}
                 alt="Foto de perfil de Amaro Netto"
                 width={800} 
                 height={1000}
                 className="
-                  relative
-                  z-10
-                  w-auto
-                  object-contain
-                  object-bottom
-                  h-[45vh]
-                  max-h-[400px]
-                  lg:h-[90vh]
-                  lg:max-h-none
-                  lg:mr-auto 
-                  block
+                  hidden dark:block  /* Lógica de troca */
+                  relative z-10 w-auto object-contain object-bottom
+                  h-[45vh] max-h-[400px]
+                  lg:h-[90vh] lg:max-h-none lg:mr-auto 
                   drop-shadow-2xl
                 "
                 loading="eager"
