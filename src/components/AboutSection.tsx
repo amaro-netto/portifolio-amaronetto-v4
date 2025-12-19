@@ -6,14 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Building, Code, Network, Palette, Shield, Briefcase, ChevronDown } from 'lucide-react';
 import experiencesData from '@/data/experiences.json';
 
-// Definindo a interface para garantir que o TS entenda o novo campo 'duration'
-// Caso seu JSON não tenha tipagem estrita, isso ajuda no intellisense
+// Interface atualizada (mantemos duration opcional caso decida usar no futuro, mas não exibiremos agora)
 interface Experience {
   id: string;
   role: string;
   company: string;
-  years: string;     // Ex: "01/2020 - 01/2021"
-  duration?: string; // Ex: "1 ano" (Opcional para não quebrar se faltar)
+  years: string;
+  duration?: string;
   description: string;
   achievements?: string[];
   technologies?: string[];
@@ -182,28 +181,16 @@ const AboutSection = () => {
                       <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
                     )}
                     
-                    {/* Container da Timeline com alinhamento preciso */}
-                    <div className="relative pl-4"> {/* pl-4 dá espaço para a linha e bolinha */}
-                        
-                        {/* LINHA VERTICAL - ALINHAMENTO MATEMÁTICO 
-                           - w-[2px]: Largura da linha
-                           - left-[5px]: Posicionamento exato para centralizar com a bolinha
-                           - top-2.5: Começa alinhado com o centro da primeira bolinha
-                           - bottom-4: Termina um pouco antes do fim
-                        */}
+                    <div className="relative pl-4"> 
+                        {/* Linha Vertical Centralizada com a bolinha */}
                         <div className="absolute left-[5px] top-3 bottom-4 w-[2px] bg-border"></div>
                         
-                        <div className="flex flex-col gap-8"> {/* gap-8 para espaçar mais os itens */}
+                        <div className="flex flex-col gap-6"> 
                         {displayedExperiences.map((exp, index) => (
                             <div key={exp.id} className="flex items-start gap-6 group relative">
                                 
                                 {/* Bolinha Minimalista */}
                                 <div className="absolute left-[-11px] top-[5px] z-10">
-                                    {/* w-3 h-3 (12px) 
-                                       A linha tem 2px e está em left 5px.
-                                       A bolinha precisa estar centralizada.
-                                       O container pai tem pl-4 (16px).
-                                    */}
                                     <div className="w-3 h-3 bg-primary rounded-full ring-4 ring-background group-hover:scale-125 transition-transform duration-300 shadow-sm"></div>
                                 </div>
 
@@ -221,22 +208,20 @@ const AboutSection = () => {
                                             <CardTitle className="text-base md:text-lg font-bold leading-tight mb-1 group-hover:text-primary transition-colors">
                                                 {exp.role}
                                             </CardTitle>
-                                            <div className="flex flex-wrap justify-between items-center gap-2 mt-2">
+                                            
+                                            {/* AJUSTE AQUI: Removemos a Data/Duração externa */}
+                                            <div className="mt-1">
                                                 <CardDescription className="text-sm font-medium flex items-center gap-1">
                                                     <Building className="w-3 h-3" /> {exp.company}
                                                 </CardDescription>
-                                                
-                                                {/* DATA FORA: MOSTRA APENAS A DURAÇÃO (Se existir) OU O ANO */}
-                                                <span className="text-xs font-medium text-muted-foreground bg-secondary/50 px-2 py-1 rounded-md">
-                                                    {exp.duration || exp.years}
-                                                </span>
                                             </div>
+
                                             </div>
                                         </CardHeader>
                                         </Card>
                                     </DialogTrigger>
                                     
-                                    {/* Modal Detalhado */}
+                                    {/* Modal Detalhado (Mantém Data Completa Aqui) */}
                                     <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-950 border-zinc-800 text-zinc-100 gap-0 p-0 overflow-hidden flex flex-col">
                                         <DialogHeader className="p-6 pb-4 bg-zinc-900/50 border-b border-zinc-800 sticky top-0 z-20 backdrop-blur-sm">
                                             <DialogTitle className="flex items-center gap-3 text-xl text-white">
@@ -249,7 +234,7 @@ const AboutSection = () => {
                                                 <span className="flex items-center gap-1.5"><Building className="h-4 w-4" aria-hidden="true" />{exp.company}</span>
                                                 <span className="hidden sm:inline text-zinc-600">•</span>
                                                 
-                                                {/* DATA DENTRO: MOSTRA O PERÍODO COMPLETO */}
+                                                {/* DATA DENTRO: Período completo mantido */}
                                                 <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" aria-hidden="true" />{exp.years}</span>
                                             </DialogDescription>
                                         </DialogHeader>
