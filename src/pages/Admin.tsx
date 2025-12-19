@@ -3,7 +3,6 @@ import { Home, Layers, Users, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import ProjectManager from '@/components/admin/ProjectManager'; 
-import CollaboratorManager from '@/components/admin/CollaboratorManager';
 import ExperienceManager from '@/components/admin/ExperienceManager';
 
 const Admin = () => {
@@ -32,12 +31,9 @@ const Admin = () => {
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="projects" className="space-y-8">
           <div className="flex items-center justify-between border-b pb-6">
-            <TabsList className="grid w-full max-w-[500px] grid-cols-3">
+            <TabsList className="grid w-full max-w-[auto] grid-cols-2">
               <TabsTrigger value="projects" className="gap-2">
                 <Layers className="h-4 w-4" /> Projetos
-              </TabsTrigger>
-              <TabsTrigger value="collaborators" className="gap-2">
-                <Users className="h-4 w-4" /> Colaboradores
               </TabsTrigger>
               <TabsTrigger value="experiences" className="gap-2">
                 <Briefcase className="h-4 w-4" /> Experiência
@@ -49,10 +45,6 @@ const Admin = () => {
             <ProjectManager />
           </TabsContent>
           
-          <TabsContent value="collaborators" className="space-y-6 animate-in fade-in-50 slide-in-from-bottom-2">
-            <CollaboratorManager />
-          </TabsContent>
-
           <TabsContent value="experiences" className="space-y-6 animate-in fade-in-50 slide-in-from-bottom-2">
             <ExperienceManager />
           </TabsContent>

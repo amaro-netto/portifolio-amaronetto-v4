@@ -1,111 +1,6 @@
 [
   {
-    "id": "1",
-    "role": "Técnico de Informática",
-    "company": "Autônomo",
-    "years": "12/2010 - 04/2016",
-    "description": "Atuação autônoma prestando serviços de tecnologia para pequenas empresas e escritórios, com foco em manutenção de computadores, suporte a usuários e administração de redes locais. Responsável por garantir a continuidade das operações e a satisfação dos clientes.",
-    "achievements": [
-      "Prestação de suporte técnico a diversos clientes, com alto índice de fidelização.",
-      "Implantação e configuração de redes locais (LAN) para escritórios.",
-      "Organização de rotinas de backup e segurança da informação para pequenas empresas.",
-      "Redução de tempo de resposta em chamados de manutenção corretiva.",
-      "Implantação de redes e rotinas de backup em clientes, aumentando a disponibilidade de sistemas.",
-      "Fidelização de clientes por meio de suporte ágil, documentação dos serviços e atendimento de qualidade."
-    ],
-    "technologies": [
-      "Suporte técnico e atendimento ao cliente",
-      "Organização e gestão de demandas",
-      "Diagnóstico e manutenção de hardware/software",
-      "Relacionamento com clientes",
-      "Windows",
-      "Linux básico",
-      "Redes TCP/IP",
-      "Pacote Office"
-    ],
-    "icon": "LifeBuoy",
-    "position": "10"
-  },
-  {
-    "role": "Gestor do Núcleo de Serviços da Coordenação de Redes",
-    "company": "Defensoria Pública do Estado do Rio de Janeiro",
-    "years": "03/2024 – 11/2024",
-    "description": "Responsável pela gestão operacional e técnica de equipes, contratos e projetos de TIC, atuando como elo estratégico entre fornecedores, áreas técnicas e administrativas. As atividades incluíram a liderança e distribuição de demandas da equipe, fiscalização de 11 contratos de TIC, monitoramento de SLAs, controle de faturamento e documentação, além do planejamento e execução de projetos de TI, com homologação e validação de entregas. Também houve destaque na criação de fluxos padronizados, elaboração de documentação técnica e coordenação de reuniões com fornecedores e setores internos.",
-    "icon": "https://www.svgrepo.com/show/327461/person.svg",
-    "achievements": [
-      "Coordenação da atualização do GLPI para versão 10, conduzindo homologação e validação.",
-      "Gestão da migração do Zimbra para Google Workspace, incluindo integração com AD e SSO.",
-      "Elaboração de Termo de Referência e coordenação do projeto de contratação de Internet via Starlink.",
-      "Implantação de documentação e processos que reduziram retrabalhos e aumentaram rastreabilidade das atividades."
-    ],
-    "technologies": [
-      "Gestão de equipes técnicas e fornecedores",
-      "Comunicação assertiva e liderança",
-      "Fiscalização de contratos e faturamento",
-      "Documentação técnica e padronização de processos",
-      "Google Workspace",
-      "Active Directory",
-      "GLPI",
-      "Zabbix",
-      "Grafana",
-      "SEI"
-    ],
-    "id": "2",
-    "position": "3"
-  },
-  {
-    "role": "Analista de Redes",
-    "company": "Defensoria Pública do Estado do Rio de Janeiro",
-    "years": "11/2023 – 02/2024",
-    "description": "Atuação direcionada à administração de infraestrutura crítica e segurança de redes, garantindo conectividade estável, controle de acessos e disponibilidade de serviços corporativos. As responsabilidades abrangeram a gestão de Active Directory e File Server, configuração de proxy e balanceamento de carga via NGINX, administração de firewall Check Point e VPNs, além do gerenciamento de certificados digitais e políticas de segurança de e-mail e endpoints. Também foi responsável pela operação de servidores e aplicações críticas, como GLPI, SEI, WordPress, Grafana e Zabbix.",
-    "icon": "https://www.svgrepo.com/show/532872/network-wired.svg",
-    "achievements": [
-      "Implementação de políticas de acesso granular em File Server, assegurando segregação e segurança de dados.",
-      "Configuração e otimização de regras de firewall e VPNs, garantindo conectividade segura e estável entre unidades.",
-      "Apoio técnico fundamental às integrações de e-mail e SSO durante a migração para Google Workspace."
-    ],
-    "technologies": [
-      "Segurança da informação e controle de acessos",
-      "Resolução de problemas críticos",
-      "Gestão de redes e conectividade",
-      "Trabalho colaborativo e foco em qualidade",
-      "Windows Server",
-      "Linux",
-      "Check Point",
-      "pfSense",
-      "NGINX"
-    ],
-    "id": "3",
-    "position": "4"
-  },
-  {
-    "role": "Técnico de Suporte TI N1 e N2",
-    "company": "Defensoria Pública do Estado do Rio de Janeiro",
-    "years": "04/2016 – 10/2023",
-    "description": "Experiência sólida em suporte técnico de campo e remoto, prestando atendimento multicanal em ambientes de alta demanda. As atribuições envolveram diagnóstico e solução de incidentes relacionados a hardware, software, conectividade e periféricos, instalação e configuração de sistemas e impressoras, gestão de chamados no GLPI, além de suporte logístico em eventos e ações externas. Também foi responsável pela documentação técnica detalhada para subsidiar análises de níveis superiores e apoiar decisões de infraestrutura.",
-    "icon": "https://www.svgrepo.com/show/93695/technical-support.svg",
-    "achievements": [
-      "Solução de mais de 1.600 chamados com elevado índice de satisfação dos usuários.",
-      "Produção de documentação sistematizada de infraestrutura que subsidiou aquisições e melhorias.",
-      "Participação em plantões e operações em áreas de difícil acesso, garantindo a continuidade dos serviços."
-    ],
-    "technologies": [
-      "Suporte ao usuário em múltiplos canais",
-      "Comunicação clara e empatia",
-      "Resolução de problemas técnicos complexos",
-      "Organização e registro detalhado",
-      "GLPI",
-      "Hardware",
-      "Software",
-      "AnyDesk",
-      "TeamViewer",
-      "Windows/Linux"
-    ],
-    "id": "4",
-    "position": "5"
-  },
-  {
-    "role": "Consultor de Tecnologia da Informação",
+    "role": "Consultor de TI & Designer",
     "company": "Amaro Netto Soluções",
     "years": "12/2024 - Presente",
     "description": "Atuação em consultoria de Tecnologia da Informação, oferecendo soluções estratégicas em infraestrutura, segurança da informação, desenvolvimento de sistemas e automação de processos. Responsável pela análise e implementação de ambientes de TI seguros e escaláveis, integração de ferramentas corporativas, otimização de fluxos operacionais e desenvolvimento de aplicações sob medida. A atuação abrange desde suporte a empresas em demandas críticas até a aplicação de inteligência artificial e automação para aumentar a eficiência, reduzir custos e garantir conformidade tecnológica.",
@@ -131,29 +26,96 @@
       "Ferramentas de monitoramento e análise"
     ],
     "id": "5",
-    "position": "1"
+    "position": 1
   },
   {
-    "id": "6",
-    "role": "Trainee Design",
-    "company": "Target Mídia Publicidade Ltda",
-    "years": "2013",
-    "description": "Criação de materiais promocionais e suporte em eventos corporativos.",
-    "achievements": [],
-    "technologies": [],
-    "icon": "Megaphone",
-    "position": "9"
+    "role": "Gestor do Núcleo de Serviços da Coordenação de Redes",
+    "company": "Defensoria Pública do Estado do Rio de Janeiro",
+    "years": "03/2024 – 11/2024",
+    "description": "Gestor operacional e técnica de equipes, contratos e projetos de TIC, atuando como elo estratégico entre fornecedores, áreas técnicas e administrativas. As atividades incluíram a liderança e distribuição de demandas da equipe, fiscalização de 11 contratos de TIC, monitoramento de SLAs, controle de faturamento e documentação, além do planejamento e execução de projetos de TI, com homologação e validação de entregas. Também houve destaque na criação de fluxos padronizados, elaboração de documentação técnica e coordenação de reuniões com fornecedores e setores internos.",
+    "icon": "https://www.svgrepo.com/show/327461/person.svg",
+    "achievements": [
+      "Coordenação da atualização do GLPI para versão 10, conduzindo homologação e validação.",
+      "Gestão da migração do Zimbra para Google Workspace, incluindo integração com AD e SSO.",
+      "Elaboração de Termo de Referência e coordenação do projeto de contratação de Internet via Starlink.",
+      "Implantação de documentação e processos que reduziram retrabalhos e aumentaram rastreabilidade das atividades."
+    ],
+    "technologies": [
+      "Gestão de equipes técnicas e fornecedores",
+      "Comunicação assertiva e liderança",
+      "Fiscalização de contratos e faturamento",
+      "Documentação técnica e padronização de processos",
+      "Google Workspace",
+      "Active Directory",
+      "GLPI",
+      "Zabbix",
+      "Grafana",
+      "SEI"
+    ],
+    "id": "2",
+    "position": 2
   },
   {
-    "id": "7",
-    "role": "Assistente de Diretor de Arte",
-    "company": "Target Mídia Publicidade Ltda",
-    "years": "2013 - 2016",
-    "description": "Assistente de Diretor de Arte, responsável por avaliar projetos visuais, sugerir melhorias criativas, auxiliar na execução de campanhas e garantir a consistência estética conforme o conceito proposto.",
+    "role": "Analista de Redes",
+    "company": "Defensoria Pública do Estado do Rio de Janeiro",
+    "years": "11/2023 – 02/2024",
+    "description": "Atuação direcionada à administração de infraestrutura crítica e segurança de redes, garantindo conectividade estável, controle de acessos e disponibilidade de serviços corporativos. As responsabilidades abrangeram a gestão de Active Directory e File Server, configuração de proxy e balanceamento de carga via NGINX, administração de firewall Check Point e VPNs, além do gerenciamento de certificados digitais e políticas de segurança de e-mail e endpoints. Também foi responsável pela operação de servidores e aplicações críticas, como GLPI, SEI, WordPress, Grafana e Zabbix.",
+    "icon": "https://www.svgrepo.com/show/532872/network-wired.svg",
+    "achievements": [
+      "Implementação de políticas de acesso granular em File Server, assegurando segregação e segurança de dados.",
+      "Configuração e otimização de regras de firewall e VPNs, garantindo conectividade segura e estável entre unidades.",
+      "Apoio técnico fundamental às integrações de e-mail e SSO durante a migração para Google Workspace."
+    ],
+    "technologies": [
+      "Segurança da informação e controle de acessos",
+      "Resolução de problemas críticos",
+      "Gestão de redes e conectividade",
+      "Trabalho colaborativo e foco em qualidade",
+      "Windows Server",
+      "Linux",
+      "Check Point",
+      "pfSense",
+      "NGINX"
+    ],
+    "id": "3",
+    "position": 3
+  },
+  {
+    "role": "Técnico de Suporte TI N1 e N2",
+    "company": "Defensoria Pública do Estado do Rio de Janeiro",
+    "years": "04/2016 – 10/2023",
+    "description": "Experiência sólida em suporte técnico de campo e remoto, prestando atendimento multicanal em ambientes de alta demanda. As atribuições envolveram diagnóstico e solução de incidentes relacionados a hardware, software, conectividade e periféricos, instalação e configuração de sistemas e impressoras, gestão de chamados no GLPI, além de suporte logístico em eventos e ações externas. Também foi responsável pela documentação técnica detalhada para subsidiar análises de níveis superiores e apoiar decisões de infraestrutura.",
+    "icon": "https://www.svgrepo.com/show/93695/technical-support.svg",
+    "achievements": [
+      "Solução de mais de 1.600 chamados com elevado índice de satisfação dos usuários.",
+      "Produção de documentação sistematizada de infraestrutura que subsidiou aquisições e melhorias.",
+      "Participação em plantões e operações em áreas de difícil acesso, garantindo a continuidade dos serviços."
+    ],
+    "technologies": [
+      "Suporte ao usuário em múltiplos canais",
+      "Comunicação clara e empatia",
+      "Resolução de problemas técnicos complexos",
+      "Organização e registro detalhado",
+      "GLPI",
+      "Hardware",
+      "Software",
+      "AnyDesk",
+      "TeamViewer",
+      "Windows/Linux"
+    ],
+    "id": "4",
+    "position": 4
+  },
+  {
+    "role": "Designer",
+    "company": "Freelancer ",
+    "years": "2016 - 2020",
+    "description": "Projetos de design gráfico e web para pequenas empresas e startups.",
+    "icon": "Megaphone",
     "achievements": [],
     "technologies": [],
-    "icon": "Megaphone",
-    "position": "8"
+    "id": "9",
+    "position": 5
   },
   {
     "id": "8",
@@ -164,28 +126,55 @@
     "achievements": [],
     "technologies": [],
     "icon": "Users",
-    "position": "7"
+    "position": 6
   },
   {
-    "id": "9",
-    "role": "Freelancer Designer",
-    "company": "Autônomo",
-    "years": "2016 - 2020",
-    "description": "Projetos de design gráfico e web para pequenas empresas e startups.",
+    "id": "7",
+    "role": "Assistente de Diretor de Arte",
+    "company": "Target Mídia Publicidade Ltda",
+    "years": "2013 - 2016",
+    "description": "Assistente de Diretor de Arte, responsável por avaliar projetos visuais, sugerir melhorias criativas, auxiliar na execução de campanhas e garantir a consistência estética conforme o conceito proposto.",
     "achievements": [],
     "technologies": [],
     "icon": "Megaphone",
-    "position": "6"
+    "position": 7
   },
   {
-    "role": "Designer Gráfico e UX/UI Designer",
-    "company": "Amaro Netto Soluções",
-    "years": "2025 - Presente",
-    "description": "Liderando projetos de design de interfaces para clientes de diversos segmentos, com foco em usabilidade e estética.",
-    "icon": "https://www.svgrepo.com/show/412933/design.svg",
+    "id": "6",
+    "role": "Trainee Design",
+    "company": "Target Mídia Publicidade Ltda",
+    "years": "2013",
+    "description": "Criação de materiais promocionais e suporte em eventos corporativos.",
     "achievements": [],
     "technologies": [],
-    "id": "10",
-    "position": "2"
+    "icon": "Megaphone",
+    "position": 8
+  },
+  {
+    "role": "Técnico de Informática",
+    "company": "Freelancer ",
+    "years": "12/2010 - 04/2016",
+    "description": "Atuação autônoma prestando serviços de tecnologia para pequenas empresas e escritórios, com foco em manutenção de computadores, suporte a usuários e administração de redes locais. Responsável por garantir a continuidade das operações e a satisfação dos clientes.",
+    "icon": "LifeBuoy",
+    "achievements": [
+      "Prestação de suporte técnico a diversos clientes, com alto índice de fidelização.",
+      "Implantação e configuração de redes locais (LAN) para escritórios.",
+      "Organização de rotinas de backup e segurança da informação para pequenas empresas.",
+      "Redução de tempo de resposta em chamados de manutenção corretiva.",
+      "Implantação de redes e rotinas de backup em clientes, aumentando a disponibilidade de sistemas.",
+      "Fidelização de clientes por meio de suporte ágil, documentação dos serviços e atendimento de qualidade."
+    ],
+    "technologies": [
+      "Suporte técnico e atendimento ao cliente",
+      "Organização e gestão de demandas",
+      "Diagnóstico e manutenção de hardware/software",
+      "Relacionamento com clientes",
+      "Windows",
+      "Linux básico",
+      "Redes TCP/IP",
+      "Pacote Office"
+    ],
+    "id": "1",
+    "position": 9
   }
 ]

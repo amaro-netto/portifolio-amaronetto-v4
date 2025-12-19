@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "title": "Otimizando LCP em Landing Pages com React",
+    "excerpt": "Técnicas práticas para garantir que sua imagem principal carregue instantaneamente, melhorando o SEO e a UX.",
+    "date": "20 Jun 2024",
+    "readTime": "5 min",
+    "category": "Performance",
+    "content": "<p>O Largest Contentful Paint (LCP) é uma das métricas mais críticas do Core Web Vitals. Em projetos React, muitas vezes negligenciamos o carregamento de imagens.</p><h3>1. Use fetchPriority</h3><p>A tag de imagem moderna suporta o atributo <code>fetchPriority='high'</code>. Isso diz ao navegador para priorizar esse recurso antes de scripts não essenciais.</p><h3>2. Evite Lazy Loading no Hero</h3><p>Nunca use <code>loading='lazy'</code> na imagem que aparece na primeira dobra. Isso atrasa o LCP.</p><h3>3. Formatos Modernos</h3><p>Sempre prefira WebP ou AVIF. A compressão é superior ao PNG/JPG tradicional.</p>",
+    "tags": ["React", "Performance", "SEO"]
+  },
+  {
+    "id": "2",
+    "title": "Por que abandonei o useEffect para buscas de dados",
+    "excerpt": "Uma análise sobre o React Query e como ele simplifica o gerenciamento de estado assíncrono.",
+    "date": "15 Mai 2024",
+    "readTime": "7 min",
+    "category": "Architecture",
+    "content": "<p>O hook <code>useEffect</code> é poderoso, mas usá-lo para data fetching cria 'race conditions' e complexidade desnecessária.</p><h3>O problema do useEffect</h3><p>Você precisa gerenciar estados de loading, erro e sucesso manualmente. Além disso, o cache é inexistente.</p><h3>A solução: React Query</h3><p>Bibliotecas como TanStack Query abstraem tudo isso. Com uma linha, temos cache, revalidação de foco e deduplicação de requisições.</p>",
+    "tags": ["React", "State Management", "Best Practices"]
+  },
+  {
+    "id": "3",
+    "title": "Segurança no Frontend: Além do HTTPS",
+    "excerpt": "Como proteger sua aplicação contra XSS e CSRF utilizando headers corretos e validação de input.",
+    "date": "02 Abr 2024",
+    "readTime": "6 min",
+    "category": "Security",
+    "content": "<p>Muitos devs acham que segurança é papel só do backend. Errado.</p><h3>Sanitização</h3><p>Nunca renderize HTML puro vindo de APIs sem sanitizar (DOMPurify). O React já protege contra a maioria dos XSS, mas cuidado com <code>dangerouslySetInnerHTML</code>.</p><h3>Content Security Policy (CSP)</h3><p>Configure headers que impedem o carregamento de scripts maliciosos de domínios desconhecidos.</p>",
+    "tags": ["Security", "OWASP", "Frontend"]
+  }
+]

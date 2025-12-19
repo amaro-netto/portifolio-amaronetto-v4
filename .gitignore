@@ -14,7 +14,7 @@ dist
 dist-ssr
 server
 *.local
-admin
+Admin.tsx
 
 # Editor directories and files
 .vscode/*

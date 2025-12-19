@@ -1,8 +1,23 @@
 [
   {
+    "title": "Juscalc",
+    "type": "Web Aplicação",
+    "year": "2026",
+    "description": "Evolução da plataforma de cálculo de pensão alimentícia.",
+    "image_card_url": "",
+    "image_modal_url": "",
+    "project_url": "",
+    "code_url": "",
+    "tags": [],
+    "features": [],
+    "id": "1766169261527",
+    "created_at": "2025-12-19T18:34:21.528Z",
+    "position": 1
+  },
+  {
     "id": "2",
     "title": "CPA - Cálculo de Pensão Alimentícia",
-    "image_card_url": "https://i.ibb.co/HpnXwbyh/Capa-Card-Projeto.webp",
+    "image_card_url": "https://i.ibb.co/whVF2LLH/Capa-Card-Projeto.webp",
     "tags": [
       "Desenvolvimento",
       "Front-end",
@@ -25,8 +40,8 @@
     ],
     "project_url": "https://cpa-calculopensaoalimenticia.netlify.app/",
     "code_url": "https://github.com/amaro-netto/calculadora_pensao-online",
-    "image_modal_url": "https://i.ibb.co/cPT5jw4/Capa-Modal-Projeto.webp",
-    "position": 1
+    "image_modal_url": "https://i.ibb.co/GvDVWnWv/Capa-Modal-Projeto.webp",
+    "position": 2
   },
   {
     "id": "3",
@@ -49,7 +64,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 2
+    "position": 3
   },
   {
     "id": "4",
@@ -67,7 +82,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 3
+    "position": 4
   },
   {
     "id": "5",
@@ -85,7 +100,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 4
+    "position": 5
   },
   {
     "id": "7",
@@ -113,7 +128,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-d688525e-3be6-4096-bd4f-96c678ec5cfa-Gemini_Generated_Image_ptxmjwptxmjwptxm.png",
-    "position": 5
+    "position": 6
   },
   {
     "id": "8",
@@ -138,7 +153,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-b6fe9c20-fa60-4b72-ba6a-06d4ad7ffb18-Gemini_Generated_Image_tvk2kgtvk2kgtvk2.png",
-    "position": 6
+    "position": 7
   },
   {
     "id": "9",
@@ -164,7 +179,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 7
+    "position": 8
   },
   {
     "id": "10",
@@ -190,7 +205,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 8
+    "position": 9
   },
   {
     "id": "11",
@@ -216,7 +231,7 @@
     "project_url": "https://defensoria.rj.def.br/noticia/detalhes/30316-Defensoria-leva-internet-de-alta-velocidade-para-acoes-sociais",
     "code_url": "https://defensoria.rj.def.br/Licitacao/Detalhes/2724",
     "image_modal_url": null,
-    "position": 9
+    "position": 10
   },
   {
     "id": "12",
@@ -249,7 +264,7 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 10
+    "position": 11
   },
   {
     "id": "13",
@@ -282,6 +297,6 @@
     "project_url": "",
     "code_url": "",
     "image_modal_url": null,
-    "position": 11
+    "position": 12
   }
 ]
