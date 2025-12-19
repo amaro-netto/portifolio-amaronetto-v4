@@ -3,9 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { 
   Clock, 
   MapPin, 
-  GraduationCap,
   MessageCircle,
-  ExternalLink
 } from 'lucide-react';
 import amaroPortrait from '@/assets/amaro-portrait2.webp';
 
@@ -18,13 +16,6 @@ const ContactSection = () => {
     { iconSrc: '/icons/linkedin.svg', label: 'LinkedIn', url: 'https://linkedin.com/in/amarosilvanetto' },
     { iconSrc: '/icons/agenda.svg', label: 'Agenda', url: 'https://calendly.com/amaronetto' },
     { iconSrc: '/icons/email.svg', label: 'E-mail', url: 'mailto:ti.amaronetto@gmail.com' },
-  ];
-
-  const learningPlatforms = [
-    { name: 'Alura', icon: '/icons/logo-alura.webp', url: 'https://cursos.alura.com.br/user/amarosilvanetto' },
-    { name: 'DIO', icon: '/icons/dio.webp', url: 'https://www.dio.me/users/amarosilva002' },
-    { name: 'Coursera', icon: '/icons/coursera.webp', url: 'https://www.coursera.org/learner/amaronetto' },
-    { name: 'Cisco', icon: '/icons/cisco.webp', url: 'https://www.credly.com/users/amaro-amarante-da-silva-netto/badges#credly' },
   ];
 
   return (
@@ -44,7 +35,8 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           
           {/* --- COLUNA ESQUERDA (CONTEÚDO) --- */}
-          <div className="lg:col-span-7 flex flex-col gap-10 pb-10">
+          {/* Ajuste de padding-bottom para alinhar visualmente com a imagem */}
+          <div className="lg:col-span-7 flex flex-col gap-10 pb-10 lg:pb-20">
                 
                 {/* 1. REDES SOCIAIS */}
                 <div className="space-y-4">
@@ -52,7 +44,6 @@ const ContactSection = () => {
                        <MessageCircle className="h-5 w-5 text-primary" /> Redes Sociais
                     </h3>
                     
-                    {/* Scroll horizontal no mobile, wrap no desktop */}
                     <div className="flex flex-nowrap gap-3 overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap no-scrollbar">
                         {socialLinks.map((social, index) => (
                         <Button
@@ -102,41 +93,9 @@ const ContactSection = () => {
                         </CardContent>
                     </Card>
                 </div>
-
-                {/* 3. PERFIL DE ESTUDOS */}
-                <div className="pt-6 border-t border-border/40">
-                     <div className="mb-6">
-                        <h3 className="font-semibold text-xl mb-3 flex items-center gap-2 text-foreground">
-                            <GraduationCap className="h-6 w-6 text-primary" /> 
-                            Aprendizado Contínuo
-                        </h3>
-                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-justify max-w-2xl">
-                            Acredito que a tecnologia exige evolução constante. Mantenho minhas skills afiadas através das principais plataformas do mercado.
-                        </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-4">
-                        {learningPlatforms.map((platform) => (
-                        <a 
-                            key={platform.name} 
-                            href={platform.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary/30 hover:bg-secondary/60 border border-transparent hover:border-primary/20 transition-all group"
-                        >
-                            <img src={platform.icon} alt={platform.name} className="w-6 h-6 object-contain grayscale group-hover:grayscale-0 transition-all" />
-                            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                                {platform.name}
-                            </span>
-                            <ExternalLink className="w-3 h-3 text-muted-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity ml-1" />
-                        </a>
-                        ))}
-                    </div>
-                </div>
           </div>
 
           {/* --- COLUNA DIREITA (FOTO) --- */}
-          {/* Ajuste de Z-Index e overflow para a imagem não cobrir elementos interativos */}
           <div className="lg:col-span-5 relative flex items-end justify-center lg:justify-end h-full min-h-[300px] lg:min-h-[600px] pointer-events-none">
                 <div className="absolute bottom-0 right-10 w-64 h-64 bg-primary/20 blur-[100px] rounded-full opacity-60" />
                 
