@@ -3,15 +3,19 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ChevronLeft, ChevronRight, Eye, ExternalLink, Code2, Calendar, Layers } from 'lucide-react';
 import projectsData from '@/data/projects.json';
+import { cn } from '@/lib/utils';
 
 const PortfolioSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [itemsPerPage, setItemsPerPage] = useState(3);
+  
+  // Estado para controlar o carregamento individual das imagens
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
 
-  // Lógica de resize otimizada
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -43,6 +47,10 @@ const PortfolioSection = () => {
     if (totalPages > 0) {
       setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
     }
+  };
+
+  const handleImageLoad = (id: string) => {
+    setLoadedImages(prev => ({ ...prev, [id]: true }));
   };
   
   const selectedProjectData = projects.find(p => p.id === selectedProject);
@@ -102,24 +110,34 @@ const PortfolioSection = () => {
                 onKeyDown={(e) => e.key === 'Enter' && setSelectedProject(project.id)}
               >
                 <CardContent className="p-0 h-full flex flex-col">
-                  {/* Imagem do Card com Overlay */}
-                  <div className="relative overflow-hidden h-48 md:h-56">
+                  {/* Imagem do Card com Skeleton */}
+                  <div className="relative overflow-hidden h-48 md:h-56 bg-muted">
+                    {/* Skeleton Loader (visível apenas enquanto carrega) */}
+                    {!loadedImages[project.id] && (
+                        <Skeleton className="absolute inset-0 w-full h-full" />
+                    )}
+                    
                     <img
                       src={project.image_card_url || ''} 
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className={cn(
+                        "w-full h-full object-cover transition-all duration-700 group-hover:scale-110",
+                        loadedImages[project.id] ? "opacity-100" : "opacity-0" // Fade-in effect
+                      )}
                       loading="lazy"
+                      onLoad={() => handleImageLoad(project.id)}
                     />
+                    
+                    {/* Overlay e Badges (só aparecem após carregar ou se quiser, sempre) */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
                     
-                    {/* Badge Flutuante */}
-                    <div className="absolute top-3 right-3 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 delay-75">
+                    <div className="absolute top-3 right-3 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 delay-75 z-10">
                          <Badge variant="secondary" className="shadow-lg backdrop-blur-md bg-white/10 text-white border-white/20">
                             Ver Detalhes
                          </Badge>
                     </div>
 
-                    <div className="absolute bottom-3 left-3 right-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="absolute bottom-3 left-3 right-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 z-10">
                        <div className="flex items-center gap-2 mb-1">
                           <Badge className="bg-primary/90 hover:bg-primary text-[10px] px-1.5 h-5 border-0">
                              {project.type}
@@ -159,7 +177,7 @@ const PortfolioSection = () => {
             ))}
           </div>
 
-          {/* Paginação (Bolinhas) */}
+          {/* Paginação */}
           <div className="flex justify-center mt-10 space-x-2">
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
@@ -174,12 +192,11 @@ const PortfolioSection = () => {
           </div>
         </div>
 
-        {/* --- MODAL DE DETALHES DO PROJETO --- */}
+        {/* --- MODAL DE DETALHES --- */}
         {selectedProjectData && (
           <Dialog open={selectedProject !== null} onOpenChange={(open) => !open && setSelectedProject(null)}>
             <DialogContent className="sm:max-w-4xl max-h-[90vh] p-0 gap-0 overflow-hidden flex flex-col bg-background border-border shadow-2xl">
               
-              {/* Header Fixo */}
               <DialogHeader className="p-6 pb-4 border-b border-border bg-background/95 backdrop-blur z-20 sticky top-0">
                 <div className="flex flex-col gap-1 pr-8">
                     <DialogTitle className="text-2xl font-bold text-foreground flex items-center gap-3">
@@ -196,21 +213,25 @@ const PortfolioSection = () => {
                 </div>
               </DialogHeader>
 
-              {/* Corpo com Scroll */}
               <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
                 
-                {/* Imagem Principal */}
-                <div className="relative rounded-xl overflow-hidden border border-border/50 shadow-inner bg-muted/20 group">
-                  <img
-                    src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url || ''}
-                    alt={selectedProjectData.title}
-                    className="w-full h-auto max-h-[400px] object-cover object-top transition-transform duration-700 hover:scale-[1.02]"
-                  />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-xl pointer-events-none"></div>
+                {/* Imagem Principal do Modal com Skeleton */}
+                <div className="relative rounded-xl overflow-hidden border border-border/50 shadow-inner bg-muted/20 group min-h-[200px]">
+                    {!loadedImages[`modal-${selectedProjectData.id}`] && (
+                        <Skeleton className="absolute inset-0 w-full h-full" />
+                    )}
+                    <img
+                        src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url || ''}
+                        alt={selectedProjectData.title}
+                        className={cn(
+                            "w-full h-auto max-h-[400px] object-cover object-top transition-all duration-700 hover:scale-[1.02]",
+                            loadedImages[`modal-${selectedProjectData.id}`] ? "opacity-100" : "opacity-0"
+                        )}
+                        onLoad={() => handleImageLoad(`modal-${selectedProjectData.id}`)}
+                    />
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
-                    {/* Coluna Principal */}
                     <div className="md:col-span-2 space-y-6">
                         <div>
                             <h3 className="font-semibold text-lg mb-3 flex items-center gap-2 text-foreground">
@@ -236,7 +257,6 @@ const PortfolioSection = () => {
                         </div>
                     </div>
 
-                    {/* Coluna Lateral (Tags e Links) */}
                     <div className="space-y-6">
                         <div className="bg-secondary/10 p-5 rounded-xl border border-border/40">
                             <h4 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground mb-4">
@@ -265,7 +285,7 @@ const PortfolioSection = () => {
                                     Repositório / Docs
                                 </Button>
                             )}
-
+                            
                             {!selectedProjectData.project_url && !selectedProjectData.code_url && (
                                 <div className="text-center p-3 text-xs text-muted-foreground bg-muted/30 rounded-lg">
                                     Projeto privado ou interno.
