@@ -97,77 +97,58 @@ const PortfolioSection = () => {
             </Button>
           </div>
 
-          {/* Grid de Projetos */}
+          {/* Grid de Projetos Estilo Poster */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
             {visibleProjects.map((project, idx) => (
               <Card 
                 key={project.id}
-                className="group cursor-pointer hover:shadow-xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 border-border/60 bg-card overflow-hidden flex flex-col h-full animate-in fade-in zoom-in-95 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                className="group relative cursor-pointer hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 border-0 overflow-hidden flex flex-col h-[400px] rounded-2xl animate-in fade-in zoom-in-95"
                 style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'both' }}
                 onClick={() => setSelectedProject(project.id)}
                 role="button"
                 tabIndex={0}
-                // ACESSIBILIDADE: Descrição completa para leitores de tela
                 aria-label={`Ver detalhes do projeto: ${project.title}`}
                 onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedProject(project.id)}
               >
-                <CardContent className="p-0 h-full flex flex-col">
-                  {/* Imagem do Card com Skeleton */}
-                  <div className="relative overflow-hidden h-48 md:h-56 bg-muted">
-                    {!loadedImages[project.id] && (
-                        <Skeleton className="absolute inset-0 w-full h-full" />
+                {/* Imagem Full */}
+                {!loadedImages[project.id] && (
+                    <Skeleton className="absolute inset-0 w-full h-full z-0" />
+                )}
+                
+                <img
+                    src={project.image_card_url || ''} 
+                    alt="" 
+                    className={cn(
+                    "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110",
+                    loadedImages[project.id] ? "opacity-100" : "opacity-0"
                     )}
+                    loading="lazy"
+                    onLoad={() => handleImageLoad(project.id)}
+                />
+                
+                {/* Overlay Gradiente (Preto embaixo -> Transparente em cima) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300 z-10" />
+
+                {/* Conteúdo Sobreposto */}
+                <div className="absolute inset-0 p-6 flex flex-col justify-between z-20">
                     
-                    <img
-                      src={project.image_card_url || ''} 
-                      alt="" // Alt vazio pois a imagem é decorativa para o botão que já tem label
-                      className={cn(
-                        "w-full h-full object-cover transition-all duration-700 group-hover:scale-110",
-                        loadedImages[project.id] ? "opacity-100" : "opacity-0"
-                      )}
-                      loading="lazy"
-                      onLoad={() => handleImageLoad(project.id)}
-                    />
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
-                    
-                    <div className="absolute top-3 right-3 translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 delay-75 z-10">
-                         <Badge variant="secondary" className="shadow-lg backdrop-blur-md bg-white/10 text-white border-white/20">
-                            Ver Detalhes
+                    {/* Topo: Selo (Badge) */}
+                    <div className="flex justify-start">
+                         <Badge className="bg-primary/90 hover:bg-primary text-white border-0 backdrop-blur-sm shadow-sm">
+                            {project.type}
                          </Badge>
                     </div>
 
-                    <div className="absolute bottom-3 left-3 right-3 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 z-10">
-                       <div className="flex items-center gap-2 mb-1">
-                          <Badge className="bg-primary/90 hover:bg-primary text-[10px] px-1.5 h-5 border-0">
-                             {project.type}
-                          </Badge>
-                       </div>
-                    </div>
-                  </div>
-
-                  {/* Conteúdo do Card */}
-                  <div className="p-5 flex flex-col flex-1 border-t border-border/40">
-                    <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                    {/* Rodapé: Título */}
+                    <div>
+                        <h3 className="font-bold text-2xl text-white group-hover:text-primary transition-colors drop-shadow-md">
                             {project.title}
                         </h3>
-                        <span className="text-xs text-muted-foreground font-mono mt-1">{project.year}</span>
+                        {/* Linha decorativa que cresce no hover */}
+                        <div className="h-1 w-0 bg-primary mt-3 transition-all duration-500 group-hover:w-16 rounded-full"></div>
                     </div>
-                    
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4 flex-1">
-                        {project.description}
-                    </p>
 
-                    <div className="flex flex-wrap gap-1.5 mt-auto">
-                        {project.tags?.slice(0, 3).map(tag => (
-                            <span key={tag} className="text-[10px] px-2 py-1 rounded-md bg-secondary/50 text-secondary-foreground border border-border/50">
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                  </div>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
@@ -181,7 +162,6 @@ const PortfolioSection = () => {
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 focus-ring ${
                   index === currentIndex ? 'bg-primary w-8' : 'bg-muted-foreground/30 hover:bg-primary/50'
                 }`}
-                // ACESSIBILIDADE: Label claro para navegação de páginas
                 aria-label={`Ir para página ${index + 1} de ${totalPages}`}
                 aria-current={index === currentIndex ? "page" : undefined}
               />
