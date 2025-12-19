@@ -24,6 +24,7 @@ import {
   Mail,
   CheckCircle2
 } from 'lucide-react';
+import Footer from './Footer'; // IMPORTANTE: Importar o Footer aqui
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
@@ -71,8 +72,11 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contato" className="section-snap bg-background pt-20 pb-20 border-t border-border/30 scroll-mt-10">
-      <div className="container mx-auto px-4 h-full">
+    // AJUSTE: flex flex-col para controlar o layout vertical e min-h-screen
+    <section id="contato" className="section-snap bg-background pt-20 border-t border-border/30 scroll-mt-10 flex flex-col min-h-screen">
+      
+      {/* Container do Conteúdo Principal (grow para ocupar o espaço) */}
+      <div className="container mx-auto px-4 flex-grow flex flex-col justify-center pb-20">
         
         <div className="text-center mb-12 animate-in slide-in-from-bottom-5 fade-in duration-700">
            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
@@ -87,12 +91,10 @@ const ContactSection = () => {
           
           {/* --- COLUNA ESQUERDA --- */}
           <div className="lg:col-span-5 flex flex-col gap-8 order-2 lg:order-1">
-                
                 <div className="grid gap-4">
                     <Card className="border-border/40 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
                         <CardContent className="p-5 flex items-start gap-4">
                             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                                {/* AJUSTE 5: aria-hidden em ícones decorativos */}
                                 <Mail className="h-5 w-5" aria-hidden="true" />
                             </div>
                             <div>
@@ -142,12 +144,11 @@ const ContactSection = () => {
                             className="h-12 w-12 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all border border-transparent hover:border-primary/20 group"
                             onClick={() => window.open(social.url, '_blank')}
                             title={social.label}
-                            // AJUSTE 2: Rótulo acessível no botão de ícone
                             aria-label={`Ir para ${social.label}`}
                         >
                             <img 
                               src={social.iconSrc} 
-                              alt="" // Alt vazio pois o botão já tem aria-label
+                              alt=""
                               className="h-6 w-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity" 
                               aria-hidden="true"
                             />
@@ -265,9 +266,12 @@ const ContactSection = () => {
                 </CardContent>
             </Card>
           </div>
-
         </div>
       </div>
+      
+      {/* RODAPÉ INTEGRADO - Agora ele aparece no final desta seção */}
+      <Footer />
+      
     </section>
   );
 };

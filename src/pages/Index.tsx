@@ -1,11 +1,11 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
-import ExperienceSection from '@/components/ExperienceSection'; // Importar Nova Seção
+import ExperienceSection from '@/components/ExperienceSection';
 import PortfolioSection from '@/components/PortfolioSection';
 import ArticlesSection from '@/components/ArticlesSection';
 import ContactSection from '@/components/ContactSection';
-import Footer from '@/components/Footer';
+// Footer removido daqui
 import { SkipLink } from '@/components/SkipLink';
 
 const Index = () => {
@@ -17,13 +17,13 @@ const Index = () => {
       <main id="main-content" tabIndex={-1} className="focus:outline-none">
         <HeroSection />
         <AboutSection />
-        <ExperienceSection /> {/* Adicionar Nova Seção aqui */}
+        <ExperienceSection />
         <PortfolioSection />
         <ArticlesSection />
-        <ContactSection />
+        <ContactSection /> {/* O Footer agora vive aqui dentro */}
       </main>
       
-      <Footer />
+      {/* <Footer />  <-- REMOVIDO DAQUI */}
     </div>
   );
 };
