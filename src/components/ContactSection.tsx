@@ -25,7 +25,6 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
-// Schema de validação (Regras do formulário)
 const formSchema = z.object({
   name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
   email: z.string().email({ message: "Insira um e-mail válido." }),
@@ -38,7 +37,6 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Inicializa o formulário
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,27 +47,18 @@ const ContactSection = () => {
     },
   });
 
-  // Função de envio (Simulação por enquanto)
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    
-    // Simula delay de rede (aqui entrará a integração com EmailJS ou Formspree depois)
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    
-    console.log(values); // Para debug
-    
+    console.log(values);
     setIsSubmitting(false);
     setIsSuccess(true);
-    
     toast({
       title: "Mensagem enviada!",
       description: "Obrigado pelo contato. Retornarei em breve.",
-      variant: "default", // Ou "success" se tiver configurado
+      variant: "default",
     });
-    
     form.reset();
-    
-    // Reseta o estado de sucesso após 5 segundos para permitir novo envio
     setTimeout(() => setIsSuccess(false), 5000);
   }
 
@@ -85,7 +74,6 @@ const ContactSection = () => {
     <section id="contato" className="section-snap bg-background pt-20 pb-20 border-t border-border/30 scroll-mt-10">
       <div className="container mx-auto px-4 h-full">
         
-        {/* Cabeçalho */}
         <div className="text-center mb-12 animate-in slide-in-from-bottom-5 fade-in duration-700">
            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
              VAMOS <span className="text-primary">CONVERSAR?</span>
@@ -97,15 +85,15 @@ const ContactSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
-          {/* --- COLUNA ESQUERDA (INFOS + REDES) --- */}
+          {/* --- COLUNA ESQUERDA --- */}
           <div className="lg:col-span-5 flex flex-col gap-8 order-2 lg:order-1">
                 
-                {/* Cards Informativos */}
                 <div className="grid gap-4">
                     <Card className="border-border/40 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
                         <CardContent className="p-5 flex items-start gap-4">
                             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                                <Mail className="h-5 w-5" />
+                                {/* AJUSTE 5: aria-hidden em ícones decorativos */}
+                                <Mail className="h-5 w-5" aria-hidden="true" />
                             </div>
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Email Direto</h4>
@@ -119,7 +107,7 @@ const ContactSection = () => {
                     <Card className="border-border/40 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
                         <CardContent className="p-5 flex items-start gap-4">
                             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                                <Clock className="h-5 w-5" />
+                                <Clock className="h-5 w-5" aria-hidden="true" />
                             </div>
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Horário</h4>
@@ -131,7 +119,7 @@ const ContactSection = () => {
                     <Card className="border-border/40 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
                         <CardContent className="p-5 flex items-start gap-4">
                             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                                <MapPin className="h-5 w-5" />
+                                <MapPin className="h-5 w-5" aria-hidden="true" />
                             </div>
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Localização</h4>
@@ -141,10 +129,9 @@ const ContactSection = () => {
                     </Card>
                 </div>
 
-                {/* Redes Sociais */}
                 <div>
                     <h3 className="font-semibold text-lg flex items-center gap-2 text-foreground mb-4">
-                       <MessageCircle className="h-5 w-5 text-primary" /> Redes Sociais
+                       <MessageCircle className="h-5 w-5 text-primary" aria-hidden="true" /> Redes Sociais
                     </h3>
                     <div className="flex flex-wrap gap-3">
                         {socialLinks.map((social, index) => (
@@ -155,11 +142,14 @@ const ContactSection = () => {
                             className="h-12 w-12 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all border border-transparent hover:border-primary/20 group"
                             onClick={() => window.open(social.url, '_blank')}
                             title={social.label}
+                            // AJUSTE 2: Rótulo acessível no botão de ícone
+                            aria-label={`Ir para ${social.label}`}
                         >
                             <img 
                               src={social.iconSrc} 
-                              alt={social.label} 
+                              alt="" // Alt vazio pois o botão já tem aria-label
                               className="h-6 w-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity" 
+                              aria-hidden="true"
                             />
                         </Button>
                         ))}
@@ -172,9 +162,9 @@ const ContactSection = () => {
             <Card className="border-border/40 bg-card shadow-lg">
                 <CardContent className="p-6 md:p-8">
                     {isSuccess ? (
-                        <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center animate-in fade-in zoom-in-95">
+                        <div className="h-full min-h-[400px] flex flex-col items-center justify-center text-center animate-in fade-in zoom-in-95" role="alert">
                             <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-4">
-                                <CheckCircle2 className="w-8 h-8" />
+                                <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
                             </div>
                             <h3 className="text-2xl font-bold text-foreground mb-2">Mensagem Enviada!</h3>
                             <p className="text-muted-foreground max-w-xs">
@@ -259,13 +249,13 @@ const ContactSection = () => {
                             >
                                 {isSubmitting ? (
                                     <>
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                                         Enviando...
                                     </>
                                 ) : (
                                     <>
                                         Enviar Mensagem
-                                        <Send className="ml-2 h-4 w-4" />
+                                        <Send className="ml-2 h-4 w-4" aria-hidden="true" />
                                     </>
                                 )}
                             </Button>

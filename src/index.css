@@ -41,6 +41,10 @@
     --card: 0 0% 100%;
     --card-foreground: 220 15% 15%;
     --card-border: 220 15% 88%;
+
+    /* Popover System (ADICIONADO PARA O SHADCN) */
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
     
     /* Status Colors */
     --success: 142 76% 36%;
@@ -112,6 +116,10 @@
     --card: 220 40% 10%;
     --card-foreground: 0 0% 95%;
     --card-border: 220 15% 22%;
+
+    /* Popover System Dark (ADICIONADO) */
+    --popover: 220 40% 10%;
+    --popover-foreground: 0 0% 95%;
     
     /* Dark Status Colors */
     --success: 142 76% 45%;
@@ -148,6 +156,7 @@
     scroll-snap-type: y mandatory;
   }
 
+  /* ACESSIBILIDADE: Respeitar Movimento Reduzido */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -165,7 +174,27 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  
+  /* ACESSIBILIDADE: Foco Global Visível (Fixa problema de navegação por teclado) */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+}
 
+/* CLASSE UTILITÁRIA PARA SCREEN READERS (Essencial para acessibilidade) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@layer utilities {
   /* Full-screen section snap */
   .section-snap {
     scroll-snap-align: start;
@@ -173,7 +202,7 @@
     min-height: 100dvh;
   }
 
-  /* Focus styles for accessibility */
+  /* Focus styles helper (mantido para compatibilidade com seus componentes atuais) */
   .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background;
   }
@@ -243,5 +272,24 @@
   
   .rotate-y-180 {
     transform: rotateY(180deg);
+  }
+
+  /* Scrollbar Utilities */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40 transition-colors;
   }
 }

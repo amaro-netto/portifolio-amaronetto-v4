@@ -11,10 +11,13 @@ export function ModeToggle() {
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="rounded-full w-9 h-9 border border-transparent hover:border-primary/20 transition-all focus-ring"
-      aria-label="Alternar tema"
+      // AJUSTE 2: Rótulo descritivo para leitores de tela
+      aria-label="Alternar entre tema claro e escuro"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      {/* Fallback extra para garantir leitura */}
+      <span className="sr-only">Alternar tema</span>
     </Button>
   )
 }
