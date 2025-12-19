@@ -7,10 +7,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   
-  // Referência para detectar cliques dentro do header
   const headerRef = useRef<HTMLElement>(null);
 
-  // Efeito para detectar Scroll (muda a cor do header)
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -20,7 +18,6 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Efeito para fechar o menu ao clicar fora dele
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -51,7 +48,7 @@ const Header = () => {
     { id: 'inicio', label: 'Início' },
     { id: 'sobre', label: 'Sobre' },
     { id: 'portfolio', label: 'Portfólio' },
-    { id: 'colaboradores', label: 'Colaboradores' },
+    // Item removido: Colaboradores
     { id: 'contato', label: 'Contato' },
   ];
 
@@ -66,7 +63,6 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <button
             onClick={() => scrollToSection('inicio')}
             className="flex items-center gap-2 text-foreground transition-colors rounded-lg group"
@@ -82,9 +78,7 @@ const Header = () => {
             </span>
           </button>
 
-          {/* Desktop Navigation & Mobile Menu Button */}
           <div className="flex items-center space-x-2">
-            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
                 <button
@@ -93,13 +87,11 @@ const Header = () => {
                   className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
                 >
                   {item.label}
-                  {/* Linha animada abaixo do link */}
                   <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transform -translate-x-1/2 transition-all duration-300 group-hover:w-1/2"></span>
                 </button>
               ))}
             </div>
 
-            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="sm"
@@ -116,7 +108,6 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 pt-2 pb-4 border-t border-border/50 animate-in slide-in-from-top-5 fade-in duration-300">
             <div className="flex flex-col space-y-1">

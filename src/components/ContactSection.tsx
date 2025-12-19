@@ -4,9 +4,9 @@ import {
   Clock, 
   MapPin, 
   GraduationCap,
-  MessageCircle
+  MessageCircle,
+  ExternalLink
 } from 'lucide-react';
-
 import amaroPortrait from '@/assets/amaro-portrait2.webp';
 
 const ContactSection = () => {
@@ -28,129 +28,122 @@ const ContactSection = () => {
   ];
 
   return (
-    <section id="contato" className="section-snap bg-background pt-32 pb-0 border-t border-border/30">
+    <section id="contato" className="section-snap bg-background pt-24 pb-0 border-t border-border/30 scroll-mt-10">
       <div className="container mx-auto px-4 h-full">
         
         {/* Cabeçalho */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-in slide-in-from-bottom-5 fade-in duration-700">
            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
              VAMOS <span className="text-primary">CONVERSAR?</span>
            </h2>
+           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+             Seja para um novo projeto, consultoria ou apenas um networking, estou disponível para trocar ideias.
+           </p>
         </div>
 
-        {/* AJUSTE 1 (Foto mais perto): 
-           Reduzi 'gap-12' para 'gap-6' no mobile. 
-           Isso aproxima a foto (coluna de baixo) do conteúdo de estudos.
-        */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           
           {/* --- COLUNA ESQUERDA (CONTEÚDO) --- */}
-          {/* AJUSTE 2 (Simetria): 
-             Removi 'space-y-10'. Agora controlamos o espaçamento manualmente em cada bloco
-             para garantir que a linha fique exatamente no meio.
-          */}
-          <div className="lg:col-span-7 flex flex-col">
+          <div className="lg:col-span-7 flex flex-col gap-10 pb-10">
                 
                 {/* 1. REDES SOCIAIS */}
-                {/* Adicionei 'pb-8' para dar espaço até a linha de baixo */}
-                <div className="pb-8">
-                    <h3 className="font-semibold text-xl mb-5 flex items-center gap-2 text-foreground">
+                <div className="space-y-4">
+                    <h3 className="font-semibold text-xl flex items-center gap-2 text-foreground">
                        <MessageCircle className="h-5 w-5 text-primary" /> Redes Sociais
                     </h3>
                     
-                    <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap md:gap-3 no-scrollbar">
+                    {/* Scroll horizontal no mobile, wrap no desktop */}
+                    <div className="flex flex-nowrap gap-3 overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:flex-wrap no-scrollbar">
                         {socialLinks.map((social, index) => (
                         <Button
                             key={index}
                             variant="ghost"
                             size="icon"
-                            className="shrink-0 h-12 w-12 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all p-2.5 border border-transparent hover:border-primary/20"
+                            className="shrink-0 h-14 w-14 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all p-3 border border-transparent hover:border-primary/20 group"
                             onClick={() => window.open(social.url, '_blank')}
                             title={social.label}
+                            aria-label={`Ir para ${social.label}`}
                         >
-                            <img src={social.iconSrc} alt={social.label} className="h-full w-full object-contain opacity-90 hover:opacity-100" />
+                            <img 
+                              src={social.iconSrc} 
+                              alt={social.label} 
+                              className="h-full w-full object-contain opacity-80 group-hover:opacity-100 transition-opacity" 
+                            />
                         </Button>
                         ))}
                     </div>
                 </div>
 
                 {/* 2. HORÁRIO E LOCALIZAÇÃO */}
-                {/* AJUSTE 3 (Simetria): 
-                   'pt-8' (topo) e 'pb-8' (baixo) criam distâncias iguais para as linhas divisórias.
-                   A borda está no topo deste bloco.
-                */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 pb-8 border-t border-border/30">
-                    {/* Card Horário */}
-                    <Card className="border-muted-foreground/20 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
+                <div className="grid sm:grid-cols-2 gap-4">
+                    <Card className="border-border/40 bg-card/50 shadow-sm hover:border-primary/30 transition-colors group">
                         <CardContent className="p-5 flex items-start gap-4">
-                            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
                                 <Clock className="h-5 w-5" />
                             </div>
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Horário</h4>
                                 <p className="text-sm text-muted-foreground">Seg - Sex: 09h às 18h</p>
-                                <p className="text-xs text-muted-foreground/70 mt-0.5">Sáb - Dom: Somente Agendado</p>
+                                <p className="text-xs text-muted-foreground/70 mt-1">Sáb - Dom: Agendado</p>
                             </div>
                         </CardContent>
                     </Card>
 
-                    {/* Card Localização */}
-                    <Card className="border-muted-foreground/20 bg-card/50 shadow-sm hover:border-primary/30 transition-colors">
+                    <Card className="border-border/40 bg-card/50 shadow-sm hover:border-primary/30 transition-colors group">
                         <CardContent className="p-5 flex items-start gap-4">
-                            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
                                 <MapPin className="h-5 w-5" />
                             </div>
                             <div>
                                 <h4 className="font-medium text-base text-foreground">Localização</h4>
                                 <p className="text-sm text-muted-foreground">Rio de Janeiro, RJ</p>
-                                <p className="text-xs text-muted-foreground/70 mt-0.5">Atendimento Presencial/Remoto</p>
+                                <p className="text-xs text-muted-foreground/70 mt-1">Atendimento Remoto Global</p>
                             </div>
                         </CardContent>
                     </Card>
                 </div>
 
                 {/* 3. PERFIL DE ESTUDOS */}
-                {/* AJUSTE 4: 'pt-8' para manter a simetria com a linha superior */}
-                <div className="pt-8 border-t border-border/30">
+                <div className="pt-6 border-t border-border/40">
                      <div className="mb-6">
                         <h3 className="font-semibold text-xl mb-3 flex items-center gap-2 text-foreground">
                             <GraduationCap className="h-6 w-6 text-primary" /> 
-                            Perfil de Estudos
+                            Aprendizado Contínuo
                         </h3>
-                        <p className="text-base text-muted-foreground leading-relaxed text-justify max-w-3xl">
-                            Mantenho-me sempre atualizado com as últimas tecnologias através de diversas 
-                            plataformas de ensino e certificações reconhecidas. Acredito que a evolução profissional 
-                            vem do equilíbrio constante entre teoria sólida e prática.
+                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed text-justify max-w-2xl">
+                            Acredito que a tecnologia exige evolução constante. Mantenho minhas skills afiadas através das principais plataformas do mercado.
                         </p>
                     </div>
 
-                    <div>
-                        <div className="flex flex-wrap gap-4">
-                            {learningPlatforms.map((platform) => (
-                            <div 
-                                key={platform.name} 
-                                className="flex items-center gap-3 px-4 py-2 rounded-lg bg-secondary/30 hover:bg-secondary/60 border border-transparent hover:border-primary/20 transition-all cursor-pointer group"
-                                onClick={() => window.open(platform.url, '_blank')}
-                            >
-                                <img src={platform.icon} alt={platform.name} className="w-6 h-6 object-contain grayscale group-hover:grayscale-0 transition-all" />
-                                <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors hidden md:block">
-                                    {platform.name}
-                                </span>
-                            </div>
-                            ))}
-                        </div>
+                    <div className="flex flex-wrap gap-4">
+                        {learningPlatforms.map((platform) => (
+                        <a 
+                            key={platform.name} 
+                            href={platform.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary/30 hover:bg-secondary/60 border border-transparent hover:border-primary/20 transition-all group"
+                        >
+                            <img src={platform.icon} alt={platform.name} className="w-6 h-6 object-contain grayscale group-hover:grayscale-0 transition-all" />
+                            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                                {platform.name}
+                            </span>
+                            <ExternalLink className="w-3 h-3 text-muted-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity ml-1" />
+                        </a>
+                        ))}
                     </div>
                 </div>
           </div>
 
           {/* --- COLUNA DIREITA (FOTO) --- */}
-          <div className="lg:col-span-5 relative flex items-end justify-center lg:justify-end h-full min-h-[350px] lg:min-h-[600px]">
-                <div className="absolute bottom-0 right-10 w-64 h-64 bg-primary/20 blur-[100px] rounded-full opacity-60 pointer-events-none" />
+          {/* Ajuste de Z-Index e overflow para a imagem não cobrir elementos interativos */}
+          <div className="lg:col-span-5 relative flex items-end justify-center lg:justify-end h-full min-h-[300px] lg:min-h-[600px] pointer-events-none">
+                <div className="absolute bottom-0 right-10 w-64 h-64 bg-primary/20 blur-[100px] rounded-full opacity-60" />
                 
                 <img 
                     src={amaroPortrait} 
                     alt="Amaro Netto" 
-                    className="relative z-10 h-full max-h-[600px] w-auto object-contain object-bottom drop-shadow-2xl transition-transform hover:scale-[1.02] duration-500"
+                    className="relative z-10 h-full max-h-[500px] lg:max-h-[650px] w-auto object-contain object-bottom drop-shadow-2xl transition-transform hover:scale-[1.02] duration-500 mask-image-gradient"
                 />
           </div>
 
