@@ -5,8 +5,8 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { Button } from '@/components/ui/button';
 import { Calendar, Building, Code, Network, Palette, Shield, Briefcase, ChevronDown } from 'lucide-react';
 import experiencesData from '@/data/experiences.json';
+import logoLight from '@/assets/logolight.svg'; // Importando o logo
 
-// Interface atualizada (mantemos duration opcional caso decida usar no futuro, mas não exibiremos agora)
 interface Experience {
   id: string;
   role: string;
@@ -24,8 +24,8 @@ const AboutSection = () => {
   const experiences = [...(experiencesData as unknown as Experience[])].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
   const [showAllExperiences, setShowAllExperiences] = useState(false);
-  const [isSkillsOpen, setIsSkillsOpen] = useState(false);
-  const [isExperienceOpen, setIsExperienceOpen] = useState(false);
+  const [isSkillsOpen, setIsSkillsOpen] = useState(true); // Começa aberto no desktop por padrão nesta nova config
+  const [isExperienceOpen, setIsExperienceOpen] = useState(true); // Começa aberto
 
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -51,7 +51,8 @@ const AboutSection = () => {
     };
   }, []);
 
-  const displayedExperiences = showAllExperiences ? experiences : experiences.slice(0, 5);
+  // AJUSTE: Limitado a 4 itens visíveis
+  const displayedExperiences = showAllExperiences ? experiences : experiences.slice(0, 4);
 
   const skills = {
     hardSkills: [
@@ -92,10 +93,11 @@ const AboutSection = () => {
   return (
     <section ref={sectionRef} id="sobre" className="section-snap bg-background scroll-mt-16">
       <div className="container mx-auto px-4 py-20 h-full">
-        <div className="grid lg:grid-cols-2 gap-12 h-full">
-          
-          {/* --- COLUNA ESQUERDA (BIO E SKILLS) --- */}
-          <div className="space-y-8 animate-in slide-in-from-left-5 fade-in duration-500">
+        
+        {/* --- LINHA SUPERIOR: JORNADA vs QUEM SOMOS --- */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-20 animate-in slide-in-from-bottom-5 fade-in duration-700">
+            
+            {/* LADO ESQUERDO: MINHA JORNADA */}
             <div>
                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
                 MINHA <span className="text-primary">JORNADA</span>
@@ -105,32 +107,44 @@ const AboutSection = () => {
                 combinando desenvolvimento, design e liderança técnica. Minha paixão é 
                 transformar desafios complexos em soluções elegantes que geram impacto real.
               </p>
-              <p className="text-muted-foreground leading-relaxed text-lg mb-8 text-justify [text-align-last:left]">
+              <p className="text-muted-foreground leading-relaxed text-lg text-justify [text-align-last:left]">
                 Especializo-me em criar experiências digitais que não apenas funcionam perfeitamente, 
                 mas também encantam os usuários. Acredito que a tecnologia deve ser uma ponte 
                 entre pessoas e possibilidades.
               </p>
             </div>
 
-            {/* --- SEÇÃO HABILIDADES --- */}
-            <div className="border border-border/40 rounded-xl p-4 md:p-6 bg-secondary/10">
-              <button 
-                className="w-full flex items-center justify-between cursor-pointer md:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
-                onClick={() => setIsSkillsOpen(!isSkillsOpen)}
-                aria-expanded={isSkillsOpen}
-                aria-controls="skills-content"
-              >
-                  <h3 className="font-display text-xl font-semibold text-foreground flex items-center gap-2">
-                    HABILIDADES
-                  </h3>
-                  <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isSkillsOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
-              </button>
+            {/* LADO DIREITO: QUEM SOMOS (EMPRESA) */}
+            <div className="flex flex-col justify-center items-center text-center p-8 bg-secondary/5 rounded-2xl border border-border/50">
+                <div className="mb-6 p-4 bg-primary/10 rounded-full">
+                    <img 
+                        src={logoLight} 
+                        alt="Amaro Netto Soluções Logo" 
+                        className="h-16 w-16 md:h-20 md:w-20 object-contain dark:brightness-0 dark:invert" 
+                    />
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
+                    AMARO NETTO <span className="text-primary">SOLUÇÕES</span>
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
+                    Consultoria especializada em Tecnologia da Informação, Infraestrutura, Segurança e Desenvolvimento. 
+                    Entregamos soluções estratégicas que unem inovação técnica e eficiência operacional para o seu negócio.
+                </p>
+            </div>
+        </div>
 
-              <div 
-                id="skills-content"
-                className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${isSkillsOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 md:max-h-none md:opacity-100'}`}
-              >
-                <div className="grid md:grid-cols-2 gap-8">
+        {/* --- LINHA INFERIOR: SKILLS vs EXPERIÊNCIA --- */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+            
+            {/* --- SEÇÃO HABILIDADES (LADO ESQUERDO) --- */}
+            <div className="border border-border/40 rounded-xl p-6 bg-secondary/10 h-full">
+              <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-display text-xl font-semibold text-foreground flex items-center gap-2">
+                    HABILIDADES TÉCNICAS
+                  </h3>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-8">
                   <div>
                     <h4 className="text-sm uppercase tracking-wider font-semibold text-muted-foreground mb-3">Hard Skills</h4>
                     <div className="flex flex-wrap gap-2">
@@ -152,41 +166,27 @@ const AboutSection = () => {
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
-          </div>
 
-          {/* --- COLUNA DIREITA (TIMELINE) --- */}
-          <div className="space-y-6 animate-in slide-in-from-right-5 fade-in duration-500 delay-100">
-            
-            {/* --- SEÇÃO EXPERIÊNCIA --- */}
-            <div className="border border-border/40 rounded-xl p-4 md:p-6 md:border-none md:p-0 md:bg-transparent">
-                <button 
-                    className="w-full flex items-center justify-between cursor-pointer md:cursor-default md:mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
-                    onClick={() => setIsExperienceOpen(!isExperienceOpen)}
-                    aria-expanded={isExperienceOpen}
-                    aria-controls="experience-content"
-                >
+            {/* --- SEÇÃO EXPERIÊNCIA (LADO DIREITO) --- */}
+            <div className="border border-border/40 rounded-xl p-6 md:border-none md:p-0 md:bg-transparent">
+                <div className="flex items-center justify-between mb-8">
                     <h3 className="font-display text-xl font-semibold text-foreground">
-                      EXPERIÊNCIA PROFISSIONAL
+                      EXPERIÊNCIA RECENTE
                     </h3>
-                    <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isExperienceOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
-                </button>
+                </div>
             
-                <div 
-                    id="experience-content"
-                    className={`mt-6 md:mt-0 transition-all duration-300 ${isExperienceOpen ? 'block' : 'hidden md:block'}`}
-                >
+                <div>
                     {experiences.length === 0 && (
                       <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
                     )}
                     
                     <div className="relative pl-4"> 
-                        {/* Linha Vertical Centralizada com a bolinha */}
+                        {/* Linha Vertical */}
                         <div className="absolute left-[5px] top-3 bottom-4 w-[2px] bg-border"></div>
                         
                         <div className="flex flex-col gap-6"> 
-                        {displayedExperiences.map((exp, index) => (
+                        {displayedExperiences.map((exp) => (
                             <div key={exp.id} className="flex items-start gap-6 group relative">
                                 
                                 {/* Bolinha Minimalista */}
@@ -209,7 +209,6 @@ const AboutSection = () => {
                                                 {exp.role}
                                             </CardTitle>
                                             
-                                            {/* AJUSTE AQUI: Removemos a Data/Duração externa */}
                                             <div className="mt-1">
                                                 <CardDescription className="text-sm font-medium flex items-center gap-1">
                                                     <Building className="w-3 h-3" /> {exp.company}
@@ -221,7 +220,7 @@ const AboutSection = () => {
                                         </Card>
                                     </DialogTrigger>
                                     
-                                    {/* Modal Detalhado (Mantém Data Completa Aqui) */}
+                                    {/* Modal Detalhado */}
                                     <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-950 border-zinc-800 text-zinc-100 gap-0 p-0 overflow-hidden flex flex-col">
                                         <DialogHeader className="p-6 pb-4 bg-zinc-900/50 border-b border-zinc-800 sticky top-0 z-20 backdrop-blur-sm">
                                             <DialogTitle className="flex items-center gap-3 text-xl text-white">
@@ -233,8 +232,6 @@ const AboutSection = () => {
                                             <DialogDescription className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm pt-2 text-primary/90 font-medium">
                                                 <span className="flex items-center gap-1.5"><Building className="h-4 w-4" aria-hidden="true" />{exp.company}</span>
                                                 <span className="hidden sm:inline text-zinc-600">•</span>
-                                                
-                                                {/* DATA DENTRO: Período completo mantido */}
                                                 <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" aria-hidden="true" />{exp.years}</span>
                                             </DialogDescription>
                                         </DialogHeader>
@@ -284,7 +281,7 @@ const AboutSection = () => {
                         </div>
                     </div>
 
-                    {!showAllExperiences && experiences.length > 5 && (
+                    {!showAllExperiences && experiences.length > 4 && (
                         <div className="text-center pt-8">
                         <Button 
                             variant="outline" 
@@ -299,7 +296,6 @@ const AboutSection = () => {
                     )}
                 </div>
             </div>
-          </div>
         </div>
       </div>
     </section>
