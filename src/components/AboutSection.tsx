@@ -3,13 +3,11 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Calendar, Building, Code, Network, Palette, Shield, Briefcase, ChevronDown } from 'lucide-react'; // Adicionado ChevronDown
-
-// Importação direta do JSON
+import { Calendar, Building, Code, Network, Palette, Shield, Briefcase, ChevronDown } from 'lucide-react';
 import experiencesData from '@/data/experiences.json';
 
 const AboutSection = () => {
-  // Ordenação local por posição ou data
+  // Ordenação por posição
   const experiences = [...experiencesData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
   const [showAllExperiences, setShowAllExperiences] = useState(false);
@@ -20,6 +18,7 @@ const AboutSection = () => {
 
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Observer para resetar a visualização de "ver todos" quando sair da tela
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -67,54 +66,47 @@ const AboutSection = () => {
     ]
   };
 
-  // Função auxiliar para renderizar o ícone corretamente
+  // Renderiza ícone na Timeline (pequeno)
   const renderIcon = (iconValue: string) => {
-    // Se for URL (começa com http), renderiza imagem
     if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
       return (
         <img 
           src={iconValue} 
           alt="icon" 
-          className="h-full w-full object-contain p-2 brightness-0 invert" // p-2 para dar respiro dentro da bolinha
-          onError={(e) => {
-             e.currentTarget.style.display = 'none'; // Esconde se der erro
-          }}
+          className="h-full w-full object-contain p-2 brightness-0 invert" 
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
         />
       );
     }
-    // Fallback para ícone padrão se não for URL
     return <Briefcase className="h-5 w-5 text-primary-foreground" />;
   };
 
-// Função auxiliar para o Modal (ícone)
+  // Renderiza ícone no Modal (grande)
   const renderIconModal = (iconValue: string) => {
     if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
       return (
         <img 
           src={iconValue} 
           alt="icon" 
-          // ADICIONADO: 'brightness-0 invert' transforma qualquer cor em BRANCO puro
-          // Se quiser outra cor, precisaria usar a técnica de 'mask' ou editar o SVG original
           className="h-8 w-8 object-contain brightness-0 invert" 
         />
       );
     }
-    // Fallback do Lucide (ícone de maleta) também forçado para branco
     return <Briefcase className="h-6 w-6 text-white" />;
   };
 
   return (
-    <section ref={sectionRef} id="sobre" className="section-snap bg-background">
+    <section ref={sectionRef} id="sobre" className="section-snap bg-background scroll-mt-16">
       <div className="container mx-auto px-4 py-20 h-full">
         <div className="grid lg:grid-cols-2 gap-12 h-full">
           
           {/* --- COLUNA ESQUERDA (BIO E SKILLS) --- */}
-          <div className="space-y-8">
+          <div className="space-y-8 animate-in slide-in-from-left-5 fade-in duration-500">
             <div>
                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-6">
                 MINHA <span className="text-primary">JORNADA</span>
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-lg mb-8 text-justify">
+              <p className="text-muted-foreground leading-relaxed text-lg mb-6 text-justify">
                 Com mais de 10 anos de experiência em tecnologia, construí uma carreira sólida 
                 combinando desenvolvimento, design e liderança técnica. Minha paixão é 
                 transformar desafios complexos em soluções elegantes que geram impacto real.
@@ -127,34 +119,39 @@ const AboutSection = () => {
             </div>
 
             {/* --- SEÇÃO HABILIDADES (COM ACORDEÃO MOBILE) --- */}
-            <div>
+            <div className="border border-border/40 rounded-xl p-4 md:p-6 bg-secondary/10">
               <div 
-                className="flex items-center justify-between mb-6 cursor-pointer md:cursor-default"
+                className="flex items-center justify-between cursor-pointer md:cursor-default"
                 onClick={() => setIsSkillsOpen(!isSkillsOpen)}
               >
-                  <h3 className="font-display text-xl font-semibold text-foreground">
+                  <h3 className="font-display text-xl font-semibold text-foreground flex items-center gap-2">
                     HABILIDADES
                   </h3>
-                  {/* Seta visível apenas no mobile */}
                   <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isSkillsOpen ? 'rotate-180' : ''}`} />
               </div>
 
-              {/* Conteúdo: Hidden no mobile (se fechado), Grid no Desktop */}
-              <div className={`${isSkillsOpen ? 'block' : 'hidden'} md:grid md:grid-cols-2 gap-8 transition-all duration-300`}>
-                <div>
-                  <h4 className="text-lg font-medium text-foreground mb-4">Hard Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.hardSkills.map((skill) => (
-                      <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">{skill.name}</Badge>
-                    ))}
+              {/* Conteúdo: Animação de expansão no mobile */}
+              <div className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${isSkillsOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0 md:max-h-none md:opacity-100'}`}>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-sm uppercase tracking-wider font-semibold text-muted-foreground mb-3">Hard Skills</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {skills.hardSkills.map((skill) => (
+                        <Badge key={skill.name} variant="secondary" className="text-xs px-2.5 py-1 hover:bg-primary hover:text-white transition-colors cursor-default">
+                          {skill.name}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="mt-4 md:mt-0"> {/* Margem top apenas no mobile para separar */}
-                  <h4 className="text-lg font-medium text-foreground mb-4">Soft Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.softSkills.map((skill) => (
-                       <Badge key={skill.name} variant="secondary" className="text-xs px-2 py-1">{skill.name}</Badge>
-                    ))}
+                  <div>
+                    <h4 className="text-sm uppercase tracking-wider font-semibold text-muted-foreground mb-3">Soft Skills</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {skills.softSkills.map((skill) => (
+                         <Badge key={skill.name} variant="outline" className="text-xs px-2.5 py-1 hover:border-primary hover:text-primary transition-colors cursor-default">
+                           {skill.name}
+                         </Badge>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -162,101 +159,121 @@ const AboutSection = () => {
           </div>
 
           {/* --- COLUNA DIREITA (TIMELINE) --- */}
-          <div className="space-y-6">
+          <div className="space-y-6 animate-in slide-in-from-right-5 fade-in duration-500 delay-100">
             
             {/* --- SEÇÃO EXPERIÊNCIA (COM ACORDEÃO MOBILE) --- */}
-            <div>
+            <div className="border border-border/40 rounded-xl p-4 md:p-6 md:border-none md:p-0 md:bg-transparent">
                 <div 
-                    className="flex items-center justify-between mb-6 cursor-pointer md:cursor-default"
+                    className="flex items-center justify-between cursor-pointer md:cursor-default md:mb-6"
                     onClick={() => setIsExperienceOpen(!isExperienceOpen)}
                 >
                     <h3 className="font-display text-xl font-semibold text-foreground">
-                    EXPERIÊNCIA PROFISSIONAL
+                      EXPERIÊNCIA PROFISSIONAL
                     </h3>
                     <ChevronDown className={`h-6 w-6 text-primary transition-transform duration-300 md:hidden ${isExperienceOpen ? 'rotate-180' : ''}`} />
                 </div>
             
-                {/* Conteúdo: Hidden no mobile (se fechado), Block no Desktop */}
-                <div className={`${isExperienceOpen ? 'block' : 'hidden'} md:block`}>
+                <div className={`mt-6 md:mt-0 transition-all duration-300 ${isExperienceOpen ? 'block' : 'hidden md:block'}`}>
                     
                     {experiences.length === 0 && (
-                    <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
+                      <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
                     )}
                     
-                    <div className="relative">
-                        <div className="absolute left-5 top-5 bottom-0 w-0.5 bg-border -translate-x-1/2"></div>
+                    <div className="relative pl-2">
+                        {/* Linha Vertical da Timeline */}
+                        <div className="absolute left-[27px] top-2 bottom-4 w-0.5 bg-gradient-to-b from-primary/50 to-transparent -translate-x-1/2"></div>
                         
-                        <div className="flex flex-col gap-4">
-                        {displayedExperiences.map((exp) => (
-                            <div key={exp.id} className="flex items-center gap-4">
-                            <div className="relative z-10">
-                                <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                                    {/* Ícone na Timeline */}
-                                    {renderIcon(exp.icon)}
-                                </div>
-                            </div>
-
-                            <div className="flex-1">
-                                <Dialog>
-                                <DialogTrigger asChild>
-                                    <Card className="cursor-pointer hover:shadow-md transition-all duration-300 hover:border-primary/50 group">
-                                    <CardHeader className="pb-4 p-4">
-                                        <div>
-                                        <CardTitle className="text-lg font-semibold leading-tight mb-2">{exp.role}</CardTitle>
-                                        <div className="flex justify-between items-center">
-                                            <CardDescription className="text-sm">{exp.company}</CardDescription>
-                                            <Badge variant="outline" className="text-xs">{exp.years}</Badge>
+                        <div className="flex flex-col gap-6">
+                        {displayedExperiences.map((exp, index) => (
+                            <div key={exp.id} className="flex items-start gap-4 group">
+                                {/* Ícone na Timeline */}
+                                <div className="relative z-10 mt-1">
+                                    <div className="w-10 h-10 bg-card border-2 border-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                        <div className="w-6 h-6 flex items-center justify-center">
+                                           {/* Reutilizando icon mas com cor ajustada para o tema claro/escuro via classe do pai */}
+                                            {/* Nota: Se o ícone for svg externo e usar filter brightness-0, ele ficará preto ou branco. Aqui mantemos a lógica original. */}
+                                            {/* Ajuste manual: forçar bg-primary dentro para manter consistência com o arquivo original se desejado, ou usar cores do tema */}
+                                            <div className="absolute inset-0 bg-primary rounded-full -z-10"></div> 
+                                            {renderIcon(exp.icon)}
                                         </div>
-                                        </div>
-                                    </CardHeader>
-                                    </Card>
-                                </DialogTrigger>
-                                
-                                {/* Modal Escuro com Destaques em Azul */}
-                                <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-900 border-zinc-800 text-white">
-                                    <DialogHeader>
-                                    <DialogTitle className="flex items-center space-x-3 text-white">
-                                        {renderIconModal(exp.icon)}
-                                        <span>{exp.role}</span>
-                                    </DialogTitle>
-                                    <DialogDescription className="flex items-center space-x-4 text-sm pt-2 text-primary font-medium">
-                                        <span className="flex items-center space-x-1"><Building className="h-4 w-4" /><span>{exp.company}</span></span>
-                                        <span className="flex items-center space-x-1"><Calendar className="h-4 w-4" /><span>{exp.years}</span></span>
-                                    </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="space-y-4 mt-4">
-                                    <p className="text-zinc-300 leading-relaxed">{exp.description}</p>
-                                    
-                                    {exp.achievements && exp.achievements.length > 0 && (
-                                        <div>
-                                        <h4 className="font-medium mb-2 text-white">Principais Conquistas:</h4>
-                                        <ul className="space-y-1 text-sm text-zinc-400">
-                                            {exp.achievements.map((achievement: string, idx: number) => (
-                                            <li key={idx} className="flex items-start space-x-2">
-                                                <span className="text-primary mt-1.5 block w-1 h-1 rounded-full bg-current flex-shrink-0"></span>
-                                                <span>{achievement}</span>
-                                            </li>
-                                            ))}
-                                        </ul>
-                                        </div>
-                                    )}
-                                    
-                                    {exp.technologies && exp.technologies.length > 0 && (
-                                        <div>
-                                        <h4 className="font-medium mb-2 text-white">Tecnologias:</h4>
-                                        <div className="flex flex-wrap gap-1">
-                                            {exp.technologies.map((tech: string) => (
-                                                <Badge key={tech} variant="secondary" className="text-xs bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20">
-                                                    {tech}
-                                                </Badge>
-                                            ))}
-                                        </div>
-                                        </div>
-                                    )}
                                     </div>
-                                </DialogContent>
-                                </Dialog>
-                            </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border-muted">
+                                        <CardHeader className="p-4">
+                                            <div>
+                                            <CardTitle className="text-base md:text-lg font-bold leading-tight mb-1 group-hover:text-primary transition-colors">
+                                                {exp.role}
+                                            </CardTitle>
+                                            <div className="flex flex-wrap justify-between items-center gap-2">
+                                                <CardDescription className="text-sm font-medium">{exp.company}</CardDescription>
+                                                <Badge variant="secondary" className="text-[10px] font-normal">{exp.years}</Badge>
+                                            </div>
+                                            </div>
+                                        </CardHeader>
+                                        </Card>
+                                    </DialogTrigger>
+                                    
+                                    {/* Modal Otimizado */}
+                                    <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-950 border-zinc-800 text-zinc-100 gap-0 p-0 overflow-hidden flex flex-col">
+                                        
+                                        <DialogHeader className="p-6 pb-4 bg-zinc-900/50 border-b border-zinc-800 sticky top-0 z-20 backdrop-blur-sm">
+                                            <DialogTitle className="flex items-center gap-3 text-xl text-white">
+                                                <div className="p-2 bg-primary/20 rounded-lg">
+                                                    {renderIconModal(exp.icon)}
+                                                </div>
+                                                <span>{exp.role}</span>
+                                            </DialogTitle>
+                                            <DialogDescription className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm pt-2 text-primary/90 font-medium">
+                                                <span className="flex items-center gap-1.5"><Building className="h-4 w-4" />{exp.company}</span>
+                                                <span className="hidden sm:inline text-zinc-600">•</span>
+                                                <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" />{exp.years}</span>
+                                            </DialogDescription>
+                                        </DialogHeader>
+
+                                        <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar">
+                                            <div>
+                                                <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+                                                    <Briefcase className="w-4 h-4 text-primary" /> Descrição
+                                                </h4>
+                                                <p className="text-zinc-300 leading-relaxed text-sm md:text-base text-justify">
+                                                    {exp.description}
+                                                </p>
+                                            </div>
+                                            
+                                            {exp.achievements && exp.achievements.length > 0 && (
+                                                <div className="bg-zinc-900/50 p-4 rounded-lg border border-zinc-800/50">
+                                                <h4 className="font-semibold mb-3 text-white text-sm uppercase tracking-wide">Principais Conquistas</h4>
+                                                <ul className="space-y-2 text-sm text-zinc-400">
+                                                    {exp.achievements.map((achievement: string, idx: number) => (
+                                                    <li key={idx} className="flex items-start gap-2.5">
+                                                        <span className="text-primary mt-1.5 block w-1.5 h-1.5 rounded-full bg-current flex-shrink-0"></span>
+                                                        <span className="leading-relaxed">{achievement}</span>
+                                                    </li>
+                                                    ))}
+                                                </ul>
+                                                </div>
+                                            )}
+                                            
+                                            {exp.technologies && exp.technologies.length > 0 && (
+                                                <div>
+                                                <h4 className="font-semibold mb-3 text-white text-sm uppercase tracking-wide">Tech Stack</h4>
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {exp.technologies.map((tech: string) => (
+                                                        <Badge key={tech} variant="secondary" className="text-xs bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 px-2 py-0.5">
+                                                            {tech}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </DialogContent>
+                                    </Dialog>
+                                </div>
                             </div>
                         ))}
                         </div>
@@ -267,9 +284,10 @@ const AboutSection = () => {
                         <Button 
                             variant="outline" 
                             onClick={() => setShowAllExperiences(true)}
-                            className="w-full"
+                            className="w-full md:w-auto min-w-[200px] border-primary/20 hover:bg-primary/5 hover:text-primary transition-all"
                         >
-                            Ver a trilha profissional completa
+                            Ver trajetória completa
+                            <ChevronDown className="ml-2 h-4 w-4" />
                         </Button>
                         </div>
                     )}
