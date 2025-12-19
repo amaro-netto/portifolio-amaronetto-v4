@@ -47,18 +47,17 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  // Lista de itens do menu atualizada
+  // --- LISTA DE NAVEGAÇÃO ATUALIZADA ---
   const navItems = [
     { id: 'inicio', label: 'Início' },
     { id: 'sobre', label: 'Sobre' },
+    { id: 'experiencia', label: 'Experiência' }, // NOVO ITEM ADICIONADO
     { id: 'portfolio', label: 'Portfólio' },
-    { id: 'artigos', label: 'Tech Notes' }, // Novo item da Fase 4
+    { id: 'artigos', label: 'Tech Notes' },
     { id: 'contato', label: 'Contato' },
   ];
 
-  // Lógica de Cores Dinâmicas:
-  // Se rolou ou menu aberto -> Usa cores do tema (foreground)
-  // Se está no topo transparente -> Força branco (para contraste com o Hero)
+  // Lógica de Cores Dinâmicas
   const isSolid = isScrolled || isMenuOpen;
 
   const textColorClass = isSolid 
@@ -94,8 +93,6 @@ const Header = () => {
             <img 
               src={logoLight} 
               alt="Amaro Netto Logo" 
-              // Inverte a cor do logo SVG se estiver no topo (para ficar branco)
-              // Se estiver no tema Dark, também inverte/ajusta conforme necessidade
               className={`h-8 w-8 transition-transform duration-300 group-hover:scale-110 ${!isSolid ? 'brightness-0 invert' : 'dark:brightness-0 dark:invert'}`} 
             />
             <span className="font-display text-xl font-bold">
@@ -137,12 +134,12 @@ const Header = () => {
                 size="sm"
                 className={`focus-ring ${mobileButtonClass}`}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+                aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
               >
                 {isMenuOpen ? (
-                  <X className="h-6 w-6 text-primary transition-transform rotate-90" />
+                  <X className="h-6 w-6 text-primary transition-transform rotate-90" aria-hidden="true" />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <Menu className="h-6 w-6" aria-hidden="true" />
                 )}
               </Button>
             </div>
