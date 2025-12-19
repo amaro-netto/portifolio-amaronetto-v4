@@ -4,7 +4,7 @@
     "company": "Amaro Netto Soluções",
     "years": "12/2024 - Presente",
     "description": "Atuação em consultoria de Tecnologia da Informação, oferecendo soluções estratégicas em infraestrutura, segurança da informação, desenvolvimento de sistemas e automação de processos. Responsável pela análise e implementação de ambientes de TI seguros e escaláveis, integração de ferramentas corporativas, otimização de fluxos operacionais e desenvolvimento de aplicações sob medida. A atuação abrange desde suporte a empresas em demandas críticas até a aplicação de inteligência artificial e automação para aumentar a eficiência, reduzir custos e garantir conformidade tecnológica.",
-    "icon": "https://www.svgrepo.com/show/456198/computer-chip.svg",
+    "icon": "Users",
     "achievements": [
       "Estruturação de ambientes de TI com foco em disponibilidade e segurança.",
       "Desenvolvimento de aplicações personalizadas para demandas específicas de clientes.",
@@ -33,7 +33,7 @@
     "company": "Defensoria Pública do Estado do Rio de Janeiro",
     "years": "03/2024 – 11/2024",
     "description": "Gestor operacional e técnica de equipes, contratos e projetos de TIC, atuando como elo estratégico entre fornecedores, áreas técnicas e administrativas. As atividades incluíram a liderança e distribuição de demandas da equipe, fiscalização de 11 contratos de TIC, monitoramento de SLAs, controle de faturamento e documentação, além do planejamento e execução de projetos de TI, com homologação e validação de entregas. Também houve destaque na criação de fluxos padronizados, elaboração de documentação técnica e coordenação de reuniões com fornecedores e setores internos.",
-    "icon": "https://www.svgrepo.com/show/327461/person.svg",
+    "icon": "Users",
     "achievements": [
       "Coordenação da atualização do GLPI para versão 10, conduzindo homologação e validação.",
       "Gestão da migração do Zimbra para Google Workspace, incluindo integração com AD e SSO.",
@@ -60,7 +60,7 @@
     "company": "Defensoria Pública do Estado do Rio de Janeiro",
     "years": "11/2023 – 02/2024",
     "description": "Atuação direcionada à administração de infraestrutura crítica e segurança de redes, garantindo conectividade estável, controle de acessos e disponibilidade de serviços corporativos. As responsabilidades abrangeram a gestão de Active Directory e File Server, configuração de proxy e balanceamento de carga via NGINX, administração de firewall Check Point e VPNs, além do gerenciamento de certificados digitais e políticas de segurança de e-mail e endpoints. Também foi responsável pela operação de servidores e aplicações críticas, como GLPI, SEI, WordPress, Grafana e Zabbix.",
-    "icon": "https://www.svgrepo.com/show/532872/network-wired.svg",
+    "icon": "Users",
     "achievements": [
       "Implementação de políticas de acesso granular em File Server, assegurando segregação e segurança de dados.",
       "Configuração e otimização de regras de firewall e VPNs, garantindo conectividade segura e estável entre unidades.",
@@ -85,7 +85,7 @@
     "company": "Defensoria Pública do Estado do Rio de Janeiro",
     "years": "04/2016 – 10/2023",
     "description": "Experiência sólida em suporte técnico de campo e remoto, prestando atendimento multicanal em ambientes de alta demanda. As atribuições envolveram diagnóstico e solução de incidentes relacionados a hardware, software, conectividade e periféricos, instalação e configuração de sistemas e impressoras, gestão de chamados no GLPI, além de suporte logístico em eventos e ações externas. Também foi responsável pela documentação técnica detalhada para subsidiar análises de níveis superiores e apoiar decisões de infraestrutura.",
-    "icon": "https://www.svgrepo.com/show/93695/technical-support.svg",
+    "icon": "Users",
     "achievements": [
       "Solução de mais de 1.600 chamados com elevado índice de satisfação dos usuários.",
       "Produção de documentação sistematizada de infraestrutura que subsidiou aquisições e melhorias.",
