@@ -6,8 +6,23 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Building, Code, Network, Palette, Shield, Briefcase, ChevronDown } from 'lucide-react';
 import experiencesData from '@/data/experiences.json';
 
+// Definindo a interface para garantir que o TS entenda o novo campo 'duration'
+// Caso seu JSON não tenha tipagem estrita, isso ajuda no intellisense
+interface Experience {
+  id: string;
+  role: string;
+  company: string;
+  years: string;     // Ex: "01/2020 - 01/2021"
+  duration?: string; // Ex: "1 ano" (Opcional para não quebrar se faltar)
+  description: string;
+  achievements?: string[];
+  technologies?: string[];
+  icon: string;
+  position?: number;
+}
+
 const AboutSection = () => {
-  const experiences = [...experiencesData].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
+  const experiences = [...(experiencesData as unknown as Experience[])].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0));
   
   const [showAllExperiences, setShowAllExperiences] = useState(false);
   const [isSkillsOpen, setIsSkillsOpen] = useState(false);
@@ -62,20 +77,6 @@ const AboutSection = () => {
     ]
   };
 
-  const renderIcon = (iconValue: string) => {
-    if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
-      return (
-        <img 
-          src={iconValue} 
-          alt=""
-          className="h-full w-full object-contain p-2 brightness-0 invert" 
-          onError={(e) => { e.currentTarget.style.display = 'none'; }}
-        />
-      );
-    }
-    return <Briefcase className="h-5 w-5 text-primary-foreground" aria-hidden="true" />;
-  };
-
   const renderIconModal = (iconValue: string) => {
     if (iconValue && (iconValue.startsWith('http') || iconValue.startsWith('/'))) {
       return (
@@ -114,7 +115,6 @@ const AboutSection = () => {
 
             {/* --- SEÇÃO HABILIDADES --- */}
             <div className="border border-border/40 rounded-xl p-4 md:p-6 bg-secondary/10">
-              {/* ACESSIBILIDADE: Transformado em botão real para navegação por teclado */}
               <button 
                 className="w-full flex items-center justify-between cursor-pointer md:cursor-default focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                 onClick={() => setIsSkillsOpen(!isSkillsOpen)}
@@ -162,7 +162,6 @@ const AboutSection = () => {
             
             {/* --- SEÇÃO EXPERIÊNCIA --- */}
             <div className="border border-border/40 rounded-xl p-4 md:p-6 md:border-none md:p-0 md:bg-transparent">
-                {/* ACESSIBILIDADE: Transformado em botão real */}
                 <button 
                     className="w-full flex items-center justify-between cursor-pointer md:cursor-default md:mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                     onClick={() => setIsExperienceOpen(!isExperienceOpen)}
@@ -183,19 +182,29 @@ const AboutSection = () => {
                       <p className="text-muted-foreground">Nenhuma experiência encontrada.</p>
                     )}
                     
-                    <div className="relative pl-2">
-                        <div className="absolute left-[27px] top-2 bottom-4 w-0.5 bg-gradient-to-b from-primary/50 to-transparent -translate-x-1/2"></div>
+                    {/* Container da Timeline com alinhamento preciso */}
+                    <div className="relative pl-4"> {/* pl-4 dá espaço para a linha e bolinha */}
                         
-                        <div className="flex flex-col gap-6">
+                        {/* LINHA VERTICAL - ALINHAMENTO MATEMÁTICO 
+                           - w-[2px]: Largura da linha
+                           - left-[5px]: Posicionamento exato para centralizar com a bolinha
+                           - top-2.5: Começa alinhado com o centro da primeira bolinha
+                           - bottom-4: Termina um pouco antes do fim
+                        */}
+                        <div className="absolute left-[5px] top-3 bottom-4 w-[2px] bg-border"></div>
+                        
+                        <div className="flex flex-col gap-8"> {/* gap-8 para espaçar mais os itens */}
                         {displayedExperiences.map((exp, index) => (
-                            <div key={exp.id} className="flex items-start gap-4 group">
-                                <div className="relative z-10 mt-1">
-                                    <div className="w-10 h-10 bg-card border-2 border-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                        <div className="w-6 h-6 flex items-center justify-center">
-                                            <div className="absolute inset-0 bg-primary rounded-full -z-10"></div> 
-                                            {renderIcon(exp.icon)}
-                                        </div>
-                                    </div>
+                            <div key={exp.id} className="flex items-start gap-6 group relative">
+                                
+                                {/* Bolinha Minimalista */}
+                                <div className="absolute left-[-11px] top-[5px] z-10">
+                                    {/* w-3 h-3 (12px) 
+                                       A linha tem 2px e está em left 5px.
+                                       A bolinha precisa estar centralizada.
+                                       O container pai tem pl-4 (16px).
+                                    */}
+                                    <div className="w-3 h-3 bg-primary rounded-full ring-4 ring-background group-hover:scale-125 transition-transform duration-300 shadow-sm"></div>
                                 </div>
 
                                 <div className="flex-1 min-w-0">
@@ -205,7 +214,6 @@ const AboutSection = () => {
                                             className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 border-muted focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                                             role="button"
                                             tabIndex={0}
-                                            // ACESSIBILIDADE: Label claro para o card
                                             aria-label={`Ver detalhes da experiência: ${exp.role} na empresa ${exp.company}`}
                                         >
                                         <CardHeader className="p-4">
@@ -213,16 +221,22 @@ const AboutSection = () => {
                                             <CardTitle className="text-base md:text-lg font-bold leading-tight mb-1 group-hover:text-primary transition-colors">
                                                 {exp.role}
                                             </CardTitle>
-                                            <div className="flex flex-wrap justify-between items-center gap-2">
-                                                <CardDescription className="text-sm font-medium">{exp.company}</CardDescription>
-                                                <Badge variant="secondary" className="text-[10px] font-normal">{exp.years}</Badge>
+                                            <div className="flex flex-wrap justify-between items-center gap-2 mt-2">
+                                                <CardDescription className="text-sm font-medium flex items-center gap-1">
+                                                    <Building className="w-3 h-3" /> {exp.company}
+                                                </CardDescription>
+                                                
+                                                {/* DATA FORA: MOSTRA APENAS A DURAÇÃO (Se existir) OU O ANO */}
+                                                <span className="text-xs font-medium text-muted-foreground bg-secondary/50 px-2 py-1 rounded-md">
+                                                    {exp.duration || exp.years}
+                                                </span>
                                             </div>
                                             </div>
                                         </CardHeader>
                                         </Card>
                                     </DialogTrigger>
                                     
-                                    {/* Modal Otimizado */}
+                                    {/* Modal Detalhado */}
                                     <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto bg-zinc-950 border-zinc-800 text-zinc-100 gap-0 p-0 overflow-hidden flex flex-col">
                                         <DialogHeader className="p-6 pb-4 bg-zinc-900/50 border-b border-zinc-800 sticky top-0 z-20 backdrop-blur-sm">
                                             <DialogTitle className="flex items-center gap-3 text-xl text-white">
@@ -234,6 +248,8 @@ const AboutSection = () => {
                                             <DialogDescription className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm pt-2 text-primary/90 font-medium">
                                                 <span className="flex items-center gap-1.5"><Building className="h-4 w-4" aria-hidden="true" />{exp.company}</span>
                                                 <span className="hidden sm:inline text-zinc-600">•</span>
+                                                
+                                                {/* DATA DENTRO: MOSTRA O PERÍODO COMPLETO */}
                                                 <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" aria-hidden="true" />{exp.years}</span>
                                             </DialogDescription>
                                         </DialogHeader>
