@@ -135,6 +135,8 @@ const Header = () => {
                 className={`focus-ring ${mobileButtonClass}`}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-navigation-menu"
               >
                 {isMenuOpen ? (
                   <X className="h-6 w-6 text-primary transition-transform rotate-90" aria-hidden="true" />
@@ -148,7 +150,10 @@ const Header = () => {
 
         {/* Mobile Navigation Dropdown */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pt-2 pb-4 border-t border-border/50 animate-in slide-in-from-top-5 fade-in duration-300">
+          <div
+            id="mobile-navigation-menu"
+            className="md:hidden mt-4 pt-2 pb-4 border-t border-border/50 animate-in slide-in-from-top-5 fade-in duration-300"
+          >
             <div className="flex flex-col space-y-1">
               {navItems.map((item) => (
                 <button

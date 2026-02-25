@@ -142,16 +142,17 @@ const ContactSection = () => {
                             variant="ghost"
                             size="icon"
                             className="h-12 w-12 rounded-xl bg-secondary/30 hover:bg-primary/10 hover:scale-110 transition-all border border-transparent hover:border-primary/20 group"
-                            onClick={() => window.open(social.url, '_blank')}
+                            asChild
                             title={social.label}
                             aria-label={`Ir para ${social.label}`}
                         >
+                            <a href={social.url} target="_blank" rel="noopener noreferrer">
                             <img 
                               src={social.iconSrc} 
-                              alt=""
+                              alt={`Ícone da rede ${social.label}`}
                               className="h-6 w-6 object-contain opacity-70 group-hover:opacity-100 transition-opacity" 
-                              aria-hidden="true"
                             />
+                          </a>
                         </Button>
                         ))}
                     </div>
