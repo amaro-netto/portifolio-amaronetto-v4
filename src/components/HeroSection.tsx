@@ -64,7 +64,7 @@ const HeroSection = () => {
             <div className="flex flex-row gap-3 w-full max-w-sm mx-auto lg:mx-0">
               <Button
                 onClick={() => scrollToSection('portfolio')}
-                className="flex-1 bg-primary hover:bg-primary-hover text-white shadow-tech transition-all duration-300 hover:shadow-glow transform hover:-translate-y-1 h-12 text-sm md:text-base group"
+                className="flex-1 bg-primary hover:bg-primary-hover text-primary-foreground shadow-tech transition-all duration-300 hover:shadow-glow transform hover:-translate-y-1 h-12 text-sm md:text-base group"
                 aria-label="Ver meu portfólio"
               >
                 Ver Portfólio
@@ -146,7 +146,8 @@ const HeroSection = () => {
                   drop-shadow-2xl
                 "
                 loading="eager"
-                fetchPriority="high" 
+                fetchPriority="high"
+                decoding="async"
               />
 
               {/* IMAGEM MODO ESCURO (Oculta no Light, Visível no Dark) */}
@@ -163,7 +164,8 @@ const HeroSection = () => {
                   drop-shadow-2xl
                 "
                 loading="eager"
-                fetchPriority="high" 
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
         </div>

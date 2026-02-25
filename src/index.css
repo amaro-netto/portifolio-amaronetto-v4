@@ -154,6 +154,7 @@
   html {
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
+    text-size-adjust: 100%;
   }
 
   /* ACESSIBILIDADE: Respeitar Movimento Reduzido */
@@ -200,6 +201,8 @@
     scroll-snap-align: start;
     min-height: 100vh;
     min-height: 100dvh;
+    content-visibility: auto;
+    contain-intrinsic-size: 100vh;
   }
 
   /* Focus styles helper (mantido para compatibilidade com seus componentes atuais) */
