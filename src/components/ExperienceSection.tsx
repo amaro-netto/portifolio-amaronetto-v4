@@ -78,7 +78,7 @@ const ExperienceSection = () => {
       return (
         <img 
           src={iconValue} 
-          alt=""
+          alt="Logotipo Amaro Netto Soluções"
           className="h-8 w-8 object-contain brightness-0 invert" 
         />
       );
