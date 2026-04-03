@@ -11,32 +11,32 @@
     /* Core Colors - Tech Professional Theme */
     --background: 0 0% 100%;
     --foreground: 220 15% 15%;
-    
+
     /* Tech Primary - Sophisticated Blue */
     --primary: 217 91% 59%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 217 91% 54%;
     --primary-light: 217 91% 94%;
-    
+
     /* Tech Secondary - Deep Navy */
     --secondary: 220 40% 15%;
     --secondary-foreground: 0 0% 100%;
     --secondary-hover: 220 40% 20%;
     --secondary-light: 220 40% 95%;
-    
+
     /* Tech Accent - Cyan Highlight */
     --accent: 189 100% 56%;
     --accent-foreground: 220 15% 15%;
     --accent-hover: 189 100% 51%;
     --accent-light: 189 100% 94%;
-    
+
     /* Neutral System */
     --muted: 220 15% 96%;
     --muted-foreground: 220 10% 45%;
     --border: 220 15% 90%;
     --input: 220 15% 92%;
     --ring: 217 91% 59%;
-    
+
     /* Card System */
     --card: 0 0% 100%;
     --card-foreground: 220 15% 15%;
@@ -45,7 +45,7 @@
     /* Popover System (ADICIONADO PARA O SHADCN) */
     --popover: 0 0% 100%;
     --popover-foreground: 220 15% 15%;
-    
+
     /* Status Colors */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
@@ -53,14 +53,14 @@
     --warning-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
+
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 59%), hsl(189 100% 56%));
     --gradient-secondary: linear-gradient(135deg, hsl(220 40% 15%), hsl(220 40% 25%));
     --gradient-accent: linear-gradient(135deg, hsl(189 100% 56%), hsl(217 91% 59%));
     --gradient-hero: linear-gradient(135deg, hsl(220 40% 15%) 0%, hsl(217 91% 59%) 100%);
     --gradient-tech: linear-gradient(45deg, hsl(217 91% 59%) 0%, hsl(189 100% 56%) 50%, hsl(217 91% 59%) 100%);
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(220 15% 15% / 0.05);
     --shadow-md: 0 4px 6px -1px hsl(220 15% 15% / 0.1), 0 2px 4px -1px hsl(220 15% 15% / 0.06);
@@ -68,12 +68,12 @@
     --shadow-xl: 0 20px 25px -5px hsl(220 15% 15% / 0.1), 0 10px 10px -5px hsl(220 15% 15% / 0.04);
     --shadow-tech: 0 8px 32px hsl(217 91% 59% / 0.15);
     --shadow-glow: 0 0 40px hsl(189 100% 56% / 0.3);
-    
+
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-spring: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     --transition-fast: all 0.15s ease-out;
-    
+
     /* Layout */
     --radius: 0.75rem;
     --radius-lg: 1rem;
@@ -86,32 +86,32 @@
     /* Dark Mode - Professional Tech Theme */
     --background: 220 40% 8%;
     --foreground: 0 0% 95%;
-    
+
     /* Tech Primary - Bright Blue in Dark */
     --primary: 217 91% 65%;
     --primary-foreground: 220 40% 8%;
     --primary-hover: 217 91% 70%;
     --primary-light: 217 91% 15%;
-    
+
     /* Tech Secondary - Darker Navy */
     --secondary: 220 40% 18%;
     --secondary-foreground: 0 0% 95%;
     --secondary-hover: 220 40% 22%;
     --secondary-light: 220 40% 12%;
-    
+
     /* Tech Accent - Bright Cyan in Dark */
     --accent: 189 100% 65%;
     --accent-foreground: 220 40% 8%;
     --accent-hover: 189 100% 70%;
     --accent-light: 189 100% 15%;
-    
+
     /* Dark Neutral System */
     --muted: 220 15% 12%;
     --muted-foreground: 220 10% 65%;
     --border: 220 15% 20%;
     --input: 220 15% 15%;
     --ring: 217 91% 65%;
-    
+
     /* Dark Card System */
     --card: 220 40% 10%;
     --card-foreground: 0 0% 95%;
@@ -120,7 +120,7 @@
     /* Popover System Dark (ADICIONADO) */
     --popover: 220 40% 10%;
     --popover-foreground: 0 0% 95%;
-    
+
     /* Dark Status Colors */
     --success: 142 76% 45%;
     --success-foreground: 220 40% 8%;
@@ -128,14 +128,14 @@
     --warning-foreground: 220 40% 8%;
     --destructive: 0 84% 65%;
     --destructive-foreground: 0 0% 95%;
-    
+
     /* Dark Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(217 91% 65%), hsl(189 100% 65%));
     --gradient-secondary: linear-gradient(135deg, hsl(220 40% 10%), hsl(220 40% 18%));
     --gradient-accent: linear-gradient(135deg, hsl(189 100% 65%), hsl(217 91% 65%));
     --gradient-hero: linear-gradient(135deg, hsl(220 40% 5%) 0%, hsl(217 91% 65%) 100%);
     --gradient-tech: linear-gradient(45deg, hsl(217 91% 65%) 0%, hsl(189 100% 65%) 50%, hsl(217 91% 65%) 100%);
-    
+
     /* Dark Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
     --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.4), 0 2px 4px -1px hsl(0 0% 0% / 0.3);
@@ -154,7 +154,9 @@
   html {
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;
+    scroll-padding-top: calc(5rem + env(safe-area-inset-top));
     text-size-adjust: 100%;
+    overflow-x: hidden;
   }
 
   /* ACESSIBILIDADE: Respeitar Movimento Reduzido */
@@ -162,8 +164,10 @@
     html {
       scroll-behavior: auto;
     }
-    
-    *, *::before, *::after {
+
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -174,8 +178,14 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
   }
-  
+
+  #root {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
   /* ACESSIBILIDADE: Foco Global Visível (Fixa problema de navegação por teclado) */
   :focus-visible {
     @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
@@ -196,6 +206,7 @@
 }
 
 @layer utilities {
+
   /* Full-screen section snap */
   .section-snap {
     scroll-snap-align: start;
@@ -264,15 +275,15 @@
   .perspective-1000 {
     perspective: 1000px;
   }
-  
+
   .transform-style-preserve-3d {
     transform-style: preserve-3d;
   }
-  
+
   .backface-hidden {
     backface-visibility: hidden;
   }
-  
+
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
@@ -281,6 +292,7 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -289,9 +301,11 @@
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40 transition-colors;
   }
