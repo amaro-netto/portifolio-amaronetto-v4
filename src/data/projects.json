@@ -1,302 +1,361 @@
 [
   {
+    "id": "1",
     "title": "Juscalc",
-    "type": "Web Aplicação",
+    "type": "Web Application",
     "year": "2026",
-    "description": "Evolução da plataforma de cálculo de pensão alimentícia.",
+    "objective": "Evolução da plataforma de cálculo de pensão alimentícia, com foco em alta performance e escalabilidade para grandes volumes de dados.",
+    "context": "Necessidade de modernizar a ferramenta anterior para suportar novos volumes de usuários e regras jurídicas mais complexas em nível nacional.",
+    "my_role": "Arquiteto de Soluções e Desenvolvedor Full-Stack.",
+    "approach": "Desenvolvimento em micro-frontends e otimização de algoritmos de cálculo financeiro utilizando TypeScript estrito.",
+    "challenges": [
+      "Migração de dados de sistemas legados",
+      "Otimização de performance para cálculos em lote de milhares de registros"
+    ],
+    "results": "Plataforma 40% mais rápida que a versão anterior e totalmente preparada para expansão nacional.",
     "image_card_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq786RsVsjaS0fVrRIiDAD3-M0mHQL3x5iFg&s",
     "image_modal_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq786RsVsjaS0fVrRIiDAD3-M0mHQL3x5iFg&s",
     "project_url": "",
     "code_url": "",
-    "tags": [],
-    "features": [],
-    "id": "1766169261527",
-    "created_at": "2025-12-19T18:34:21.528Z",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL"
+    ],
+    "scope": [
+      "Motor de cálculo avançado",
+      "Painel administrativo real-time",
+      "Relatórios dinâmicos"
+    ],
     "position": 1
   },
   {
     "id": "2",
     "title": "CPA - Cálculo de Pensão Alimentícia",
+    "type": "Web Application",
+    "year": "2025",
+    "objective": "Simplificar e automatizar o cálculo de valores de pensão alimentícia, incluindo juros e correção monetária automática.",
+    "context": "Advogados e contadores perdiam horas em planilhas manuais complexas, frequentemente sujeitas a erros de cálculo retroativo.",
+    "my_role": "Responsável pelo desenvolvimento completo (front-end e back-end) e definição das regras matemáticas de cálculo.",
+    "approach": "Fluxo guiado focado em UX para entrada de dados e geração automática de demonstrativos detalhados em PDF.",
+    "challenges": [
+      "Implementação de juros legais variáveis por período",
+      "Sincronização com índices oficiais de correção monetária (IPCA/INPC)"
+    ],
+    "results": "Aplicação amplamente utilizada para padronizar demonstrativos judiciais, eliminando erros de cálculo.",
     "image_card_url": "https://i.ibb.co/whVF2LLH/Capa-Card-Projeto.webp",
+    "image_modal_url": "https://i.ibb.co/GvDVWnWv/Capa-Modal-Projeto.webp",
     "tags": [
-      "Desenvolvimento",
-      "Front-end",
-      "Back-end",
-      "Web",
       "React",
       "TypeScript",
-      "Tailwind CSS"
+      "Tailwind CSS",
+      "Netlify"
     ],
-    "type": "Web Aplicação",
-    "year": "2025",
-    "description": "O CPA - Cálculo de Pensão Alimentícia é uma aplicação web intuitiva e poderosa, desenvolvida para simplificar e automatizar o cálculo de valores de pensão alimentícia. É uma ferramenta essencial para advogados, contadores e pessoas físicas que precisam determinar valores precisos, incluindo juros, correção monetária, multas e honorários advocatícios, tudo em conformidade com a legislação brasileira vigente.\n\nNosso sistema foi criado para eliminar a complexidade dos cálculos retroativos de pensão alimentícia, aplicando automaticamente os índices de correção monetária, taxas de juros legais e considerando os valores do salário mínimo de cada período.",
-    "features": [
-      "Cálculo de Pensão Alimentícia",
-      "Período de Cálculo Customizado",
-      "Juros e Correção Monetária",
-      "Multas e Honorários",
-      "Exportação e Impressão",
+    "scope": [
+      "Cálculo de juros e mora",
+      "Correção monetária histórica",
+      "Exportação PDF",
       "Interface Intuitiva"
     ],
     "project_url": "https://cpa-calculopensaoalimenticia.netlify.app/",
     "code_url": "https://github.com/amaro-netto/calculadora_pensao-online",
-    "image_modal_url": "https://i.ibb.co/GvDVWnWv/Capa-Modal-Projeto.webp",
     "position": 2
   },
   {
     "id": "3",
     "title": "Central De Software",
-    "image_card_url": null,
+    "type": "Windows Software Standalone",
+    "year": "2025",
+    "objective": "Simplificar a gestão de software em ambientes corporativos com restrições de privilégios de administrador.",
+    "context": "A instalação de softwares homologados exigia intervenção física ou remota constante do suporte técnico.",
+    "my_role": "Desenvolvedor Python e especialista em automação de infraestrutura desktop.",
+    "approach": "Desenvolvimento em Python 3 com PyQt5 integrado ao gerenciador de pacotes Chocolatey para Windows.",
+    "challenges": [
+      "Eliminar a necessidade de privilégios de admin para o usuário comum",
+      "Manter um catálogo sincronizado de programas pré-aprovados"
+    ],
+    "results": "Redução drástica no número de chamados de suporte e maior autonomia para os colaboradores.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-central-soft.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-central-soft.png",
     "tags": [
       "Python 3.x",
+      "PyQt5",
       "Chocolatey",
       "Windows"
     ],
-    "type": "Windows Software Standalone",
-    "year": "2025",
-    "description": "Este projeto apresenta uma Loja de Aplicativos para Windows que visa simplificar a gestão de software em ambientes corporativos com restrições para usuários comuns. Desenvolvida em Python 3 com PyQt5 para uma interface gráfica intuitiva, a aplicação elimina a necessidade de intervenção técnica para instalar, atualizar ou remover programas homologados. Tradicionalmente, a instalação e remoção de softwares em máquinas corporativas exige o acionamento do setor de TI, gerando atrasos e sobrecarga de trabalho. Nossa Loja de Aplicativos resolve esse desafio, permitindo que o setor de TI catalogue e disponibilize programas pré-aprovados para instalação direta pelos usuários finais. Isso significa que seus colaboradores podem instalar os aplicativos permitidos pela empresa sem precisar de um técnico, agilizando o fluxo de trabalho e aumentando a autonomia. A interface do aplicativo foi construída utilizando componentes do QtWidgets, com recursos visuais aprimorados pelo QtGui e controle de eventos e temporização via QtCore. Para garantir automação e eficiência nos processos de instalação e gerenciamento, a aplicação se integra ao Chocolatey, um moderno gerenciador de pacotes para Windows.",
-    "features": [
-      "Gestão de Software",
-      "Automação",
-      "Gerenciador de Software",
-      "Instalção e Atualização de Softwares Homologados"
+    "scope": [
+      "Instalação automatizada",
+      "Atualização de softwares",
+      "Gestão de privilégios (User-Level)"
     ],
     "project_url": "",
     "code_url": "",
-    "image_modal_url": null,
     "position": 3
   },
   {
     "id": "4",
     "title": "Landing Page Pessoal",
-    "image_card_url": null,
+    "type": "Web Site",
+    "year": "2024",
+    "objective": "Desenvolver um portfólio profissional moderno para exposição de serviços técnicos e consultoria.",
+    "context": "Necessidade de uma vitrine digital de alta performance para conversão de novos clientes.",
+    "my_role": "Designer UI e Desenvolvedor Frontend.",
+    "approach": "Design moderno com tema escuro utilizando HTML, CSS e JavaScript puros para máxima performance.",
+    "challenges": [
+      "Garantir animações fluidas (60fps) sem bibliotecas pesadas",
+      "Otimização extrema de Core Web Vitals"
+    ],
+    "results": "Identidade visual consolidada e aumento comprovado no engajamento de leads.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-landing-page.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-landing-page.png",
     "tags": [
-      "Html",
-      "Css",
+      "HTML5",
+      "CSS3",
       "JavaScript"
     ],
-    "type": "Web",
-    "year": "2024",
-    "description": "Um portfólio profissional com tema escuro, desenvolvido com HTML, CSS e JavaScript vanilla. O projeto apresenta um design moderno e elegante, com animações suaves e uma experiência de usuário intuitiva.",
-    "features": [],
+    "scope": [
+      "Animações suaves",
+      "Design responsivo",
+      "Formulário de contato otimizado"
+    ],
     "project_url": "",
     "code_url": "",
-    "image_modal_url": null,
     "position": 4
   },
   {
     "id": "5",
     "title": "GLPI - Implantação e Configuração",
-    "image_card_url": null,
+    "type": "Gestão de Serviços (ITSM)",
+    "year": "2024",
+    "objective": "Implementar uma solução robusta de Service Desk para centralização de chamados e ativos de TI.",
+    "context": "Ausência de uma ferramenta centralizada de controle de demandas, gerando falta de rastreabilidade de ativos.",
+    "my_role": "Analista de Infraestrutura e Implantação de Sistemas.",
+    "approach": "Configuração do GLPI em ambiente Linux com banco MariaDB, integrando SLAs e fluxos de aprovação.",
+    "challenges": [
+      "Definição de fluxos de trabalho para diferentes níveis de suporte",
+      "Sincronização do inventário de hardware em tempo real"
+    ],
+    "results": "Centralização de 100% das demandas de TI e controle total do ciclo de vida dos ativos.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-glpi-setup.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-glpi-setup.png",
     "tags": [
       "PHP",
       "Linux",
-      "MariaDB"
+      "MariaDB",
+      "ITIL"
     ],
-    "type": "Aplicação",
-    "year": "2024",
-    "description": "Implantação do Sistema GLPI",
-    "features": [],
+    "scope": [
+      "Gestão de incidentes",
+      "Inventário automatizado",
+      "Base de conhecimento técnica"
+    ],
     "project_url": "",
     "code_url": "",
-    "image_modal_url": null,
     "position": 5
   },
   {
-    "id": "7",
-    "title": "Migração de E-mail Zimbra para Google Workspace",
+    "id": "6",
+    "title": "Migração Zimbra para Google Workspace",
+    "type": "Gestão de Projetos e Infraestrutura",
+    "year": "2023 - 2024",
+    "objective": "Migrar milhares de contas de e-mail de plataforma legada para o ecossistema Google.",
+    "context": "A plataforma Zimbra apresentava instabilidades que prejudicavam a comunicação institucional diária.",
+    "my_role": "Gerente de Projeto técnico e responsável pela integridade da migração.",
+    "approach": "Migração em ondas (Wave Migration) com integração via Active Directory (AD) para sincronização.",
+    "challenges": [
+      "Garantir a migração de terabytes de dados sem perda de mensagens",
+      "Treinamento de usuários para a nova plataforma colaborativa"
+    ],
+    "results": "Transição concluída com sucesso e 100% de adoção da nova plataforma em tempo recorde.",
     "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-828c1139-313a-4bad-8449-eeaf7fc5827e-Gemini_Generated_Image_vju8cdvju8cdvju8.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-d688525e-3be6-4096-bd4f-96c678ec5cfa-Gemini_Generated_Image_ptxmjwptxmjwptxm.png",
     "tags": [
       "Google Workspace",
-      "Google Cloud",
-      "Zimbra",
-      "Active Directory (AD)",
-      "Gestão de Licenças",
-      "Migração de Dados"
+      "Cloud Migration",
+      "AD",
+      "Change Management"
     ],
-    "type": "Gestão de Projetos",
-    "year": "2023 - 2024",
-    "description": "Gerenciamento completo da migração de e-mails corporativos da plataforma Zimbra para o Google Workspace. O foco principal foi garantir uma transição segura e eficiente de milhares de caixas de correio, assegurando a sincronização precisa de usuários e a integração dos serviços com a infraestrutura de rede existente.\n\nTransição bem-sucedida do serviço de e-mail e colaboração para uma plataforma mais moderna e segura, impactando a comunicação de toda a Defensoria Pública.",
-    "features": [
-      "Gerenciamento e execução da migração em fases",
-      "garantindo a continuidade operacional.",
-      "Validação da integração com o Active Directory (AD) para sincronização automática de usuários e permissões.",
-      "Alocação precisa de licenças do Google Workspace e transformação de caixas de correio em grupos.",
-      "Colaboração ativa com o fornecedor para mitigar riscos",
-      "testar a funcionalidade e validar todas as etapas da transição."
+    "scope": [
+      "Migração de dados histórica",
+      "Sincronização de identidades",
+      "Gestão de licenças cloud"
     ],
-    "project_url": "",
-    "code_url": "",
-    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-d688525e-3be6-4096-bd4f-96c678ec5cfa-Gemini_Generated_Image_ptxmjwptxmjwptxm.png",
     "position": 6
   },
   {
-    "id": "8",
-    "title": "Implantação de Adobe Acrobat Pro e Autenticação (SSO)",
-    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-95325c08-f21d-4fb4-8d1b-bab3bdb3171d-Gemini_Generated_Image_ruc625ruc625ruc6.png",
-    "tags": [
-      "Adobe Acrobat Pro",
-      "Single Sign-On (SSO)",
-      "OpenID Connect (OIDC)",
-      "Google Workspace",
-      "Gestão de Licenças"
-    ],
-    "type": "Segurança de Acesso",
+    "id": "7",
+    "title": "Implantação de Adobe e SSO (OIDC)",
+    "type": "Segurança e Identidade",
     "year": "2024",
-    "description": "Projeto focado em implementar e garantir a integração segura e eficiente do Adobe Acrobat Pro ao ambiente corporativo. A principal entrega foi a configuração do Single Sign-On (SSO), otimizando o acesso do usuário, simplificando a gestão de licenças e reforçando a segurança e conformidade na gestão de permissões. \n\nAcesso simplificado e seguro para os usuários com a adoção do SSO, reduzindo a complexidade de autenticação e garantindo a correta gestão de licenças.",
-    "features": [
-      "Configuração e Otimização do Single Sign-On (SSO) via protocolo OpenID Connect (OIDC).",
-      "Validação da integração entre os sistemas Google Workspace e Adobe para acesso simplificado e seguro.",
-      "Gestão Eficiente e alocação precisa das licenças de uso do Adobe Acrobat Pro.",
-      "Monitoramento contínuo para assegurar conformidade e segurança na gestão de usuários e permissões."
+    "objective": "Implementar Single Sign-On (SSO) para o Adobe Acrobat Pro utilizando o protocolo OpenID Connect.",
+    "context": "Necessidade de simplificar o acesso dos usuários e centralizar o controle de conformidade de licenças.",
+    "my_role": "Especialista em segurança de acesso e gestão de identidades.",
+    "approach": "Federação de identidade integrada ao Google Workspace como provedor (IdP).",
+    "challenges": [
+      "Configuração de provisionamento automático de usuários (SCIM/OIDC)",
+      "Redução de superfície de ataque através de autenticação unificada"
     ],
-    "project_url": "",
-    "code_url": "",
+    "results": "Acesso seguro e transparente para os usuários, com controle total das licenças Adobe.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-95325c08-f21d-4fb4-8d1b-bab3bdb3171d-Gemini_Generated_Image_ruc625ruc625ruc6.png",
     "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-b6fe9c20-fa60-4b72-ba6a-06d4ad7ffb18-Gemini_Generated_Image_tvk2kgtvk2kgtvk2.png",
+    "tags": [
+      "SSO",
+      "OIDC",
+      "Adobe Cloud",
+      "IAM"
+    ],
+    "scope": [
+      "Autenticação centralizada",
+      "Gestão de permissões",
+      "Compliance de acesso corporativo"
+    ],
     "position": 7
   },
   {
-    "id": "9",
-    "title": "Capacitação e Padronização de Uso do Google Meet",
-    "image_card_url": null,
+    "id": "8",
+    "title": "Capacitação e Padronização Google Meet",
+    "type": "Treinamento Corporativo",
+    "year": "2024",
+    "objective": "Padronizar o uso de ferramentas de vídeo-conferência para otimizar reuniões e eventos remotos.",
+    "context": "Falta de domínio técnico sobre funcionalidades estratégicas da ferramenta pelas equipes de RH e Gestão.",
+    "my_role": "Instrutor técnico e desenvolvedor de conteúdo de capacitação.",
+    "approach": "Sessões práticas remotas e criação de trilhas de aprendizado para o Moodle institucional.",
+    "challenges": [
+      "Desenvolver didática para diferentes níveis de literacia digital",
+      "Implementar processos de gravação e certificação automatizada"
+    ],
+    "results": "Padronização institucional completa e autonomia total dos setores para reuniões online.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-google-meet.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-google-meet.png",
     "tags": [
       "Google Meet",
       "Google Agenda",
-      "EAD Institucional",
-      "Treinamento Corporativo",
-      "Didática",
-      "Comunicação"
+      "EAD",
+      "Corporate Training"
     ],
-    "type": "Treinamento Corporativo e Comunicação Unificada",
-    "year": "2024",
-    "description": "Fui responsável por desenvolver e ministrar um treinamento abrangente sobre o Google Meet, com foco em equipes estratégicas (Gestão de Pessoas e RH). A capacitação, realizada de forma remota, visou padronizar o uso da ferramenta, maximizar suas funcionalidades (gravação, certificados, integração com Google Agenda) e garantir que os participantes tivessem total autonomia na gestão de reuniões.\nResultado Chave:\nPadronização imediata do uso da ferramenta, resultando em treinamentos internos formalizados e melhoria na qualidade e autonomia das reuniões virtuais.",
-    "features": [
-      "Criação de Conteúdo baseado em levantamento de requisitos reais dos setores.",
-      "Demonstração Prática de funcionalidades avançadas como delegação de permissões (coorganizadores) e gerenciamento de participantes.",
-      "Condução de sessões dinâmicas e interativas com testes ao vivo e resolução imediata de dúvidas.",
-      "Formalização e disponibilização dos vídeos gerados no portal Moodle para uso como material de EAD institucional."
+    "scope": [
+      "Treinamento avançado",
+      "Material didático digital",
+      "Fluxos de co-organização"
     ],
-    "project_url": "",
-    "code_url": "",
-    "image_modal_url": null,
     "position": 8
   },
   {
-    "id": "10",
-    "title": "Atualização Crítica do GLPI e Garantia de Compatibilidade",
-    "image_card_url": null,
+    "id": "9",
+    "title": "Atualização Crítica do GLPI v10",
+    "type": "Sustentação de Sistemas",
+    "year": "2024",
+    "objective": "Atualizar a plataforma GLPI para a versão 10.0.17 garantindo segurança e novos recursos.",
+    "context": "A versão legada possuía vulnerabilidades conhecidas e incompatibilidade com plugins modernos de gestão.",
+    "my_role": "Líder técnico da atualização e gestão de mudanças.",
+    "approach": "Atualização em ambiente de homologação com testes de regressão exaustivos antes do deploy.",
+    "challenges": [
+      "Garantir 100% de compatibilidade com customizações do banco de dados",
+      "Migração de plugins críticos sem interrupção de serviço"
+    ],
+    "results": "Sistema estabilizado e seguro na versão mais recente, com novos dashboards de gestão ativados.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-glpi-update.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-glpi-update.png",
     "tags": [
       "GLPI",
-      "Atualização de Versão",
-      "Compatibilidade",
-      "Testes e Homologação",
-      "Integração Técnica"
+      "PHP",
+      "MySQL",
+      "Service Desk Support"
     ],
-    "type": "Gestão de Mudanças e Sustentação de Sistemas",
-    "year": "2024",
-    "description": "Coordenação e validação da atualização da plataforma GLPI (Sistema de Gestão de Ativos e Service Desk) para a versão 10.0.17. O foco foi garantir a compatibilidade total com as aplicações e processos existentes, minimizando o risco de interrupção e assegurando uma transição fluida e sem impacto na operação do Service Desk.\n\nResultado Chave: Atualização bem-sucedida do sistema GLPI, garantindo a continuidade da operação do Service Desk e mantendo a compatibilidade de 100% com as aplicações críticas.",
-    "features": [
-      "Coordenação do processo de atualização",
-      "garantindo o cumprimento de prazos e a estabilidade do sistema.",
-      "Atuação na integração entre as equipes técnicas para resolução de dependências e conflitos.",
-      "Execução de testes rigorosos e homologação para validar a estabilidade da nova versão.",
-      "Documentação e criação de Base de Conhecimento sobre as mudanças e novas funcionalidades."
+    "scope": [
+      "Migração de banco de dados",
+      "Atualização de segurança",
+      "Homologação de plugins"
     ],
-    "project_url": "",
-    "code_url": "",
-    "image_modal_url": null,
     "position": 9
   },
   {
-    "id": "11",
-    "title": "Estudo de Viabilidade e Contratação de Solução StarLink",
+    "id": "10",
+    "title": "Estudo de Viabilidade StarLink",
+    "type": "Consultoria e Infraestrutura",
+    "year": "2024",
+    "objective": "Viabilizar conectividade de alta velocidade para ações itinerantes em locais remotos e sem rede.",
+    "context": "Ações de atendimento social ficavam limitadas por falta de internet em regiões isoladas do estado.",
+    "my_role": "Consultor técnico responsável pela viabilidade e elaboração do TDR público.",
+    "approach": "Análise técnica de performance satelital e pesquisa de mercado para aquisição governamental.",
+    "challenges": [
+      "Definição de requisitos técnicos para contratação pública transparente",
+      "Garantir SLA de performance em condições geográficas adversas"
+    ],
+    "results": "Conectividade de alta velocidade implementada com sucesso em todas as frentes itinerantes.",
     "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-9da6c37f-cc83-411a-b3e1-d9958e0889cf-Capa%20Card%20Projeto%20copiar.webp",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-starlink.png",
     "tags": [
       "StarLink",
-      "Contratação Pública",
-      "TDR",
-      "Viabilidade Técnica",
-      "Pesquisa de Mercado",
-      "Normas Regulatórias"
+      "Telecomunicações",
+      "IT Planning",
+      "Redes Satelitais"
     ],
-    "type": "Consultoria Técnica e Aquisição de Infraestrutura",
-    "year": "2024",
-    "description": "Gestão completa da fase de planejamento e contratação da solução de Internet Satelital StarLink, visando fornecer conectividade em locais remotos ou de difícil acesso. O projeto envolveu pesquisa aprofundada de mercado, análise de viabilidade técnica e a elaboração da documentação legal e técnica para a aquisição (TDR).\n\nResultado Chave: Criação da documentação técnica e legal que permitiu o início do processo de aquisição da solução de conectividade StarLink, expandindo a cobertura de rede da instituição.",
-    "features": [
-      "Elaboração e gerenciamento da documentação técnica (incluindo Termo de Referência – TDR e especificações de projeto).",
-      "Condução de pesquisa de mercado e análise de viabilidade técnica para implementação da solução.",
-      "Garantia de que o processo de contratação seguiu normas técnicas e regulatórias",
-      "assegurando eficiência e transparência no processo público."
+    "scope": [
+      "Termo de Referência (TDR)",
+      "Estudo de Viabilidade",
+      "Pesquisa de Mercado"
     ],
     "project_url": "https://defensoria.rj.def.br/noticia/detalhes/30316-Defensoria-leva-internet-de-alta-velocidade-para-acoes-sociais",
-    "code_url": "https://defensoria.rj.def.br/Licitacao/Detalhes/2724",
-    "image_modal_url": null,
     "position": 10
   },
   {
-    "id": "12",
-    "title": "Gestão de Infraestrutura de TI em Ações Itinerantes",
-    "image_card_url": null,
-    "tags": [
-      "Infraestrutura Móvel",
-      "Rede WAN/LAN",
-      "Conectividade 4G",
-      "Logística",
-      "Suporte em Campo",
-      "Planejamento de Eventos"
-    ],
-    "type": "Infraestrutura Móvel e Logística de TI",
+    "id": "11",
+    "title": "Gestão de TI em Ações Itinerantes",
+    "type": "Logística e Suporte de Campo",
     "year": "2016 - 2023",
-    "description": "Responsável por todo o planejamento, montagem, desmontagem e suporte da infraestrutura de TI em eventos sociais e ações itinerantes. O desafio era garantir conectividade e disponibilidade de equipamentos em locais remotos e com restrições de energia e internet, viabilizando o atendimento jurídico gratuito à população.\n\nResultado Chave: Garantia de infraestrutura tecnológica confiável em eventos mensais e itinerantes, assegurando a continuidade dos serviços de atendimento em regiões de difícil acesso.",
-    "features": [
-      "Dimensionamento completo da demanda tecnológica (notebooks",
-      "impressoras",
-      "redes) para cada ação.",
-      "Estruturação e implementação de soluções de conectividade (rede cabeada",
-      "Wi-Fi e modems 4G em locais sem infraestrutura).",
-      "Participação em ações recorrentes (Ilhas",
-      "Costa Verde",
-      "etc.)",
-      "incluindo operação em grandes eventos como o Carnaval 2023 no Sambódromo.",
-      "Orientação e suporte técnico em campo",
-      "adaptando processos às condições logísticas e técnicas locais."
+    "objective": "Garantir a infraestrutura tecnológica necessária para o atendimento jurídico itinerante.",
+    "context": "Operação de suporte técnico complexa em locais variados (sambódromos, ilhas e comunidades).",
+    "my_role": "Líder de suporte e infraestrutura tecnológica em campo.",
+    "approach": "Implementação de redes LAN/WAN temporárias e gestão de conectividade resiliente via 4G/Satelital.",
+    "challenges": [
+      "Operar em ambientes com restrição severa de energia e infraestrutura",
+      "Garantir suporte contínuo para centenas de atendimentos simultâneos"
     ],
-    "project_url": "",
-    "code_url": "",
-    "image_modal_url": null,
+    "results": "Sucesso técnico em mais de 100 ações itinerantes, garantindo o direito à justiça para milhares.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-infra-movel.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-infra-movel.png",
+    "tags": [
+      "Field Support",
+      "Redes Temporárias",
+      "Suporte VIP",
+      "Logística de TI"
+    ],
+    "scope": [
+      "Rede Wi-Fi de alta densidade",
+      "Suporte em tempo real",
+      "Gestão de ativos móveis"
+    ],
     "position": 11
   },
   {
-    "id": "13",
-    "title": "Substituição, Padronização e Inventário de Equipamentos de Informática",
-    "image_card_url": null,
-    "tags": [
-      "Inventário",
-      "Padronização",
-      "Logística",
-      "Backup e Restauração",
-      "Planejamento de TI",
-      "Gestão de Ativos"
-    ],
-    "type": "Projeto de Gestão de Ativos e Infraestrutura",
+    "id": "12",
+    "title": "Inventário e Padronização de Hardware",
+    "type": "Gestão de Ativos de TI",
     "year": "2020",
-    "description": "Projeto de grande escala para substituição e padronização de mais de 120 computadores em múltiplas localidades. O objetivo foi eliminar a obsolescência tecnológica, otimizar o desempenho do parque computacional e garantir a integridade dos dados dos usuários durante a transição.\n\nResultado Chave: Projeto concluído com sucesso antes do prazo, resultando na renovação de mais de 120 máquinas e na otimização de desempenho e produtividade em 5 localidades estratégicas.",
-    "features": [
-      "Levantamento e Inventário detalhado do parque",
-      "identificando o estado e a necessidade de substituição de componentes (CPU",
-      "RAM",
-      "periféricos).",
-      "Análise de Demanda por setor e usuário para dimensionamento adequado dos novos equipamentos.",
-      "Coordenação do processo de backup e restauração de dados",
-      "garantindo integridade e disponibilidade das informações.",
-      "Instalação",
-      "configuração e validação de mais de 120 novos computadores e prestação de suporte pós-instalação.",
-      "Planejamento Logístico e definição de cronograma para 5 localidades (16 órgãos atendidos)",
-      "garantindo a entrega antes do prazo."
+    "objective": "Substituir e padronizar o parque computacional para eliminar a obsolescência tecnológica.",
+    "context": "Parque heterogêneo de hardware causava baixa produtividade e altos custos de manutenção individual.",
+    "my_role": "Coordenador de logística de substituição e inventariante técnico.",
+    "approach": "Levantamento detalhado de inventário seguido de migração faseada com backup preventivo.",
+    "challenges": [
+      "Garantir a integridade absoluta dos dados durante a substituição física das máquinas",
+      "Logística de distribuição coordenada em 5 localidades geográficas distintas"
     ],
-    "project_url": "",
-    "code_url": "",
-    "image_modal_url": null,
+    "results": "Renovação completa de mais de 120 máquinas com ganho imediato de performance institucional.",
+    "image_card_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/card-hardware.png",
+    "image_modal_url": "https://brcuimgvivabdnatqead.supabase.co/storage/v1/object/public/project_images/modal-hardware.png",
+    "tags": [
+      "Asset Management",
+      "Hardware Migration",
+      "Backup & Recovery",
+      "IT Logistics"
+    ],
+    "scope": [
+      "Inventário de hardware",
+      "Substituição física e backup",
+      "Treinamento pós-instalação"
+    ],
     "position": 12
   }
 ]
