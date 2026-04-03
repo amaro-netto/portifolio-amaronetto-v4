@@ -69,12 +69,12 @@ const PortfolioSection = () => {
 
   return (
     <section id="portfolio" className="section-snap bg-muted/30 scroll-mt-16">
-      <div className="container mx-auto px-4 py-20 h-full">
+      <div className="container mx-auto px-4 py-12 md:py-16 xl:py-20 h-full">
         <div className="text-left mb-12 animate-in slide-in-from-bottom-5 fade-in duration-700">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
             MEU <span className="text-primary">PORTFÓLIO</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl">
+          <p className="text-muted-foreground text-base md:text-lg max-w-3xl">
             Aqui estão alguns dos projetos que desenvolvi, variando de aplicações web complexas a soluções de automação e infraestrutura.
           </p>
         </div>

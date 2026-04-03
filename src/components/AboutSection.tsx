@@ -20,17 +20,17 @@ const AboutSection = () => {
   `;
 
   // --- CONTROLE DE ALTURA DA FOTO ---
-  const imageHeightClass = "lg:h-[700px] xl:h-[850px]"; 
+  const imageHeightClass = "lg:h-[min(62vh,700px)] xl:h-[min(70vh,820px)]"; 
 
   return (
-    <section ref={sectionRef} id="sobre" className="section-snap bg-background scroll-mt-16 flex items-center min-h-[90vh] py-20">
+    <section ref={sectionRef} id="sobre" className="section-snap bg-background scroll-mt-16 flex items-center min-h-[100svh] py-12 md:py-16 xl:py-20">
       <div className="container mx-auto px-4 h-full flex items-center">
         
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start animate-in slide-in-from-bottom-5 fade-in duration-700 w-full">
             
             {/* --- LADO ESQUERDO: TEXTO + FOTO --- */}
             <div className="lg:w-2/3 relative clearfix">
-               <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-10">
+               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-8 md:mb-10">
                 MINHA <span className="text-primary">JORNADA</span>
               </h2>
 
@@ -50,7 +50,7 @@ const AboutSection = () => {
                 loading="lazy"
               />
               
-              <div className="text-muted-foreground leading-relaxed text-lg text-justify [text-align-last:left] relative z-20">
+              <div className="text-muted-foreground leading-relaxed text-base md:text-lg text-justify [text-align-last:left] relative z-20">
                 <p className="mb-8">
                   Com mais de 10 anos de experiência imersiva em tecnologia, construí uma carreira sólida 
                   que combina o rigor do desenvolvimento back-end, a criatividade do design de interfaces e a visão estratégica da liderança técnica. 
@@ -77,7 +77,7 @@ const AboutSection = () => {
                 <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-6 leading-tight">
                     AMARO NETTO <span className="text-primary">SOLUÇÕES</span>
                 </h3>
-                <p className="text-muted-foreground text-lg leading-relaxed">
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
                     Consultoria boutique especializada em Tecnologia da Informação. Unimos infraestrutura robusta, segurança de dados e desenvolvimento sob medida para entregar inovação estratégica e eficiência operacional para o seu negócio.
                 </p>
             </div>

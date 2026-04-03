@@ -73,13 +73,13 @@ const ContactSection = () => {
 
     return (
         // AJUSTE: flex flex-col para controlar o layout vertical e min-h-screen
-        <section id="contato" className="section-snap bg-background pt-20 border-t border-border/30 scroll-mt-10 flex flex-col min-h-screen">
+        <section id="contato" className="section-snap bg-background pt-12 md:pt-16 xl:pt-20 border-t border-border/30 scroll-mt-10 flex flex-col min-h-[100svh]">
 
             {/* Container do Conteúdo Principal (grow para ocupar o espaço) */}
             <div className="container mx-auto px-4 flex-grow flex flex-col justify-center pb-20">
 
                 <div className="text-center mb-12 animate-in slide-in-from-bottom-5 fade-in duration-700">
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+                    <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                         VAMOS <span className="text-primary">CONVERSAR?</span>
                     </h2>
                     <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">

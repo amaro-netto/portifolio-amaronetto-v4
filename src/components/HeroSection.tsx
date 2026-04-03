@@ -24,7 +24,7 @@ const HeroSection = () => {
   return (
     <section 
       id="inicio" 
-      className="section-snap relative bg-gradient-hero dark:bg-secondary overflow-hidden h-screen min-h-[600px] flex flex-col"
+      className="section-snap relative bg-gradient-hero dark:bg-secondary overflow-hidden min-h-[100svh] flex flex-col"
       aria-label="Introdução e Boas-vindas"
     >
       
@@ -38,10 +38,10 @@ const HeroSection = () => {
         
         {/* --- COLUNA ESQUERDA: TEXTO --- */}
         <div className="flex-1 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-24 lg:pt-0 z-20 lg:w-1/2">
-          <div className="space-y-6 md:space-y-8 max-w-2xl animate-in slide-in-from-left-10 fade-in duration-700">
+          <div className="space-y-5 md:space-y-7 max-w-2xl animate-in slide-in-from-left-10 fade-in duration-700">
             <div className="space-y-3 md:space-y-4">
               
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-sm">
+              <h1 className="font-display text-[clamp(1.9rem,4.6vw,3.75rem)] font-bold text-white leading-tight drop-shadow-sm">
                 Soluções em{' '}
                 <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                   Tecnologia
@@ -50,7 +50,7 @@ const HeroSection = () => {
                 para seu Negócio
               </h1>
               
-              <p className="text-lg md:text-2xl text-white/90 font-medium tracking-wide">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 font-medium tracking-wide">
                 Profissional de TI e Designer
               </p>
               
@@ -141,8 +141,9 @@ const HeroSection = () => {
                 className="
                   block dark:hidden  /* Lógica de troca */
                   relative z-10 w-auto object-contain object-bottom
-                  h-[45vh] max-h-[400px]
-                  lg:h-[90vh] lg:max-h-none lg:mr-auto 
+                  h-[38vh] max-h-[320px]
+                  sm:h-[42vh] sm:max-h-[360px]
+                  lg:h-[min(82vh,820px)] lg:max-h-none lg:mr-auto 
                   drop-shadow-2xl
                 "
                 loading="eager"
@@ -159,8 +160,9 @@ const HeroSection = () => {
                 className="
                   hidden dark:block  /* Lógica de troca */
                   relative z-10 w-auto object-contain object-bottom
-                  h-[45vh] max-h-[400px]
-                  lg:h-[90vh] lg:max-h-none lg:mr-auto 
+                  h-[38vh] max-h-[320px]
+                  sm:h-[42vh] sm:max-h-[360px]
+                  lg:h-[min(82vh,820px)] lg:max-h-none lg:mr-auto 
                   drop-shadow-2xl
                 "
                 loading="eager"

@@ -48,15 +48,15 @@ const ArticlesSection = () => {
 
   return (
     <section id="artigos" className="section-snap bg-muted/20 scroll-mt-16 border-t border-border/30">
-      <div className="container mx-auto px-4 py-20 h-full">
+      <div className="container mx-auto px-4 py-12 md:py-16 xl:py-20 h-full">
         
         {/* Cabeçalho */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4 animate-in slide-in-from-bottom-5 fade-in duration-700">
             <div className="text-left">
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
                     TECH <span className="text-primary">NOTES</span>
                 </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl">
+                <p className="text-muted-foreground text-base md:text-lg max-w-2xl">
                     Compartilho aqui um pouco da minha visão técnica, desafios superados e boas práticas de desenvolvimento.
                 </p>
             </div>

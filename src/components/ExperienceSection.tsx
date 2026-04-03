@@ -88,10 +88,10 @@ const ExperienceSection = () => {
 
   return (
     <section ref={sectionRef} id="experiencia" className="section-snap bg-muted/30 scroll-mt-16 border-t border-border/30">
-      <div className="container mx-auto px-4 py-20 h-full">
+      <div className="container mx-auto px-4 py-12 md:py-16 xl:py-20 h-full">
         
         <div className="text-center mb-16 animate-in slide-in-from-bottom-5 fade-in duration-700">
-           <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
              COMPETÊNCIAS E <span className="text-primary">CARREIRA</span>
            </h2>
         </div>
