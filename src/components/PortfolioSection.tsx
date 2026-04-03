@@ -117,7 +117,7 @@ const PortfolioSection = () => {
                 
                 <img
                     src={project.image_card_url || ''} 
-                    alt="" 
+                    alt={`Capa do projeto ${project.title}`} 
                     className={cn(
                     "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110",
                     loadedImages[project.id] ? "opacity-100" : "opacity-0"
@@ -199,7 +199,7 @@ const PortfolioSection = () => {
                   )}
                   <img
                     src={selectedProjectData.image_modal_url || selectedProjectData.image_card_url || ''}
-                    alt="" 
+                    alt={`Visual do projeto ${selectedProjectData.title}`} 
                     className={cn(
                         "w-full h-auto max-h-[400px] object-cover object-top transition-all duration-700 hover:scale-[1.02]",
                         loadedImages[`modal-${selectedProjectData.id}`] ? "opacity-100" : "opacity-0"
@@ -250,16 +250,20 @@ const PortfolioSection = () => {
 
                         <div className="flex flex-col gap-3">
                             {selectedProjectData.project_url && (
-                                <Button onClick={() => window.open(selectedProjectData.project_url, '_blank')} className="w-full shadow-lg shadow-primary/20">
-                                    <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" /> 
+                                <Button asChild className="w-full shadow-lg shadow-primary/20">
+                                  <a href={selectedProjectData.project_url} target="_blank" rel="noopener noreferrer">
+                                    <ExternalLink className="w-4 h-4 mr-2" aria-hidden="true" />
                                     Ver Projeto Online
+                                  </a>
                                 </Button>
                             )}
                             
                             {selectedProjectData.code_url && (
-                                <Button variant="outline" onClick={() => window.open(selectedProjectData.code_url, '_blank')} className="w-full">
-                                    <Code2 className="w-4 h-4 mr-2" aria-hidden="true" /> 
+                                <Button asChild variant="outline" className="w-full">
+                                  <a href={selectedProjectData.code_url} target="_blank" rel="noopener noreferrer">
+                                    <Code2 className="w-4 h-4 mr-2" aria-hidden="true" />
                                     Repositório / Docs
+                                  </a>
                                 </Button>
                             )}
                         </div>
