@@ -7,7 +7,7 @@ import logoLight from '@/assets/logolight.svg';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  
+
   const headerRef = useRef<HTMLElement>(null);
 
   // Detecta rolagem para mudar o fundo do header
@@ -24,8 +24,8 @@ const Header = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        isMenuOpen && 
-        headerRef.current && 
+        isMenuOpen &&
+        headerRef.current &&
         !headerRef.current.contains(event.target as Node)
       ) {
         setIsMenuOpen(false);
@@ -39,7 +39,7 @@ const Header = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -47,53 +47,50 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  // --- LISTA DE NAVEGAÇÃO ATUALIZADA ---
   const navItems = [
     { id: 'inicio', label: 'Início' },
     { id: 'sobre', label: 'Sobre' },
-    { id: 'experiencia', label: 'Experiência' }, // NOVO ITEM ADICIONADO
+    { id: 'experiencia', label: 'Experiência' },
     { id: 'portfolio', label: 'Portfólio' },
     { id: 'artigos', label: 'Tech Notes' },
     { id: 'contato', label: 'Contato' },
   ];
 
-  // Lógica de Cores Dinâmicas
   const isSolid = isScrolled || isMenuOpen;
 
-  const textColorClass = isSolid 
-    ? "text-muted-foreground hover:text-foreground" 
+  const textColorClass = isSolid
+    ? "text-muted-foreground hover:text-foreground"
     : "text-white/90 hover:text-white";
-    
-  const logoColorClass = isSolid 
-    ? "text-foreground" 
+
+  const logoColorClass = isSolid
+    ? "text-foreground"
     : "text-white";
-    
-  const mobileButtonClass = isSolid 
-    ? "text-foreground hover:bg-secondary/20" 
+
+  const mobileButtonClass = isSolid
+    ? "text-foreground hover:bg-secondary/20"
     : "text-white hover:bg-white/10";
 
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
-        isSolid
-          ? 'bg-background/95 backdrop-blur-md shadow-md border-border/40' 
-          : 'bg-transparent border-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 border-b ${isSolid
+        ? 'bg-background/95 backdrop-blur-md shadow-md border-border/40'
+        : 'bg-transparent border-transparent'
+        }`}
     >
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          
+
           {/* Logo */}
           <button
             onClick={() => scrollToSection('inicio')}
             className={`flex items-center gap-2 transition-colors rounded-lg group ${logoColorClass}`}
             aria-label="Ir para o início"
           >
-            <img 
-              src={logoLight} 
-              alt="Amaro Netto Logo" 
-              className={`h-8 w-8 transition-transform duration-300 group-hover:scale-110 ${!isSolid ? 'brightness-0 invert' : 'dark:brightness-0 dark:invert'}`} 
+            <img
+              src={logoLight}
+              alt="Amaro Netto Logo"
+              className={`h-8 w-8 transition-transform duration-300 group-hover:scale-110 ${!isSolid ? 'brightness-0 invert' : 'dark:brightness-0 dark:invert'}`}
             />
             <span className="font-display text-xl font-bold">
               Amaro <span className="text-primary">Netto</span>
@@ -101,7 +98,7 @@ const Header = () => {
           </button>
 
           <div className="flex items-center space-x-2">
-            
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
@@ -114,8 +111,7 @@ const Header = () => {
                   <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transform -translate-x-1/2 transition-all duration-300 group-hover:w-1/2"></span>
                 </button>
               ))}
-              
-              {/* Botão Dark Mode (Desktop) */}
+
               <div className={`ml-2 ${!isSolid ? 'text-white' : ''}`}>
                 <ModeToggle />
               </div>
@@ -123,12 +119,10 @@ const Header = () => {
 
             {/* Mobile Actions */}
             <div className="flex items-center gap-2 md:hidden">
-               {/* Botão Dark Mode (Mobile) */}
-               <div className={!isSolid ? 'text-white' : ''}>
-                 <ModeToggle />
-               </div>
+              <div className={!isSolid ? 'text-white' : ''}>
+                <ModeToggle />
+              </div>
 
-              {/* Botão Hamburguer */}
               <Button
                 variant="ghost"
                 size="sm"
