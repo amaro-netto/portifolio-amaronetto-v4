@@ -17,6 +17,7 @@ import {
     Lightbulb,
     MessageSquareText,
     TrendingUp,
+    X,
     type LucideIcon,
 } from 'lucide-react';
 import articlesData from '@/data/articles.json';
@@ -35,15 +36,15 @@ const canvasByItems: Record<number, CanvasSize> = {
 };
 
 const accentThemes = [
-    'from-amber-300 via-amber-400 to-yellow-500',
-    'from-orange-300 via-orange-400 to-red-500',
-    'from-stone-400 via-stone-500 to-amber-900',
-    'from-lime-400 via-green-500 to-emerald-600',
-    'from-cyan-300 via-sky-400 to-cyan-500',
-    'from-blue-500 via-blue-600 to-sky-700',
-    'from-slate-400 via-slate-500 to-indigo-300',
-    'from-violet-500 via-purple-500 to-fuchsia-500',
-    'from-pink-400 via-fuchsia-500 to-pink-500',
+    'from-[#0D2439] via-[#16324D] to-[#2D4A62]',
+    'from-[#15181C] via-[#1B2430] to-[#304457]',
+    'from-[#0D2439] via-[#23384B] to-[#445A6D]',
+    'from-[#15181C] via-[#202C38] to-[#4B5F70]',
+    'from-[#0D2439] via-[#1C3247] to-[#6F8393]',
+    'from-[#15181C] via-[#26313D] to-[#D5D9DC]',
+    'from-[#0D2439] via-[#21384C] to-[#7F91A0]',
+    'from-[#15181C] via-[#203040] to-[#92A2AF]',
+    'from-[#0D2439] via-[#243A4C] to-[#B7C0C7]',
 ] as const;
 
 const articleIcons: LucideIcon[] = [
@@ -215,20 +216,20 @@ const ArticlesSection = () => {
                                         aria-label={`Ler artigo: ${article.title}`}
                                         style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'both' }}
                                     >
-                                        <div className="flex h-full overflow-hidden rounded-[30px] border border-white/90 bg-[#F6F7F9] text-slate-900 shadow-[0_22px_55px_rgba(15,23,42,0.18)]">
+                                        <div className="flex h-full overflow-hidden rounded-[30px] border border-[#D5D9DC]/85 bg-[#F4F5F7] text-[#15181C] shadow-[0_22px_55px_rgba(13,36,57,0.14)] transition-shadow duration-300 group-hover:shadow-[0_28px_65px_rgba(13,36,57,0.18)]">
                                             <div className="flex min-w-0 flex-1 flex-col px-7 py-7">
-                                                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 shadow-sm">
+                                                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D5D9DC] bg-white text-[#0D2439] shadow-sm">
                                                     <ArticleIcon className="h-5 w-5" aria-hidden="true" />
                                                 </div>
 
                                                 <div className="min-w-0">
-                                                    <p className="truncate text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">
+                                                    <p className="truncate text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0D2439]/55">
                                                         {article.category}
                                                     </p>
-                                                    <h3 className="mt-3 line-clamp-2 text-[31px] font-semibold leading-[1.02] tracking-[-0.045em] text-slate-900">
+                                                    <h3 className="mt-3 line-clamp-2 text-[31px] font-semibold leading-[1.02] tracking-[-0.045em] text-[#15181C] transition-colors duration-300 group-hover:text-[#0D2439]">
                                                         {article.title}
                                                     </h3>
-                                                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-medium text-slate-500">
+                                                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] font-medium text-[#15181C]/62">
                                                         <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                                                             <Clock className="h-3.5 w-3.5" aria-hidden="true" />
                                                             {article.readTime}
@@ -240,24 +241,24 @@ const ArticlesSection = () => {
                                                     </div>
                                                 </div>
 
-                                                <p className="mt-6 line-clamp-5 text-[15px] leading-7 text-slate-600">
+                                                <p className="mt-6 line-clamp-5 text-[15px] leading-7 text-[#15181C]/68">
                                                     {article.excerpt}
                                                 </p>
 
                                                 <div className="mt-auto pt-7">
-                                                    <span className="inline-flex h-11 items-center gap-2 rounded-full bg-slate-900 px-5 text-[14px] font-semibold text-white transition-transform duration-300 group-hover:translate-x-1">
+                                                    <span className="inline-flex h-11 items-center gap-2 rounded-full bg-[#0D2439] px-5 text-[14px] font-semibold text-white transition-transform duration-300 group-hover:translate-x-1">
                                                         Visualizar
                                                         <ChevronRight className="h-4 w-4" aria-hidden="true" />
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            <div className={`flex w-[58px] shrink-0 flex-col justify-between bg-gradient-to-b ${theme} px-3 py-4 text-white`}>
-                                                <span className="ml-auto text-[24px] font-semibold leading-none tracking-[-0.04em]">
+                                            <div className={`flex w-[58px] shrink-0 flex-col justify-between bg-gradient-to-b ${theme} px-3 py-4 text-white shadow-[-8px_0_18px_rgba(13,36,57,0.08)]`}>
+                                                <span className="ml-auto rounded-xl border border-white/15 bg-white/12 px-2 py-1 text-[22px] font-semibold leading-none tracking-[-0.04em] backdrop-blur-sm">
                                                     {articleNumber}
                                                 </span>
                                                 <span
-                                                    className="self-center text-[10px] uppercase tracking-[0.24em] text-white/80"
+                                                    className="self-center text-[10px] uppercase tracking-[0.24em] text-white/78"
                                                     style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
                                                 >
                                                     notes
@@ -291,18 +292,31 @@ const ArticlesSection = () => {
                     <DialogContent className="w-[97vw] max-w-[1600px] h-[94vh] max-h-[94vh] overflow-hidden rounded-xl border border-border/60 bg-background p-0 shadow-2xl">
                         <div className="flex h-full flex-col">
                             <DialogHeader className="sticky top-0 z-10 border-b border-border bg-background/95 p-6 pb-4 backdrop-blur-md md:p-8 md:pb-5">
-                                <div className="mb-4 flex flex-wrap gap-2">
-                                    <Badge className="bg-primary text-primary-foreground hover:bg-primary/90">
-                                        {selectedArticle.category}
-                                    </Badge>
-                                    <Badge variant="outline" className="flex items-center gap-1.5">
-                                        <Clock className="h-3 w-3" aria-hidden="true" />
-                                        {selectedArticle.readTime} leitura
-                                    </Badge>
-                                    <Badge variant="outline" className="flex items-center gap-1.5">
-                                        <Calendar className="h-3 w-3" aria-hidden="true" />
-                                        {selectedArticle.date}
-                                    </Badge>
+                                <div className="mb-5 flex items-start justify-between gap-4">
+                                    <div className="flex flex-wrap gap-2">
+                                        <Badge className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                            {selectedArticle.category}
+                                        </Badge>
+                                        <Badge variant="outline" className="flex items-center gap-1.5">
+                                            <Clock className="h-3 w-3" aria-hidden="true" />
+                                            {selectedArticle.readTime} leitura
+                                        </Badge>
+                                        <Badge variant="outline" className="flex items-center gap-1.5">
+                                            <Calendar className="h-3 w-3" aria-hidden="true" />
+                                            {selectedArticle.date}
+                                        </Badge>
+                                    </div>
+
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => setSelectedArticle(null)}
+                                        className="h-10 w-10 shrink-0 rounded-full border border-border/60 text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+                                        aria-label="Fechar modal"
+                                    >
+                                        <X className="h-5 w-5" aria-hidden="true" />
+                                    </Button>
                                 </div>
                                 <DialogTitle className="text-2xl font-bold leading-tight md:text-3xl xl:text-4xl">
                                     {selectedArticle.title}

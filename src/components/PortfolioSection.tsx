@@ -162,10 +162,10 @@ const PortfolioSection = () => {
                     return (
                       <Card
                         key={project.id}
-                        className="group flex flex-col overflow-hidden rounded-[28px] border border-border/60 bg-background/88 p-3 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 animate-in fade-in zoom-in-95"
+                        className="group flex flex-col overflow-hidden rounded-[28px] border border-[#D5D9DC]/85 bg-[#F4F5F7] p-3 text-[#15181C] shadow-[0_22px_55px_rgba(13,36,57,0.14)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_65px_rgba(13,36,57,0.18)] animate-in fade-in zoom-in-95"
                         style={{ animationDelay: `${idx * 100}ms`, height: `${cardHeight}px` }}
                       >
-                        <div className="relative overflow-hidden rounded-[20px] border border-border/50 bg-muted/40" style={{ height: `${imageHeight}px` }}>
+                        <div className="relative overflow-hidden rounded-[20px] border border-[#D5D9DC] bg-[#D5D9DC]/45" style={{ height: `${imageHeight}px` }}>
                           {!loadedImages[project.id] && <Skeleton className="absolute inset-0 h-full w-full" />}
                           <img
                             src={project.image_card_url || ''}
@@ -181,31 +181,31 @@ const PortfolioSection = () => {
 
                         <div className="flex min-h-0 flex-1 flex-col px-1 pt-4 pb-1">
                           <div className="mb-3 flex min-w-0 items-center justify-between gap-3">
-                            <span className="min-w-0 flex-1 truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-primary/90">
+                            <span className="min-w-0 flex-1 truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-[#0D2439]/80">
                               {project.type}
                             </span>
                             {project.year && (
-                              <span className="shrink-0 text-[11px] text-muted-foreground">{project.year}</span>
+                              <span className="shrink-0 text-[11px] text-[#15181C]/55">{project.year}</span>
                             )}
                           </div>
 
-                          <h3 className="truncate text-[18px] font-semibold leading-[1.15] tracking-tight text-foreground">
+                          <h3 className="truncate text-[18px] font-semibold leading-[1.15] tracking-tight text-[#15181C]">
                             {project.title}
                           </h3>
 
-                          <p className="mt-2 truncate text-[12px] font-medium text-muted-foreground">
+                          <p className="mt-2 truncate text-[12px] font-medium text-[#0D2439]/68">
                             {techTags}
                           </p>
 
-                          <p className="mt-4 min-h-[54px] overflow-hidden text-[13px] leading-[1.38] text-muted-foreground line-clamp-3">
+                          <p className="mt-4 min-h-[54px] overflow-hidden text-[13px] leading-[1.38] text-[#15181C]/74 line-clamp-3">
                             {previewText}
                           </p>
 
-                          <div className="mt-auto border-t border-border/60 pt-4">
+                          <div className="mt-auto border-t border-[#D5D9DC] pt-4">
                             <Button
                               type="button"
                               onClick={() => setSelectedProject(project.id)}
-                              className="h-11 w-full rounded-full text-[14px] font-semibold"
+                              className="h-11 w-full rounded-full bg-[#0D2439] text-[14px] font-semibold text-white hover:bg-[#15181C]"
                               aria-label={`Visualizar detalhes do projeto ${project.title}`}
                             >
                               Visualizar
